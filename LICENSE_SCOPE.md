@@ -6,7 +6,7 @@ The full license text is in [LICENSE](LICENSE). Copyright and patent permissions
 
 ## Research artifacts
 
-The research archive also contains synthetic datasets (`datasets/`), PyTorch checkpoints (`models/`), and historical run artifacts (`evidence/` and `reports/`). **Do not assume redistribution or modification rights for these artifacts solely from the repository-level code license.** Their ownership, input provenance and model-/data-specific licensing are pending a separate documented clearance before public release. A license or rights declaration for each group must be recorded here before the repository is made public.
+The research archive also contains synthetic datasets (`datasets/`), PyTorch model weights/checkpoints (`models/`), and historical run artifacts (`evidence/` and `reports/`). **Do not assume redistribution or modification rights for these artifacts solely from the repository-level code license.** Their ownership, input provenance and model-/data-specific licensing are pending a separate documented clearance before public release. A license or rights declaration for each group must be recorded here before the repository is made public.
 
 Historical records retain their original-source SHA-256 digests as provenance; checked-in, redacted versions are tracked separately under `repo_sha256`. This preserves evidence of the original experiments without distributing machine-local references.
 
