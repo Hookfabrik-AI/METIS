@@ -1,0 +1,78 @@
+{
+  "schema": "metis-reported-progress-v1",
+  "phase": "P3",
+  "reported_at": "2026-10-18",
+  "status": "USER_REPORTED_NOT_INDEPENDENTLY_VERIFIED",
+  "source": "User-provided project report screenshot and accompanying conversation; original P3 evaluation artifacts not provided",
+  "architecture": "reported_unchanged_from_P2",
+  "criteria": {
+    "C2": {
+      "reported": "passed"
+    },
+    "C3": {
+      "reported": "passed"
+    },
+    "C4": {
+      "reported": "passed",
+      "delta_vs_rule": 0.015,
+      "p_value": {
+        "operator": "<",
+        "value": 0.001
+      },
+      "p2_p_value": 0.906,
+      "qualification": "advantage from saved verification costs; more forward passes; without verification costs policy worse"
+    },
+    "C5_K4": {
+      "reported": "passed",
+      "paired_L_minus_1_delta_pp_range": [
+        6,
+        10
+      ],
+      "paired_FB_at_4_delta_pp_range": [
+        8,
+        19
+      ]
+    },
+    "C6_K1": {
+      "reported": "passed",
+      "L_minus_1_delta_pp_range": [
+        6,
+        12
+      ],
+      "FB_at_4_delta_pp_range": [
+        9,
+        13
+      ]
+    }
+  },
+  "reported_summary": {
+    "FB_at_4_across_classes_range": [
+      0.8,
+      0.82
+    ],
+    "P2_FB_at_4_on_own_testset_approx": 0.75,
+    "C4_repair_decisions": 835,
+    "C4_fresh_decisions": 209
+  },
+  "limitations": {
+    "K4_FB_at_4_range": [
+      0.44,
+      0.51
+    ],
+    "K4_min_conflicts_budget_256": 0.61,
+    "reflexion_feedback_gain_pp_approx": [
+      2,
+      3.5
+    ],
+    "K5": "mixed; seed1 hard tasks worse than P2",
+    "dataset_and_constants": "changed together; no ablation",
+    "data_filtering": "initial filtering error corrected before training",
+    "p3_raw_artifacts_in_repo": false
+  },
+  "validation": {
+    "numeric_reaggregation": "not_performed",
+    "original_logs": "not_provided",
+    "p3_checkpoints": "not_provided",
+    "independent_review": "pending"
+  }
+}

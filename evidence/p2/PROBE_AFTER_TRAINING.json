@@ -1,0 +1,271 @@
+{
+  "p1_ckpt": "<EXTERNAL_P1_RESEARCH>/runs_p1/seed0/B/best.pt",
+  "p2_ckpt": "runs_p2/seed0/B/best.pt",
+  "pairs": {
+    "LIN_EQ coefficient swap: x0+2x1=6 vs 2x0+x1=6": {
+      "solutions_a": 18,
+      "solutions_b": 18,
+      "solution_sets_differ": true,
+      "P1_trained": {
+        "trunk_rel_diff": 4.3855064291165036e-07,
+        "logit_max_abs_diff": 3.546476364135742e-06,
+        "greedy_a": [
+          2,
+          2,
+          2
+        ],
+        "greedy_b": [
+          2,
+          2,
+          2
+        ],
+        "greedy_a_ok": true,
+        "greedy_b_ok": true
+      },
+      "P2_untrained": {
+        "trunk_rel_diff": 0.0160930547863245,
+        "logit_max_abs_diff": 0.016371160745620728,
+        "greedy_a": [
+          4,
+          4,
+          5
+        ],
+        "greedy_b": [
+          4,
+          4,
+          5
+        ],
+        "greedy_a_ok": false,
+        "greedy_b_ok": false
+      },
+      "P2_trained": {
+        "trunk_rel_diff": 0.197837695479393,
+        "logit_max_abs_diff": 1.9503039121627808,
+        "greedy_a": [
+          2,
+          2,
+          2
+        ],
+        "greedy_b": [
+          2,
+          2,
+          2
+        ],
+        "greedy_a_ok": true,
+        "greedy_b_ok": true
+      }
+    },
+    "LIN_EQ 3 vars: x0-2x1+3x2=4 vs 3x0-2x1+x2=4": {
+      "solutions_a": 12,
+      "solutions_b": 12,
+      "solution_sets_differ": true,
+      "P1_trained": {
+        "trunk_rel_diff": 4.594187146267359e-07,
+        "logit_max_abs_diff": 4.172325134277344e-06,
+        "greedy_a": [
+          1,
+          2,
+          2
+        ],
+        "greedy_b": [
+          1,
+          2,
+          2
+        ],
+        "greedy_a_ok": false,
+        "greedy_b_ok": false
+      },
+      "P2_untrained": {
+        "trunk_rel_diff": 0.01707802526652813,
+        "logit_max_abs_diff": 0.013769589364528656,
+        "greedy_a": [
+          4,
+          4,
+          5
+        ],
+        "greedy_b": [
+          4,
+          4,
+          5
+        ],
+        "greedy_a_ok": false,
+        "greedy_b_ok": false
+      },
+      "P2_trained": {
+        "trunk_rel_diff": 0.3520069718360901,
+        "logit_max_abs_diff": 5.155919075012207,
+        "greedy_a": [
+          4,
+          5,
+          4
+        ],
+        "greedy_b": [
+          4,
+          5,
+          2
+        ],
+        "greedy_a_ok": false,
+        "greedy_b_ok": true
+      }
+    },
+    "LT direction: x0<x1 vs x1<x0": {
+      "solutions_a": 90,
+      "solutions_b": 90,
+      "solution_sets_differ": true,
+      "P1_trained": {
+        "trunk_rel_diff": 3.6377164747136703e-07,
+        "logit_max_abs_diff": 5.125999450683594e-06,
+        "greedy_a": [
+          2,
+          2,
+          2
+        ],
+        "greedy_b": [
+          2,
+          2,
+          2
+        ],
+        "greedy_a_ok": false,
+        "greedy_b_ok": false
+      },
+      "P2_untrained": {
+        "trunk_rel_diff": 0.012078299187123775,
+        "logit_max_abs_diff": 0.01560559868812561,
+        "greedy_a": [
+          4,
+          4,
+          5
+        ],
+        "greedy_b": [
+          4,
+          4,
+          5
+        ],
+        "greedy_a_ok": false,
+        "greedy_b_ok": false
+      },
+      "P2_trained": {
+        "trunk_rel_diff": 1.0208255052566528,
+        "logit_max_abs_diff": 16.81951141357422,
+        "greedy_a": [
+          1,
+          2,
+          2
+        ],
+        "greedy_b": [
+          3,
+          0,
+          2
+        ],
+        "greedy_a_ok": true,
+        "greedy_b_ok": true
+      }
+    },
+    "CLAUSE polarity: (x0 or not x1) vs (not x0 or x1)": {
+      "solutions_a": 6,
+      "solutions_b": 6,
+      "solution_sets_differ": true,
+      "P1_trained": {
+        "trunk_rel_diff": 4.190135030057718e-07,
+        "logit_max_abs_diff": 3.5762786865234375e-06,
+        "greedy_a": [
+          0,
+          0,
+          0
+        ],
+        "greedy_b": [
+          0,
+          0,
+          0
+        ],
+        "greedy_a_ok": true,
+        "greedy_b_ok": true
+      },
+      "P2_untrained": {
+        "trunk_rel_diff": 0.016189510002732277,
+        "logit_max_abs_diff": 0.015077531337738037,
+        "greedy_a": [
+          1,
+          1,
+          1
+        ],
+        "greedy_b": [
+          1,
+          1,
+          1
+        ],
+        "greedy_a_ok": true,
+        "greedy_b_ok": true
+      },
+      "P2_trained": {
+        "trunk_rel_diff": 0.7536011338233948,
+        "logit_max_abs_diff": 12.296316146850586,
+        "greedy_a": [
+          1,
+          0,
+          0
+        ],
+        "greedy_b": [
+          1,
+          1,
+          0
+        ],
+        "greedy_a_ok": true,
+        "greedy_b_ok": true
+      }
+    },
+    "CLAUSE 3 literals: (x0 or not x1 or not x2) vs (not x0 or not x1 or x2)": {
+      "solutions_a": 7,
+      "solutions_b": 7,
+      "solution_sets_differ": true,
+      "P1_trained": {
+        "trunk_rel_diff": 3.446149889896333e-07,
+        "logit_max_abs_diff": 2.86102294921875e-06,
+        "greedy_a": [
+          0,
+          0,
+          0
+        ],
+        "greedy_b": [
+          0,
+          0,
+          0
+        ],
+        "greedy_a_ok": true,
+        "greedy_b_ok": true
+      },
+      "P2_untrained": {
+        "trunk_rel_diff": 0.012904375791549683,
+        "logit_max_abs_diff": 0.01751883327960968,
+        "greedy_a": [
+          1,
+          1,
+          1
+        ],
+        "greedy_b": [
+          1,
+          1,
+          1
+        ],
+        "greedy_a_ok": true,
+        "greedy_b_ok": true
+      },
+      "P2_trained": {
+        "trunk_rel_diff": 0.707548201084137,
+        "logit_max_abs_diff": 6.628165245056152,
+        "greedy_a": [
+          0,
+          0,
+          0
+        ],
+        "greedy_b": [
+          0,
+          0,
+          0
+        ],
+        "greedy_a_ok": true,
+        "greedy_b_ok": true
+      }
+    }
+  }
+}

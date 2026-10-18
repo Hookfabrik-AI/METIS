@@ -1,0 +1,21 @@
+# Secrets and host artifacts
+.env
+.env.*
+!.env.example
+**/.ollama/
+**/id_ed25519*
+**/instance_home/
+**/.cache/
+**/.ssh/
+**/*.pem
+**/*.key
+**/__pycache__/
+**/.pytest_cache/
+**/.venv/
+**/venv/
+**/run_*/instance/
+**/OLLAMA_INSTANCE.log
+runs/
+*.log
+!evidence/**/*.log
+.DS_Store

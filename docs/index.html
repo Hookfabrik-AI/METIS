@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="MÉTIS Research Book — HOOKFABRIK independent AI research.">
+  <title>MÉTIS Research Book · HOOKFABRIK</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --outer:#d9ded8; --paper:#e9ece6; --ink:#202721; --text:#303832;
+      --secondary:#4e5a51; --muted:#67736a; --line:#c8d0c7; --soft:#e0e5dd;
+      --accent:#33483c; --focus:#435b4c; --shade:rgba(32,41,35,.025);
+      --reader-scale:1; --reader-font:calc(19px * var(--reader-scale)); --sidebar:218px;
+    }
+    :root[data-theme="paper"] {
+      color-scheme:light;
+      --outer:#e8e5dd; --paper:#f5f2e9; --ink:#292821; --text:#3b3a33;
+      --secondary:#615f55; --muted:#7b796e; --line:#d9d4c9; --soft:#eee9df;
+      --accent:#4b5347; --focus:#5c6656; --shade:rgba(41,40,33,.022);
+    }
+    :root[data-theme="dark"] {
+      color-scheme:dark;
+      --outer:#141713; --paper:#20231f; --ink:#eeeee3; --text:#dcddd0;
+      --secondary:#afb3a8; --muted:#929b8e; --line:#393f39; --soft:#292e29;
+      --accent:#b8cdbc; --focus:#b7cdb5; --shade:rgba(240,240,220,.035);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--outer);color:var(--ink);font:15px/1.68 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.003em;-webkit-font-smoothing:antialiased}
+    button,input{font:inherit}
+    button{cursor:pointer}
+    button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+    a{color:var(--accent);text-underline-offset:3px}
+    .app{max-width:1520px;min-height:100vh;margin:0 auto;background:var(--paper)}
+    .progress{position:fixed;top:0;left:0;height:2px;background:var(--accent);width:0;z-index:8;transition:width .08s linear}
+    .top{height:74px;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:0 clamp(22px,4vw,62px);border-bottom:1px solid var(--line);background:var(--paper);position:sticky;top:0;z-index:5}
+    .wordmark{display:flex;align-items:center;gap:14px;color:var(--ink);text-decoration:none;min-width:0}
+    .glyph{width:28px;height:28px;border:1.5px solid currentColor;display:grid;place-items:center;font:17px Georgia,serif;transform:rotate(45deg);flex:none}
+    .glyph span{transform:rotate(-45deg)}
+    .brand-name{display:block;font-size:20px;font-weight:500;letter-spacing:.22em;line-height:1.1}
+    .brand-sub{display:block;font-size:9px;font-weight:650;letter-spacing:.14em;text-transform:uppercase;color:var(--secondary);margin-top:7px;white-space:nowrap}
+    .actions{display:flex;align-items:center;gap:7px}
+    .tool{min-width:37px;height:36px;display:inline-flex;align-items:center;justify-content:center;padding:0 8px;border:1px solid transparent;border-radius:3px;background:transparent;color:var(--text);font-size:13px;gap:6px}
+    .tool:hover,.tool[aria-pressed="true"]{background:var(--soft);border-color:var(--line)}
+    .tool svg,.nav svg,.inline-icon{width:17px;height:17px;stroke:currentColor;stroke-width:1.65;fill:none;stroke-linecap:round;stroke-linejoin:round;flex:none}
+    .tool .shortcut{font-size:10px;color:var(--muted);border:1px solid var(--line);padding:0 4px;border-radius:3px}
+    .mainlayout{display:grid;grid-template-columns:var(--sidebar) minmax(0,1fr);min-height:calc(100vh - 74px)}
+    .sidebar{border-right:1px solid var(--line);padding:36px 17px 30px 23px;position:sticky;top:74px;height:calc(100vh - 74px);overflow-y:auto;display:flex;flex-direction:column;gap:28px}
+    .kicker{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--secondary);font-weight:700}
+    .nav{display:flex;flex-direction:column;gap:2px}
+    .nav a,.nav button{display:flex;width:100%;align-items:center;gap:10px;text-decoration:none;text-align:left;background:transparent;border:0;color:var(--secondary);padding:10px 11px;font-size:13px;border-radius:4px}
+    .nav a:hover,.nav button:hover{color:var(--ink);background:var(--soft)}
+    .nav a.active{background:var(--soft);color:var(--ink);font-weight:650}
+    .nav .dot{width:6px;height:6px;background:var(--accent);border-radius:50%}
+    .nav .soft-dot{width:6px;height:6px;border:1px solid var(--muted);border-radius:50%}
+    .navtiny{padding:10px 11px;color:var(--muted);font-size:12px;overflow-wrap:anywhere}
+    .sidefooter{margin-top:auto;padding:18px 9px 0;border-top:1px solid var(--line);font-size:11px;line-height:1.8;color:var(--muted)}
+    .content{min-width:0;min-height:calc(100vh - 82px)}
+    .page{width:min(100%,960px);margin:0 auto;padding:72px clamp(25px,6vw,86px) 120px}
+    .intro{max-width:720px}
+    .eyebrow{font-size:11px;letter-spacing:.19em;font-weight:650;text-transform:uppercase;color:var(--secondary)}
+    h1,h2,h3,p{margin-top:0}
+    h1,h2,h3{color:var(--ink)}
+    h1,h2{font-family:Georgia,"Palatino Linotype",serif;font-weight:400;letter-spacing:-.032em}
+    h1{font-size:clamp(44px,5vw,70px);line-height:1.14;margin:25px 0 28px;max-width:760px}
+    h2{font-size:34px;line-height:1.2;margin-bottom:18px}
+    h3{font-size:16px;letter-spacing:.003em}
+    .lead{font-size:clamp(17px,2vw,20px);line-height:1.75;color:var(--text);max-width:640px;margin:0}
+    .intro-rule{margin:66px 0 33px;border:0;border-top:1px solid var(--line)}
+    .section-top{display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin-bottom:19px}
+    .section-top h2{margin:0;font-size:30px}
+    .textlink{text-decoration:none;font-size:13px;white-space:nowrap}
+    .research-list{border-top:1px solid var(--line)}
+    .research-entry{width:100%;border:0;border-bottom:1px solid var(--line);padding:25px 0 26px;display:flex;align-items:center;gap:25px;background:transparent;color:var(--ink);text-align:left}
+    .research-entry:hover .entry-name,.textlink:hover{text-decoration:underline;text-underline-offset:5px}
+    .entry-number{width:29px;flex:none;color:var(--muted);font-size:11px;font-variant-numeric:tabular-nums}
+    .entry-main{flex:1;min-width:0}
+    .entry-name{font-family:Georgia,"Palatino Linotype",serif;font-size:26px;line-height:1.2;display:block;letter-spacing:-.025em}
+    .entry-desc{display:block;font-size:13px;color:var(--secondary);margin-top:7px;line-height:1.5}
+    .entry-meta{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:9px;display:block}
+    .arrow{font-size:22px;color:var(--secondary);font-weight:300;flex:none}
+    .note-box{border-left:2px solid var(--accent);padding:5px 0 5px 20px;margin:53px 0 0;color:var(--secondary);max-width:660px;font-size:14px;line-height:1.85}
+    .note-box strong{color:var(--ink);font-weight:600}
+    .faint{color:var(--muted)}
+    .library-title{font-size:58px;margin-bottom:14px}
+    .library-sub{color:var(--secondary);max-width:610px;line-height:1.75;font-size:16px}
+    .searchbar{display:flex;align-items:center;border:1px solid var(--line);padding:0 14px;gap:12px;margin:35px 0 22px;height:52px;background:var(--shade)}
+    .searchbar svg{height:17px;width:17px;stroke:var(--secondary);fill:none;stroke-width:1.8}
+    .searchbar input{width:100%;border:0;background:transparent;color:var(--ink);outline:none;font-size:15px}
+    .searchbar input::placeholder{color:var(--muted)}
+    .filterline{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:18px 0 29px}
+    .filter{border:1px solid transparent;background:transparent;color:var(--secondary);padding:6px 11px;font-size:12px;border-radius:3px}
+    .filter:hover{background:var(--soft)}
+    .filter[aria-pressed="true"]{border-color:var(--line);color:var(--ink);background:var(--soft)}
+    .resultline{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+    .back{font-size:13px;text-decoration:none;display:inline-block;margin-bottom:50px}
+    .article{max-width:725px}
+    .article h1{margin:19px 0 20px;font-size:clamp(48px,5.5vw,76px)}
+    .article-lead{font:clamp(19px,2.2vw,23px)/1.65 Georgia,serif;letter-spacing:-.01em;color:var(--text);margin-bottom:35px}
+    .pill{display:inline-block;padding:3px 9px;border:1px solid var(--line);font-size:10px;text-transform:uppercase;letter-spacing:.11em;color:var(--secondary);border-radius:2px;vertical-align:middle}
+    .pill.preview{border-style:dashed}
+    .info-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:38px 0 56px}
+    .info-grid>div{padding:19px 14px 19px 0;min-width:0}
+    .info-grid>div+div{padding-left:18px;border-left:1px solid var(--line)}
+    .info-grid span{display:block;color:var(--muted);font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+    .info-grid strong{display:block;font-size:13px;font-weight:550;overflow-wrap:anywhere;line-height:1.5}
+    .article-controls{display:flex;gap:10px;margin:0 0 20px;flex-wrap:wrap}
+    .quiet-btn{padding:8px 12px;background:transparent;border:1px solid var(--line);color:var(--text);font-size:12px;border-radius:3px}
+    .quiet-btn:hover{background:var(--soft)}
+    .article section{margin:50px 0;scroll-margin-top:112px}
+    .article section h2{font-size:32px;padding-top:7px}
+    .reader-text{font-family:Georgia,"Palatino Linotype",serif;font-size:var(--reader-font);line-height:1.86;color:var(--text);letter-spacing:.005em}
+    .reader-text p{margin:0 0 22px}
+    .reader-text a{font-family:system-ui,sans-serif;font-size:15px}
+    .chapter-no{display:block;margin-bottom:15px;font:650 10px system-ui,sans-serif;color:var(--muted);letter-spacing:.15em;text-transform:uppercase}
+    .toc{margin:48px 0 12px;padding:20px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .toc h3{font:650 10px system-ui,sans-serif;color:var(--secondary);letter-spacing:.17em;text-transform:uppercase;margin-bottom:10px}
+    .toc-items{display:flex;gap:8px 19px;flex-wrap:wrap}
+    .toc-items a{font-size:12px;text-decoration:none;color:var(--secondary)}
+    .toc-items a:hover{color:var(--ink);text-decoration:underline}
+    .evidence{border:1px solid var(--line);padding:21px 23px;background:var(--shade)}
+    .evidence h3{font-size:14px;margin-bottom:9px}
+    .evidence p{color:var(--secondary);font-size:13px;line-height:1.8;margin-bottom:0}
+    .tablewrap{overflow-x:auto;margin:23px 0}
+    .metrics{border-collapse:collapse;width:100%;font:13px/1.6 system-ui,sans-serif;min-width:410px}
+    .metrics td,.metrics th{padding:12px 11px;border-bottom:1px solid var(--line);text-align:left;font-weight:400}
+    .metrics th{color:var(--secondary);font-size:12px}
+    .metrics th:not(:first-child),.metrics td:not(:first-child){text-align:right;font-variant-numeric:tabular-nums}
+    .warning{border-left:2px solid var(--line);padding:8px 0 8px 15px;color:var(--secondary);font:13px/1.8 system-ui,sans-serif}
+    .empty{padding:39px 0;color:var(--secondary);border-top:1px solid var(--line);font-size:14px}
+    .mini-divider{border:0;border-top:1px solid var(--line);margin:45px 0}
+    .prose{max-width:690px;color:var(--text);font-size:var(--reader-font);font-family:Georgia,serif;line-height:1.86}
+    .prose p{margin-bottom:25px}
+    .prose h2{margin-top:48px}
+    .footer{border-top:1px solid var(--line);padding:24px clamp(25px,5vw,60px);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+    .mobile-only{display:none}
+    .mobile-reader-tools{display:none}
+    /* Unaufdringliche Reader-Einstellungen: auf jeder Seite sofort sichtbar. */
+    .reader-setting{display:inline-flex;align-items:center;gap:2px;padding:2px 5px;border:1px solid var(--line);border-radius:7px;background:var(--shade)}
+    .reader-setting .tool{min-width:34px;height:34px;font-weight:550}
+    .reader-setting .tool:disabled{opacity:.32;cursor:not-allowed}
+    .font-level{min-width:39px;text-align:center;font-size:11px;color:var(--secondary);font-variant-numeric:tabular-nums}
+    .focus-tool{min-width:59px;border:1px solid var(--line);border-radius:6px;font-size:12px}
+    .tool:active,.quiet-btn:active{transform:translateY(1px)}
+    .top .tool:hover{background:var(--soft)}
+    .app.is-focus .mainlayout{display:block}
+    .app.is-focus .sidebar{display:none!important}
+    .app.is-focus .page{max-width:830px;padding-left:clamp(24px,7vw,85px);padding-right:clamp(24px,7vw,85px)}
+    .app.is-focus .article{max-width:680px}
+    .app.is-focus #focus-action{background:var(--soft);font-weight:650}
+    .app.is-focus .top{border-bottom-color:transparent}
+    .page h1{font-size:clamp(38px,calc(64px * var(--reader-scale)),90px)}
+    .page h2{font-size:clamp(25px,calc(33px * var(--reader-scale)),49px)}
+    .page h3{font-size:calc(16px * var(--reader-scale))}
+    .page .lead{font-size:clamp(16px,calc(20px * var(--reader-scale)),30px)}
+    .page .library-title{font-size:clamp(40px,calc(58px * var(--reader-scale)),86px)}
+    .page .library-sub{font-size:clamp(15px,calc(17px * var(--reader-scale)),26px)}
+    .page .section-top h2{font-size:clamp(24px,calc(30px * var(--reader-scale)),44px)}
+    .page .entry-name{font-size:clamp(21px,calc(26px * var(--reader-scale)),39px)}
+    .page .entry-desc{font-size:clamp(12px,calc(14px * var(--reader-scale)),21px)}
+    .page .article h1{font-size:clamp(40px,calc(70px * var(--reader-scale)),103px)}
+    .page .article-lead{font-size:clamp(18px,calc(23px * var(--reader-scale)),34px)}
+    .page .article section h2{font-size:clamp(26px,calc(32px * var(--reader-scale)),46px)}
+    .page .note-box{font-size:clamp(13px,calc(14px * var(--reader-scale)),21px)}
+    .page .info-grid strong{font-size:clamp(13px,calc(14px * var(--reader-scale)),20px)}
+    .page .metrics{font-size:clamp(13px,calc(14px * var(--reader-scale)),21px)}
+    .page .evidence p{font-size:clamp(13px,calc(14px * var(--reader-scale)),21px)}
+    @media(max-width:800px){
+      :root{--sidebar:200px}
+      .sidebar{padding:28px 12px}
+      .page{padding:49px 38px 85px}
+      .brand-sub{font-size:8px}
+    }
+    @media(max-width:640px){
+      .top{height:70px;padding:0 19px}
+      .brand-name{font-size:17px}.brand-sub{font-size:8px;letter-spacing:.07em}
+      .glyph{height:24px;width:24px;font-size:14px}.wordmark{gap:11px}
+      .mainlayout{display:block;min-height:calc(100vh - 70px)}
+      .sidebar{display:none;position:fixed;top:70px;left:0;bottom:0;z-index:6;height:auto;width:min(80vw,290px);background:var(--paper);box-shadow:100vw 0 0 100vw rgba(0,0,0,.35);padding:28px 22px}
+      .sidebar.is-open{display:flex}
+      .mobile-only{display:inline-flex}
+      .actions{gap:1px}.actions .shortcut{display:none}
+      .tool{min-width:31px;padding:0 5px}
+      /* Keep reading controls available on mobile. */
+      .mobile-reader-tools{display:block}
+      .section-top{flex-wrap:wrap;gap:4px 12px}
+      .page{padding:40px 23px 70px}
+      h1{font-size:48px}.library-title{font-size:48px}
+      .intro-rule{margin-top:43px}
+      .entry-name{font-size:23px}.entry-desc{font-size:12px}.research-entry{gap:11px}
+      .info-grid{grid-template-columns:1fr}
+      .info-grid>div{padding:11px 0!important;border:0!important;border-bottom:1px solid var(--line)!important}
+      .info-grid>div:last-child{border-bottom:0!important}
+      .article h1{font-size:54px}.article section{margin:40px 0}
+      .footer{padding:22px}
+    }
+    @media(max-width:640px){
+      .top{gap:5px;padding:0 11px}
+      .brand-name{font-size:15px;letter-spacing:.15em}
+      .brand-sub{max-width:125px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:7px}
+      .wordmark{gap:8px}
+      .glyph{display:none}
+      .actions{gap:3px}
+      .actions .tool{min-width:32px}
+      .reader-setting{padding:1px 2px;gap:0}
+      .reader-setting .tool{min-width:29px;padding:0 1px}
+      .font-level{min-width:36px;font-size:10px}
+      .focus-tool{min-width:32px;padding:0 3px;font-size:0}
+      .focus-tool::before{content:'◫';font-size:19px}
+      .mobile-reader-tools{display:none}
+      .page{padding-left:23px;padding-right:23px}
+    }
+    @media(max-width:380px){
+      .brand-sub{display:none}
+      .actions{gap:1px}
+      .font-level{min-width:31px}
+    }
+    @media print{
+      :root{--paper:white;--outer:white;--ink:#111;--text:#111;--secondary:#333}
+      .top,.sidebar,.actions,.footer,.article-controls,.back,.toc,.progress{display:none!important}
+      .app{border:0}.mainlayout{display:block}.page{padding:0;max-width:none}
+      .article{max-width:none}h1{font-size:37px!important}.article section{break-inside:avoid}
+    }
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+  
+
+.chapters-title{margin-bottom:15px}
+.chapter-list .research-entry{cursor:pointer;text-decoration:none}
+.chapter-list .entry-name{font-size:25px}
+.article .reader-text ul{padding-left:1.45em;margin:10px 0 27px}
+.article .reader-text li{margin-bottom:11px}
+.article .reader-text strong{color:var(--ink)}
+.reader-text h3{font:600 calc(17px * var(--reader-scale))/1.5 system-ui,sans-serif;margin:32px 0 12px}
+.reader-text blockquote{padding:6px 0 6px 22px;border-left:2px solid var(--accent);font-style:italic;margin:28px 0;color:var(--secondary)}
+.reader-text pre{overflow-x:auto;border:1px solid var(--line);background:var(--shade);font:13px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;padding:18px;margin:20px 0 30px;white-space:pre}
+.reader-text code{font:12px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+.reader-text .tablewrap{max-width:100%;margin:24px 0 30px}
+.reader-text .metrics{min-width:580px}
+.reader-text .metrics th:not(:first-child),.reader-text .metrics td:not(:first-child){text-align:left}
+.reader-text .ref-links{font:13px/1.9 system-ui,sans-serif;list-style:none;padding-left:0}
+.reader-text .ref-links li{border-bottom:1px solid var(--line);padding:9px 0;margin:0}
+.reader-text .ref-links a{text-decoration:none}
+.reader-text .ref-links a:hover{text-decoration:underline}
+.article-pager{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:60px 0 30px;border-top:1px solid var(--line);padding-top:24px;font:13px/1.6 system-ui,sans-serif}
+.article-pager a{max-width:48%;text-decoration:none}
+.article-pager a:hover{text-decoration:underline}
+.reader-stamp{display:flex;flex-wrap:wrap;gap:15px;color:var(--muted);font-size:11px;letter-spacing:.04em;margin:34px 0 0}
+.status-label{font-weight:600;color:var(--secondary)}
+@media(max-width:640px){.chapter-list .entry-name{font-size:22px}.article-pager{align-items:start}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<div class="app">
+ <header class="top">
+  <a class="wordmark" href="#/" aria-label="Back to book overview">
+   <span class="glyph" aria-hidden="true"><span>✧</span></span>
+   <span><span class="brand-name" id="brand-name">RESEARCH</span><span class="brand-sub">HOOKFABRIK · INDEPENDENT AI RESEARCH</span></span>
+  </a>
+  <div class="actions" aria-label="Reader settings">
+   <button class="tool" id="search-action" title="Search chapters (/)" aria-label="Open search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg><span class="shortcut">/</span></button>
+   <div class="reader-setting" role="group" aria-label="Font size">
+    <button class="tool" id="font-decrease" title="Decrease font size" aria-label="Decrease font size">A−</button>
+    <output class="font-level" id="font-level" aria-live="polite" aria-label="Font size">100%</output>
+    <button class="tool" id="font-increase" title="Increase font size" aria-label="Increase font size">A+</button>
+   </div>
+   <button class="tool focus-tool" id="focus-action" title="Focus mode" aria-label="Toggle focus" aria-pressed="false">Focus</button>
+   <button class="tool" id="theme-action" title="Change theme: E-Ink, Paper, Night" aria-label="Change color theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.3 15.8A8.5 8.5 0 0 1 8.2 4.7a8.6 8.6 0 1 0 11.1 11.1Z"/></svg></button>
+   <button class="tool mobile-only" id="menu-action" title="Menu" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+  </div>
+ </header>
+ <div class="mainlayout">
+  <aside class="sidebar" id="sidebar" aria-label="Hauptnavigation">
+   <div><div class="kicker" style="padding:0 11px 12px">Reading room</div>
+    <nav class="nav" id="main-nav">
+     <a href="#/" data-nav="home">Book overview</a>
+     <a href="#/kapitel" data-nav="chapters">All chapters</a>
+     <a href="#/kapitel/evidenz" data-nav="evidence">Evidence</a>
+     <a href="#/kapitel/reproduktion" data-nav="repro">Reproducibility</a>
+    </nav>
+   </div>
+   <div><div class="kicker" style="padding:0 11px 10px">Chapter</div><nav class="nav" id="chapter-nav"></nav></div>
+   <div><div class="kicker" style="padding:0 11px 10px">Bookmarks</div><nav class="nav" id="bookmark-nav"><div class="navtiny">No bookmarks yet.</div></nav></div>
+   <div class="sidefooter"><div>hookfabrik.de</div><div>Open research. Checkable results.</div><div style="margin-top:15px" id="reader-footer">MÉTIS · Research Book</div></div>
+  </aside>
+  <main class="content" id="content" tabindex="-1"></main>
+ </div>
+ <footer class="footer"><span>© HOOKFABRIK · Research Book</span><span id="footer-status">Research stage · Evidence in chapters</span></footer>
+</div>
+<script>
+'use strict';
+const BOOK = {"schema_version":1,"project_id":"metis","title":"M\u00c9TIS","category":"Model efficiency \u00b7 Structured constraints","subtitle":"A small neural model proposing candidate solutions for formalized constraint tasks, with evidence and limitations documented.","edition":"Research Book \u00b7 18 October 2026","updated":"18 October 2026","status":"P2 archived \u00b7 P3 reported, unverified","disclaimer":"P2 artifacts are archived and hash-checkable; P3 is reported without raw results or checkpoints. No general Qwen acceleration has been proven.","toc_intro":"Research question, architecture, methods, results, P3 report, limitations and reproducibility.","chapters":[{"id":"vorwort","number":"01","title":"Introduction","summary":"Research scope and evidence status.","label":"Context","evidence_status":"Documented","blocks":[{"type":"paragraph","text":"M\u00c9TIS is a small Transformer trained on structured constraint tasks. It supplies candidates to a separate verifier rather than serving as a general language model."},{"type":"paragraph","text":"The archived P2 configuration contains 679,571 trainable parameters. This repository includes historic Qwen experiments using P2 and a separate, unverified P3 progress report. Experiments were not independently rerun."}]},{"id":"frage","number":"02","title":"Research question","summary":"Are learned candidate hints better than simple alternatives?","label":"Research question","evidence_status":"Open","blocks":[{"type":"paragraph","text":"Can a small specialized model reduce a larger local language model\u2019s effort on formalized constraint tasks without reducing answer correctness?"},{"type":"paragraph","text":"A candidate from a neural model must be compared with no candidate, random hints and simple deterministic methods. All end-to-end costs matter, including candidate generation and verification."},{"type":"bullets","items":["Correctness: solved constraints, including hard cases.","Efficiency: Qwen output tokens, attempts, response time and complete costs.","Causality: control prompt formatting, tasks, hardware and model versions.","Generalization: validate on new distributions using independent replications."]}]},{"id":"architektur","number":"03","title":"Architecture","summary":"The archived P2 Transformer with 679,571 parameters.","label":"Model","evidence_status":"Archived P2 source","blocks":[{"type":"paragraph","text":"P2 implements a four-layer Transformer encoder with four attention heads, hidden width 128, feed-forward width 256 and dropout 0."},{"type":"table","columns":["Property","Archived P2"],"rows":[["Trainable parameters","679,571"],["Model","Transformer encoder"],["Layers / heads","4 / 4"],["Width / feed-forward","128 / 256"],["Input","One class token, up to 24 constraint tokens and 12 variable tokens"],["Output","Domain-masked variable-value logits plus two auxiliary heads"]]},{"type":"paragraph","text":"Constraint-slot embeddings jointly encode variable identity, coefficient/sign and position. Auxiliary heads support self-assessment and strategy selection, while an external verifier checks solutions."},{"type":"warning","text":"P3 reportedly retained this architecture, but the P3 implementation, weights and raw evaluations are not included."},{"type":"links","items":[{"label":"Model architecture","href":"architecture.md"},{"label":"Methods","href":"methods.md"}]}]},{"id":"methodik","number":"04","title":"Experimental design","summary":"Archived P2, Qwen comparisons and reported P3.","label":"Methods","evidence_status":"Partially verifiable","blocks":[{"type":"paragraph","text":"Archived P2 data include training scripts, seven dataset splits, seven selected weights and evaluation files. Hash checks do not reproduce neural training."},{"type":"paragraph","text":"The Qwen four-arm snapshot consists of 12 structured tasks: T01 from run_04; T02\u2013T05 from run_03; T06\u2013T09 from run_04; T10\u2013T12 from run_05. The records are assembled from resumed partial runs."},{"type":"bullets","items":["A: Qwen without a candidate.","B: Qwen with a M\u00c9TIS P2 candidate.","C: Qwen with a random candidate.","D: Qwen with a Min-Conflicts candidate (256 checks)."]},{"type":"warning","text":"Cache conditions, interrupted runs and incomplete end-to-end timing limit interpretation. Original Qwen runners require external runtime components."},{"type":"links","items":[{"label":"Methods","href":"methods.md"},{"label":"Historical Qwen note (archival German source)","href":"historical-qwen-note.md"}]}]},{"id":"evidenz","number":"05","title":"Results and evidence","summary":"What the 12-task Qwen comparison does and does not show.","label":"Historic P2 evidence","evidence_status":"Reaggregatable offline","blocks":[{"type":"paragraph","text":"These records are from the historical four-arm Qwen comparison using P2, not P3."},{"type":"table","columns":["Condition","Correct","Output tokens","Recorded Qwen time"],"rows":[["Qwen alone","11/12","40,559","2,045.3 s"],["Qwen + M\u00c9TIS P2","10/12","36,241","1,892.8 s"],["Qwen + random","10/12","52,074","2,819.2 s"],["Qwen + Min-Conflicts","11/12","24,910","1,367.5 s"]]},{"type":"paragraph","text":"The M\u00c9TIS arm used 10.6% fewer Qwen output tokens than no hint but solved one fewer task. The deterministic Min-Conflicts baseline performed better in this snapshot."},{"type":"warning","text":"Recorded Qwen time excludes full end-to-end costs. These results do not establish a causal advantage for learned hints or generalized speedups."},{"type":"note","title":"Evidence boundary","text":"Archive hashes and saved-result reaggregation are checkable. Neither historical training nor Qwen experiments were independently rerun."},{"type":"links","items":[{"label":"Findings","href":"findings.md"},{"label":"Methods","href":"methods.md"}]}]},{"id":"p3","number":"06","title":"P3 \u2014 reported progress","summary":"A reported C4 improvement, without independently verified raw evidence.","label":"Project report","evidence_status":"Reported only","blocks":[{"type":"paragraph","text":"A project report dated 18 October 2026 describes further training with unchanged model architecture. Criteria C2\u2013C6, including learned control C4, were reportedly passed."},{"type":"table","columns":["Criterion","P2","P3 (reported)"],"rows":[["C2 / C3","passed","passed"],["C4 learned control","failed (p = 0.906)","passed (+0.015; p \u003c 0.001)"],["C5 \u2014 K4 paired tasks","\u2014","L\u22121 +6 to +10 pp; FB@4 +8 to +19 pp"],["C6 \u2014 K1","\u2014","L\u22121 +6 to +12 pp; FB@4 +9 to +13 pp"]]},{"type":"paragraph","text":"FB@4 was reported near 0.80\u20130.82; a P2 reference around 0.75 came from a separate test set, not a directly paired comparison. C4 savings reportedly came from fewer checks despite more model forward passes."},{"type":"warning","text":"The P3 report is not raw evidence. Checkpoints, seeds, tasks, test splits, cost accounting and statistics must be verified before claims can be independently confirmed."},{"type":"links","items":[{"label":"Reported P3 status","href":"p3-status.md"}]}]},{"id":"grenzen","number":"07","title":"Limitations and negative findings","summary":"K4, K5, missing controls and other uncertainties.","label":"Negative results","evidence_status":"Explicitly documented","blocks":[{"type":"bullets","items":["Reported P3 K4 FB@4 0.44\u20130.51 remains below Min-Conflicts at 256 checks (0.61).","P3 K5 results were mixed, with worse hard-task outcomes for one seed.","P3 changed both data and constants without an isolating ablation.","The 12-task Qwen snapshot is small and assembled from historic partial runs.","Missing P1 sources prevent complete P2 C5/C6 reproduction.","No evidence for general natural-language tasks or broader model families."]},{"type":"paragraph","text":"The P3 report describes an overly strict data filter corrected before training. Original logs are unavailable for independent validation."},{"type":"links","items":[{"label":"Limitations","href":"limitations.md"},{"label":"Roadmap","href":"roadmap.md"}]}]},{"id":"reproduktion","number":"08","title":"Reproducibility","summary":"Offline file-integrity and Qwen-result checks.","label":"Reproducibility","evidence_status":"Checkable offline","blocks":[{"type":"paragraph","text":"Three commands check curated source and dataset hashes, recorded Qwen aggregation and unit/regression behavior."},{"type":"code","text":"python3 scripts/verify_evidence.py\npython3 scripts/summarize_qwen.py\npython3 -m unittest discover -s tests -v"},{"type":"note","title":"Scope","text":"These checks do not rerun original P2 training, run Qwen, demonstrate causality or verify P3."},{"type":"links","items":[{"label":"Reproducibility guide","href":"../REPRODUCIBILITY.md"},{"label":"Evidence index","href":"../evidence/index.json"}]}]},{"id":"quellen","number":"09","title":"References and future work","summary":"Evidence files, limitations and follow-up experiments.","label":"Sources","evidence_status":"Mixed evidence levels","blocks":[{"type":"paragraph","text":"This research archive separates hash-checkable historical P2 evidence from separately reported P3 findings and documents the limitations of each."},{"type":"links","items":[{"label":"Model architecture","href":"architecture.md"},{"label":"Methods","href":"methods.md"},{"label":"Findings","href":"findings.md"},{"label":"P3 report","href":"p3-status.md"},{"label":"Limitations","href":"limitations.md"},{"label":"Future research","href":"roadmap.md"},{"label":"Provenance","href":"../evidence/provenance.json"},{"label":"Release checklist","href":"../RELEASE_GATE.md"}]}]}]};
+const chapters=BOOK.chapters;
+const content=document.getElementById('content');
+const sidebar=document.getElementById('sidebar');
+const menuButton=document.getElementById('menu-action');
+const key=(suffix)=>'metis-book-'+BOOK.project_id+'-'+suffix+'-v1';
+const safeRead=(k)=>{try{return localStorage.getItem(k)}catch(_){return null}};
+const safeWrite=(k,v)=>{try{localStorage.setItem(k,v)}catch(_){}};
+let readerSize=Number(safeRead(key('font'))) || 100;
+readerSize=(Number.isFinite(readerSize)&&readerSize>=80&&readerSize<=150)?readerSize:100;
+let theme=safeRead(key('theme')) || 'eink';
+if(!['eink','paper','dark'].includes(theme))theme='eink';
+let focused=safeRead(key('focus'))==='true';
+let bookmarks;
+try{const b=JSON.parse(safeRead(key('bookmarks'))||'[]');bookmarks=new Set(Array.isArray(b)?b:[])}catch(_){bookmarks=new Set()}
+let searchText='';
+const esc=(s)=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const safeHref=(h)=>{const v=String(h||'');return (/^(https?:\/\/|[a-zA-Z0-9_.-]+(?:\/[a-zA-Z0-9_.-]+)*(?:#[a-zA-Z0-9_.-]+)?)$/.test(v))?v:'#/'};
+const route=()=>{try{return decodeURIComponent(location.hash.slice(1)||'/')}catch(_){return '/'}};
+const chapter=(id)=>chapters.find(c=>c.id===id);
+function scrollTopNow(){window.scrollTo({top:0,behavior:'instant'})}
+function closeMenu(){sidebar.classList.remove('is-open');menuButton.setAttribute('aria-expanded','false')}
+function navCurrent(s){document.querySelectorAll('[data-nav]').forEach(x=>{const active=x.dataset.nav===s;x.classList.toggle('active',active);if(active)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')})}
+function chapterRow(ch){return `<a class="research-entry" href="#/kapitel/${encodeURIComponent(ch.id)}"><span class="entry-number">${esc(ch.number)}</span><span class="entry-main"><span class="entry-name">${esc(ch.title)}</span><span class="entry-desc">${esc(ch.summary)}</span><span class="entry-meta">${esc(ch.label||'Research chapter')}</span></span><span class="arrow" aria-hidden="true">↗</span></a>`}
+function intro(){navCurrent('home');return `<div class="page"><div class="intro"><div class="eyebrow">${esc(BOOK.category)} · MÉTIS Research Book</div><h1>${esc(BOOK.title)}</h1><p class="lead">${esc(BOOK.subtitle)}</p><div class="reader-stamp"><span>${esc(BOOK.edition)}</span><span>${esc(BOOK.updated)}</span><span class="status-label">${esc(BOOK.status)}</span></div></div><hr class="intro-rule"><div class="section-top"><h2>The research book.</h2><a class="textlink" href="#/kapitel">All chapters ↗</a></div><div class="research-list chapter-list">${chapters.slice(0,6).map(chapterRow).join('')}</div><div class="note-box"><strong>Evidence before claims.</strong> ${esc(BOOK.disclaimer)}</div><p style="margin-top:40px"><a class="textlink" href="#/kapitel">Full contents ↗</a></p></div>`}
+function toc(){navCurrent('chapters');return `<div class="page"><div class="eyebrow">${esc(BOOK.category)} · Contents</div><h1 class="library-title">All chapters.</h1><p class="library-sub">${esc(BOOK.toc_intro)}</p><label for="search-input" class="kicker" style="display:block;margin-top:38px">Search within chapters</label><div class="searchbar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg><input id="search-input" type="search" autocomplete="off" placeholder="Chapter, topic or keyword …" aria-label="Search chapters" value="${esc(searchText)}"></div><div class="resultline" id="result-line"></div><div class="research-list chapter-list" id="chapter-results"></div><p class="faint" style="font-size:12px;margin-top:28px">${esc(BOOK.status)} · ${esc(BOOK.disclaimer)}</p></div>`}
+function renderBlock(b){
+ switch(b.type){
+  case 'paragraph':return `<p>${esc(b.text)}</p>`;
+  case 'heading':return `<h3>${esc(b.text)}</h3>`;
+  case 'bullets':return `<ul>${b.items.map(t=>`<li>${esc(t)}</li>`).join('')}</ul>`;
+  case 'quote':return `<blockquote>${esc(b.text)}</blockquote>`;
+  case 'warning':return `<div class="warning">${esc(b.text)}</div>`;
+  case 'note':return `<div class="evidence"><h3>${esc(b.title||'Hinweis')}</h3><p>${esc(b.text)}</p></div>`;
+  case 'code':return `<pre><code>${esc(b.text)}</code></pre>`;
+  case 'table':return `<div class="tablewrap"><table class="metrics"><thead><tr>${b.columns.map(c=>`<th scope="col">${esc(c)}</th>`).join('')}</tr></thead><tbody>${b.rows.map(r=>`<tr>${r.map(v=>`<td>${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+  case 'links':return `<ul class="ref-links">${b.items.map(i=>`<li><a href="${esc(safeHref(i.href))}" rel="noopener noreferrer">${esc(i.label)} ↗</a>${i.description?' · '+esc(i.description):''}</li>`).join('')}</ul>`;
+  default:return '';
+ }
+}
+function readChapter(ch){let idx=chapters.findIndex(c=>c.id===ch.id);let mark=bookmarks.has(ch.id);navCurrent(ch.id==='evidenz'?'evidence':ch.id==='reproduktion'?'repro':'');return `<div class="page"><article class="article"><a class="back" href="#/kapitel">← Contents</a><div class="eyebrow">${esc(BOOK.category)} · Research record</div><h1>${esc(ch.title)}</h1><p class="article-lead">${esc(ch.summary)}</p><span class="pill preview">${esc(ch.label||BOOK.status)}</span><div class="info-grid"><div><span>Project</span><strong>${esc(BOOK.title)}</strong></div><div><span>Chapter</span><strong>${esc(ch.number)} / ${String(chapters.length).padStart(2,'0')}</strong></div><div><span>Evidence status</span><strong>${esc(ch.evidence_status||'See source records')}</strong></div></div><div class="article-controls"><button class="quiet-btn" data-bookmark="${esc(ch.id)}" aria-pressed="${String(mark)}">${mark?'✓ Bookmark saved':'+ Save bookmark'}</button><button class="quiet-btn" data-print="1">↗ Print chapter</button></div><section><span class="chapter-no">Chapter ${esc(ch.number)}</span><h2>${esc(ch.title)}</h2><div class="reader-text">${ch.blocks.map(renderBlock).join('')}</div></section><div class="article-pager"><span>${idx>0?`<a href="#/kapitel/${esc(chapters[idx-1].id)}">← ${esc(chapters[idx-1].title)}</a>`:' '}</span><span>${idx<chapters.length-1?`<a href="#/kapitel/${esc(chapters[idx+1].id)}">${esc(chapters[idx+1].title)} →</a>`:' '}</span></div><a href="#/kapitel" class="textlink">← All chapters</a></article></div>`}
+function notFound(){navCurrent('');return '<div class="page"><div class="eyebrow">404</div><h1>Chapter not found.</h1><p><a href="#/kapitel">Back to contents ↗</a></p></div>'}
+function renderBookmarks(){const b=[...bookmarks].map(chapter).filter(Boolean);document.getElementById('bookmark-nav').innerHTML=b.length?b.map(c=>`<a href="#/kapitel/${esc(c.id)}"><span class="soft-dot"></span>${esc(c.title)}</a>`).join(''):'<div class="navtiny">No bookmarks yet.</div>'}
+function renderChaptersNav(){document.getElementById('chapter-nav').innerHTML=chapters.map(ch=>`<a href="#/kapitel/${esc(ch.id)}" ${route()==='/kapitel/'+ch.id?'aria-current="page" class="active"':''}><span class="soft-dot"></span>${esc(ch.number)} · ${esc(ch.title)}</a>`).join('')}
+function updateSearch(){const box=document.getElementById('chapter-results');if(!box)return;const norm=(s)=>String(s).normalize('NFD').replace(/[̀-ͯ]/g,'').toLocaleLowerCase('en');const q=norm(searchText);const matches=chapters.filter(c=>norm([c.title,c.summary,c.label,...c.blocks.map(b=>[b.text||'',(b.items||[]).map(x=>typeof x==='string'?x:(x.label||''))].join(' '))].join(' ')).includes(q));box.innerHTML=matches.length?matches.map(chapterRow).join(''):'<div class="empty">No matching chapters.</div>';document.getElementById('result-line').textContent=matches.length+' '+(matches.length===1?'chapter':'chapters')+' found'}
+function updateProgress(){const p=document.getElementById('progress');if(!route().startsWith('/kapitel/')){p.style.width='0';return}const max=document.documentElement.scrollHeight-window.innerHeight;p.style.width=(max>0?Math.round(100*window.scrollY/max):0)+'%'}
+function render(){const r=route();let markup;if(r==='/')markup=intro();else if(r==='/kapitel')markup=toc();else if(r.startsWith('/kapitel/')){const ch=chapter(r.slice(9));markup=ch?readChapter(ch):notFound()}else markup=notFound();content.innerHTML=markup;if(r==='/kapitel')updateSearch();renderBookmarks();renderChaptersNav();closeMenu();scrollTopNow();updateProgress();const c=r.startsWith('/kapitel/')?chapter(r.slice(9)):null;document.title=(c?c.title+' — ':'')+BOOK.title+' · HOOKFABRIK'}
+function updateControls(){document.getElementById('font-level').textContent=readerSize+'%';document.getElementById('font-decrease').disabled=readerSize<=80;document.getElementById('font-increase').disabled=readerSize>=150;const labels={eink:'E-Ink',paper:'Paper',dark:'Night'};document.getElementById('theme-action').title='Theme: '+labels[theme]+' · click to change'}
+function changeSize(d){readerSize=Math.max(80,Math.min(150,readerSize+d*10));document.documentElement.style.setProperty('--reader-scale',String(readerSize/100));safeWrite(key('font'),String(readerSize));updateControls();updateProgress()}
+document.getElementById('brand-name').textContent=BOOK.title;
+document.getElementById('reader-footer').textContent=BOOK.edition;
+document.getElementById('footer-status').textContent=BOOK.status;
+document.documentElement.style.setProperty('--reader-scale',String(readerSize/100));document.documentElement.dataset.theme=theme;document.querySelector('.app').classList.toggle('is-focus',focused);document.getElementById('focus-action').setAttribute('aria-pressed',String(focused));updateControls();
+document.addEventListener('click',e=>{const mark=e.target.closest('[data-bookmark]');if(mark){const id=mark.dataset.bookmark;if(bookmarks.has(id))bookmarks.delete(id);else bookmarks.add(id);safeWrite(key('bookmarks'),JSON.stringify([...bookmarks]));mark.setAttribute('aria-pressed',String(bookmarks.has(id)));mark.textContent=bookmarks.has(id)?'✓ Bookmark saved':'+ Save bookmark';renderBookmarks();return}if(e.target.closest('[data-print]')){window.print();return}if(e.target.closest('a[href^="#/"]'))closeMenu()});
+document.addEventListener('input',e=>{if(e.target.id==='search-input'){searchText=e.target.value;updateSearch()}});
+function openSearch(){if(route()!=='/kapitel'){location.hash='#/kapitel';setTimeout(()=>document.getElementById('search-input')?.focus(),0)}else document.getElementById('search-input')?.focus()}
+document.getElementById('search-action').addEventListener('click',openSearch);
+document.getElementById('font-decrease').addEventListener('click',()=>changeSize(-1));
+document.getElementById('font-increase').addEventListener('click',()=>changeSize(1));
+document.getElementById('focus-action').addEventListener('click',()=>{focused=!focused;document.querySelector('.app').classList.toggle('is-focus',focused);document.getElementById('focus-action').setAttribute('aria-pressed',String(focused));safeWrite(key('focus'),String(focused));updateProgress()});
+document.getElementById('theme-action').addEventListener('click',()=>{theme=theme==='eink'?'paper':theme==='paper'?'dark':'eink';document.documentElement.dataset.theme=theme;safeWrite(key('theme'),theme);updateControls()});
+menuButton.addEventListener('click',()=>{const o=sidebar.classList.toggle('is-open');menuButton.setAttribute('aria-expanded',String(o))});
+document.addEventListener('keydown',e=>{const tag=document.activeElement?.tagName||'';if((e.key==='/'&&!['INPUT','TEXTAREA'].includes(tag))||((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k')){e.preventDefault();openSearch()}if(e.key==='Escape'){document.getElementById('search-input')?.blur();closeMenu()}});
+window.addEventListener('hashchange',render);window.addEventListener('scroll',updateProgress,{passive:true});window.addEventListener('resize',updateProgress);render();
+</script>
+</body></html>

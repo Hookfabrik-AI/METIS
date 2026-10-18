@@ -1,0 +1,65 @@
+{
+  "model": "qwen3.5:latest",
+  "think": false,
+  "temperature": 0,
+  "seed": 0,
+  "num_predict": 4096,
+  "deadline_s": 600,
+  "max_attempts": 3,
+  "task_seed": 9901,
+  "tasks": 12,
+  "selected_task_ids": [
+    "T09",
+    "T10",
+    "T11",
+    "T12"
+  ],
+  "skipped_known_instances": 1,
+  "min_mem_available_mb": 2000,
+  "mem_log": [
+    {
+      "at": "start",
+      "mem_available_mb": 4438
+    },
+    {
+      "at": "T09",
+      "mem_available_mb": 4704
+    },
+    {
+      "at": "T10",
+      "mem_available_mb": 3883
+    },
+    {
+      "at": "T11",
+      "mem_available_mb": 3507
+    },
+    {
+      "at": "T12",
+      "mem_available_mb": 2752
+    }
+  ],
+  "metis_ckpt": "<LOCAL_METIS_P2>/runs_p2/seed0/C/best.pt",
+  "metis_weights_sha256": "eb7c9a8d2f304f6ae2028ce259d1d83f0b2c98bb11d59571d0aa5cf28d097ac0",
+  "code_sha256": {
+    "metis_adapter.py": "dfb88fc71113e92c6ed4d8efd278ac7e55d8a2a8236f9ce37e1707ffee4f9749",
+    "metis_qwen_e2e.py": "1c8d44322bed65ed2092038db55af59562ad3cd81cf4c9a51d052716d67e5b87"
+  },
+  "system_instance_idle_before": true,
+  "idle_reason": null,
+  "instance": {
+    "start_problem": null,
+    "port": 56523
+  },
+  "warmup": {
+    "ended": "DONE",
+    "wall_s": 21.6,
+    "load_duration": 21168930361
+  },
+  "metis_cpu_s_total": 0.2762,
+  "instance_stop": {
+    "stopped": true,
+    "group_empty": true,
+    "killed": false
+  },
+  "system_instance_idle_after": true
+}

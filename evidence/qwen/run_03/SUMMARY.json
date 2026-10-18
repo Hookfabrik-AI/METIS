@@ -1,0 +1,83 @@
+{
+  "model": "qwen3.5:latest",
+  "think": false,
+  "temperature": 0,
+  "seed": 0,
+  "num_predict": 4096,
+  "deadline_s": 600,
+  "max_attempts": 3,
+  "task_seed": 9901,
+  "arms": [
+    "A",
+    "B",
+    "C",
+    "D"
+  ],
+  "mc_budget": 256,
+  "hint_text": "\n\nEin ungeprüfter Lösungsvorschlag (kann falsch sein):\n",
+  "selected_task_ids": "all",
+  "skipped_known_instances": 1,
+  "metis_ckpt": "<LOCAL_METIS_P2>/runs_p2/seed0/C/best.pt",
+  "metis_weights_sha256": "eb7c9a8d2f304f6ae2028ce259d1d83f0b2c98bb11d59571d0aa5cf28d097ac0",
+  "min_mem_available_mb": 2000,
+  "mem_log": [
+    {
+      "at": "start",
+      "mem_available_mb": 5228
+    },
+    {
+      "at": "T01",
+      "mem_available_mb": 5021
+    },
+    {
+      "at": "T02",
+      "mem_available_mb": 4173
+    },
+    {
+      "at": "T03",
+      "mem_available_mb": 3305
+    },
+    {
+      "at": "T04",
+      "mem_available_mb": 3132
+    },
+    {
+      "at": "T05",
+      "mem_available_mb": 2646
+    },
+    {
+      "at": "T06",
+      "mem_available_mb": 1740
+    }
+  ],
+  "code_sha256": {
+    "metis_adapter.py": "dfb88fc71113e92c6ed4d8efd278ac7e55d8a2a8236f9ce37e1707ffee4f9749",
+    "metis_qwen_e2e.py": "1c8d44322bed65ed2092038db55af59562ad3cd81cf4c9a51d052716d67e5b87",
+    "metis_qwen_4arm.py": "3b21050ef99d430b8e52245ab1a51ba09d808123547f9cbcc9d8b4ef3b99eb5c"
+  },
+  "system_instance_idle_before": true,
+  "idle_reason": null,
+  "instance": {
+    "start_problem": null,
+    "port": 44799
+  },
+  "warmup": {
+    "ended": "DONE",
+    "done_reason": "stop",
+    "prompt_eval_count": 19,
+    "eval_count": 2,
+    "total_duration": 11942760104,
+    "load_duration": 10642734813,
+    "prompt_eval_duration": 910182000,
+    "eval_duration": 386405000,
+    "wall_s": 11.9,
+    "error": null
+  },
+  "stopped": "MEMORY_GUARD before T06: MemAvailable 1740 MB",
+  "instance_stop": {
+    "stopped": true,
+    "group_empty": true,
+    "killed": false
+  },
+  "system_instance_idle_after": true
+}
