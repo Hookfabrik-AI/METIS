@@ -1,0 +1,107 @@
+name: Publish METIS Research Book
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/index.html'
+      - 'docs/*.md'
+      - 'REPRODUCIBILITY.md'
+      - 'RELEASE_GATE.md'
+      - 'evidence/index.json'
+      - 'evidence/provenance.json'
+      - '.github/workflows/publish-research-book.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish reviewed static research book
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - name: Check out research archive
+        uses: actions/checkout@v4
+
+      - name: Assemble a strict publication allowlist
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p _site/evidence
+          cp docs/index.html _site/index.html
+          for page in architecture methods findings historical-qwen-note p3-status limitations roadmap; do
+            cp "docs/${page}.md" "_site/${page}.md"
+          done
+          cp REPRODUCIBILITY.md RELEASE_GATE.md _site/
+          cp evidence/index.json evidence/provenance.json _site/evidence/
+
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          import re
+
+          target = Path("_site/index.html")
+          html = target.read_text(encoding="utf-8")
+          # Book data is embedded in JavaScript as one JSON object.
+          match = re.search(r"const BOOK = (\{[^\n]*\});", html)
+          if match is None:
+              raise SystemExit("Publication blocked: book data not found")
+
+          book = json.loads(match.group(1))
+          if book.get("project_id") != "metis" or len(book.get("chapters", [])) != 9:
+              raise SystemExit("Publication blocked: unexpected book or chapter count")
+
+          # ../ links were authored relative to docs/index.html.
+          # In Pages, index.html resides at the project site's root.
+          for chapter in book["chapters"]:
+              for block in chapter.get("blocks", []):
+                  if block.get("type") != "links":
+                      continue
+                  for item in block["items"]:
+                      href = item["href"]
+                      if href.startswith("../"):
+                          href = href[3:]
+                      if href.startswith("/") or "://" in href or ".." in Path(href).parts:
+                          raise SystemExit("Publication blocked: unsafe link " + href)
+                      if not (Path("_site") / href.split("#", 1)[0]).is_file():
+                          raise SystemExit("Publication blocked: missing linked page " + href)
+
+          html = html.replace('"href":"../', '"href":"')
+          target.write_text(html, encoding="utf-8")
+
+          names = {str(p.relative_to("_site")) for p in Path("_site").rglob("*") if p.is_file()}
+          allowed = {
+              "index.html", "architecture.md", "methods.md",
+              "findings.md", "historical-qwen-note.md", "p3-status.md",
+              "limitations.md", "roadmap.md", "REPRODUCIBILITY.md",
+              "RELEASE_GATE.md", "evidence/index.json",
+              "evidence/provenance.json"
+          }
+          if names != allowed:
+              raise SystemExit("Publication blocked: unexpected files in Pages artifact")
+          print("Pages artifact: 12 explicitly allowed files; no model weights or datasets")
+          PY
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+      - name: Deploy to Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
