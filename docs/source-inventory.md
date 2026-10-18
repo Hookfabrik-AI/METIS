@@ -1,10 +1,10 @@
-# Archivaufnahme
+# Source inventory and archival provenance
 
-- Original: `METIS_.zip`
-- SHA-256 des Originalarchivs: `7e3ffc0b82604023d417f0880deee05984fb0e5cfc211266dad498abe2c785e7`
-- Inspektierte Gesamtmenge: 1.735 ZIP-Einträge, davon sehr viele Laufzeitcaches.
-- In die Forschungsmappe übernommen: **47** kuratierte Artefakte, inklusive sieben besten P2-Gewichtedateien und aller P2-Datensatzsplits.
-- Bewusst ausgeschlossen: Ollama-Identitätsschlüssel, System-Caches, Ollama-Prozesslogs, überzählige Gewichts-Zwischenstände und sonstige lokal-spezifische Laufzeitdaten.
-- **Nicht enthalten:** P1-Archiv und externe MOIRAI-`res1_instance`/`resource_profile`-Runtime. Das Archiv lieferte dafür keine eigenständig freigegebenen Quellen.
+- Source package identifier: `METIS_.zip`.
+- Original archive SHA-256: `7e3ffc0b82604023d417f0880deee05984fb0e5cfc211266dad498abe2c785e7`.
+- Archive inspected: **1,735** ZIP entries, many of them caches or runtime artifacts.
+- Curated items retained: **47**, including seven selected P2 checkpoint files and all seven P2 dataset splits.
+- Excluded: machine identity keys, system caches, model process logs, surplus interim checkpoints and machine-local run directories.
+- Not bundled: prior P1 sources/checkpoints and a separate historical runtime required by some archived Qwen scripts.
 
-Alle übernommenen Originaldateien sind mit Original- und Repo-SHA-256 in `evidence/provenance.json` aufgeführt. Pfadbereinigungen wurden **nicht** mit unveränderten Originalen verwechselt.
+The original `original_sha256` values and the current repository's `repo_sha256` values are listed separately in [evidence/provenance.json](../evidence/provenance.json). The dataset manifest retains the **original** source-generator hash, even where attribution strings in the published generator are privacy-redacted. Such changes are not misrepresented as identical original bytes.

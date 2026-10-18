@@ -1,28 +1,28 @@
-# P3-Aufnahme ins MÉTIS-Forschungsrepository
+# P3 research artifact intake
 
-**Der aktuell vorliegende P3-Fortschrittsbericht ist nicht dasselbe wie ein P3-Release.** Für einen belegten P3-Stand werden folgende Dateien benötigt — aus dem aktiven Entwicklungsprojekt **nur nach separater Auswahl und Sicherheitsprüfung**.
+The reported P3 progress is **not** a release of independently reproducible P3 evidence. Add P3 assets only after selection, source inspection, privacy review and separate research acceptance.
 
-## Aufnahmecheckliste
+## Required acceptance checklist
 
-- [ ] Commit/Source-Snapshot der P3-Implementierung, einschließlich Code-Diff zur archivierten P2-Modellarchitektur; keine absoluten Privatpfade
-- [ ] Training-Configs, Hyperparameter, Seeds, Versionsnummern und Beschreibung der Änderungen an Daten und numerischen Konstanten
-- [ ] P3-Datensplits und maschinenlesbare SHA-256-Manifeste; Generator-Quellen, Train/Dev/Test-Trennung und Dokumentation der Filterkorrektur
-- [ ] P3-Checkpoints (nur geprüfte, freigegebene Gewichte); genaue Zuordnung Modell ↔ Seed ↔ Run ↔ Test
-- [ ] Maschinenlesbare Testberichte zu C2–C6, einschließlich individueller Aufgabenresultate für gepaarte Vergleiche und Definition von FB@4 und L−1
-- [ ] Statistische Tests zu C4 (Berechnung, Baseline/Regel, N, zufällige Seeds, Effektgrößen) sowie vollständige Kostenrechnung inkl. Verifikator und Vorwärtsläufen
-- [ ] K4/K5-Fehlerfälle, Min-Conflicts-Protokoll und vereinheitlichte Baselines
-- [ ] Unabhängig ausführbare Reaggregationsskripte und ein Verifikationsbericht
-- [ ] Secret-, Lizenz-, Datenschutz- und Herkunftsprüfung des konkreten Upload-Pakets
-- [ ] Reviewer-Freigabe und ausdrückliche Human Acceptance vor öffentlichem Release
+- [ ] P3 implementation snapshot and P2-to-P3 source diff, without machine-specific paths.
+- [ ] Training configurations, hyperparameters, seeds, version identifiers and details of data/numerical-constant changes.
+- [ ] P3 train/dev/test splits, generator sources and SHA-256 manifests, including the documented data-filter correction.
+- [ ] P3 checkpoint selection and exact correspondence between model, seed, run and test set.
+- [ ] Machine-readable C2–C6 results with per-instance paired task outcomes and definitions of FB@4 and L−1.
+- [ ] Recomputable C4 significance tests (rule baseline, sample size, seeds, effect size) and verifier/forward-pass costs.
+- [ ] K4/K5 failure examples, Min-Conflicts records and aligned baseline conditions.
+- [ ] Independently executable aggregation scripts and a reproducibility report.
+- [ ] Secret, privacy, licensing, ownership and provenance review of each proposed artifact.
+- [ ] Independent reviewer sign-off and explicit human acceptance.
 
-## Vorgeschlagene Zielpfade nach erfolgreicher Prüfung
+## Paths, if approved
 
 ```text
-research/p3/                versionierte P3-Implementierung und Konfigurationen
-datasets/p3/                freigegebene Splits samt Hashmanifest
-models/p3/                  freigegebene Modellgewichte mit Modellkarten
-evidence/p3/                Rohresultate, Auswertung, Seeds, Provenienz
-scripts/                    separate P3-Integritäts- und Reaggregationsbefehle
+research/p3/     versioned P3 implementation and configuration
+datasets/p3/     approved data splits and hashes
+models/p3/       approved checkpoints and model cards
+evidence/p3/     raw evaluations, seeds, analysis and provenance
+scripts/         independent P3 integrity and reaggregation checks
 ```
 
-Diese Verzeichnisse werden **nicht mit Platzhalter-Rohdaten aufgefüllt**. Bis zur Aufnahme der echten Artefakte verbleiben P3-Zahlen als gemeldete Resultate in `docs/p3-status.md`.
+Do **not** fabricate placeholder raw records to populate these paths. Until actual P3 artifacts are verified, all P3 results remain labeled as project-reported findings in [docs/p3-status.md](docs/p3-status.md).

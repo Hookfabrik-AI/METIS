@@ -1,27 +1,29 @@
-# Methodik
+# Research methodology
 
-## Forschungsfragen
+## Research questions
 
-- Kann ein sehr kleines, trainiertes neuronales Modell formal strukturierte Constraints so repräsentieren, dass es tatsächlich zwischen leicht verwechselbaren Aufgaben unterscheidet?
-- Erhöhen P2-Hinweise die Erfolgsquote und/oder reduzieren sie Output-Tokens sowie gesamte reale Ausführungszeit eines größeren LLM?
-- Welchen **inkrementellen** Nutzen liefern gelernte Vorschläge gegenüber neutralen Hinweisen, Zufall, heuristischen Kandidaten und einem deterministischen Verifikator?
-- Wie lässt sich Fehlverankerung durch einen hochkonfidenten, aber falschen Hinweis vermeiden?
+- Can a small trained neural model represent structured constraints well enough to distinguish deceptively similar variable/coefficient bindings?
+- Do P2-generated candidates improve accuracy or reduce a larger language model's output tokens and true end-to-end cost?
+- What **incremental** value does learned content provide over a neutral hint, random candidate, simple rules, Min-Conflicts and deterministic verification?
+- How can the model avoid misleading a larger LLM with high-confidence incorrect proposals?
 
-## P2-Protokoll
+## P2 protocol
 
-Vier ursprüngliche Aufgabengruppen: `K1_numbers`, `K2_schedule`, `K3_logic`, `K4_equations`; externe Tests auch mit `K5_coloring`. Synthetische Problemgeneratoren, train/dev/test getrennt; Parameter/Splits/Seeds in `datasets/p2/manifest.json`. `problems.violations` fungiert als deterministischer externer Prüfer. Die Modelleinheiten sehen formale Conditions und ggf. vorherigen Kandidaten/Verletzungsflags, aber keine Solver-Traces oder korrekten Lösungszahlen als Input. Details: `research/p2/model.py`, `cog.py`, `evaluate.py`.
+The original four classes were `K1_numbers`, `K2_schedule`, `K3_logic` and `K4_equations`, with external tests on `K5_coloring`. Problem generation was synthetic, with train/dev/test separation and dataset settings recorded in `datasets/p2/manifest.json`.
 
-## Qwen-Vierarm
+`problems.violations` implements an external deterministic verifier. The network receives structured problem inputs and, in feedback mode, previous candidates and violation flags. It does **not** receive a solver trace or a correct answer as part of the input. See `research/p2/model.py`, `cog.py` and `evaluate.py`.
 
-- A: keine Kandidaten.
-- B: MÉTIS P2 Greedy-Vorschlag.
-- C: uniform zufällige Werte pro Variable (fixierter Seed).
-- D: Min-Conflicts mit maximal 256 Verifikatorevaluationen, bester beobachteter Kandidat.
-- B/C/D: identische Einleitung „Ein ungeprüfter Lösungsvorschlag (kann falsch sein):“.
-- Qwen: im historischen Skript `qwen3.5:latest`, `think=false`, `temperature=0`, `seed=0`, `num_predict=4096`, bis zu drei Attempts und jeweils beschränktes Zeitbudget. `latest` ist **kein unveränderlicher Modell-Digest**.
-- Feedback: Bei falscher Ausgabe werden ausschließlich verletzte Bedingungen genannt. Protokollbeschreibungen stehen im historischen (pfadbereinigten) `research/qwen/historical/metis_qwen_4arm.py`.
-- Zielmaße: korrekt/12, Ausgabe-Tokens (`eval_count` über alle Versuche) und Summen der `wall_s` je Arm. Verifier-, MÉTIS- und Min-Conflicts-CPU sind separate Kostenterme; prompt processing/model loading/warmup gehören zur kompletten E2E-Bilanz.
+## Four-arm Qwen protocol
 
-## Statistische Aussagegrenze
+- **A:** No candidate.
+- **B:** Greedy MÉTIS P2 candidate.
+- **C:** Uniformly random value per variable, under a fixed seed.
+- **D:** Min-Conflicts candidate using at most 256 verifier evaluations; the best observed candidate is retained.
+- **B/C/D:** The same introductory text: an unverified solution proposal that may be wrong (original historical prompts were in German).
+- **Qwen:** Historical settings were `qwen3.5:latest`, `think=false`, temperature `0`, seed `0`, `num_predict=4096`, up to three attempts and a bounded runtime per task. `latest` is **not** an immutable model digest.
+- **Feedback:** Incorrect parseable responses receive only violated constraints. The historical, path-redacted runner is `research/qwen/historical/metis_qwen_4arm.py`.
+- **Measures:** Correct/12, output tokens (sum of `eval_count` across attempts), and recorded `wall_s` per arm. Verifier CPU, MÉTIS CPU, Min-Conflicts CPU, prompt processing, model loading and warmup must all be considered in a complete end-to-end cost analysis.
 
-Nur zwölf Aufgaben, kein gepaartes Mehrfachsampling je Bedingung und uneinheitliche Hardware-/Cachezustände. Die vierarmigen Daten sind aus drei Teilruns mit dokumentierter Dublette kombiniert, nicht aus einem einzig durchgängigen, vorab festgelegten Durchlauf. Kein bestätigter kausaler oder auf neue Verteilungen generalisierbarer Effekt. Kein Claim zu spontaner Reflexion oder allgemeiner Intelligenz.
+## Statistical boundary
+
+There are only twelve tasks, no repeated paired sampling per condition, and variable memory/cache conditions. The four-arm summary joins three partial runs, including a documented duplicate, instead of a single pre-registered uninterrupted run. These observations establish neither a generalizable causal benefit nor spontaneous reflection or general intelligence.

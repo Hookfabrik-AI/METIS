@@ -1,16 +1,16 @@
-# Modellarchitektur · MÉTIS P2
+# Model architecture — MÉTIS P2
 
-Der hier archivierte `research/p2/model.py` beschreibt den experimentellen P2-Stand (kein allgemeines Sprachmodell). Seine `Net()`-Standardkonfiguration enthält **679.571 trainierbare Parameter** (aus den Modulparametern der Klasse ermittelt, ohne Checkpoint-Laden).
+The archived `research/p2/model.py` implements the experimental P2 model, **not a general-language model**. The default `Net()` configuration has **679,571 trainable parameters**, counted from the implementation without loading checkpoints.
 
-## Aufbau
+## Design
 
-- **Modelltyp:** kleiner Transformer-Encoder für symbolische Constraints und Variablen.
-- **Breite / Tiefe:** `d=128`, vier Encoder-Layer, vier Attention-Heads, Feedforward-Breite `256`, Dropout `0.0`.
-- **Eingaberepräsentation:** ein Klassentoken, maximal 24 Constraint-Tokens und maximal 12 Variable-Tokens; Domänen und Constraints werden als eingebettete Struktur übergeben.
-- **P2-spezifischer Eingriff:** Je Constraint-Slot werden Variablen-ID, Koeffizient/Vorzeichen und Slotposition gemeinsam über ein kleines MLP (`bind`) codiert und anschließend akkumuliert. Damit wird die in P1 beobachtete mehrdeutige Bindung dieser Merkmale adressiert.
-- **Ausgabe:** pro Variable Logits über einen Wertewortschatz von 16 Symbolen (`0..15`), mit Domänenmaske. Zusätzlich zwei spezialisierte Köpfe (`head_p`, `head_q`) für Selbstbeurteilung und Strategiewahl, die in Stage C trainiert wurden.
-- **Feedbackmodi:** frischer Vorschlag, Reparatur mit Verifikatorflags und vorheriger Versuch ohne Flags. Der externe Constraint-Verifikator steht außerhalb des Modells.
+- **Model:** compact Transformer encoder for symbolic constraints and variables.
+- **Dimensions:** width `128`, four encoder layers, four attention heads, feed-forward width `256`, dropout `0.0`.
+- **Representation:** one class token, up to 24 constraint tokens, and up to 12 variable tokens; domains and constraints are represented structurally.
+- **P2-specific change:** each constraint slot jointly encodes variable ID, coefficient/sign and slot position through a small MLP (`bind`), then accumulates them. This targets ambiguous coefficient–variable binding observed in P1.
+- **Output:** per-variable logits over 16 values (`0..15`), with domain masking; two auxiliary heads (`head_p`, `head_q`) for self-assessment and strategy selection, trained in stage C.
+- **Feedback modes:** fresh candidate, repair with prior candidate and verifier flags, or a prior candidate without flags. A deterministic verifier operates outside the neural network.
 
-## Abgrenzung
+## Scope
 
-Die Architektur verarbeitet formalisierte Aufgabenobjekte, **keine freie natürliche Sprache**. Die behauptete P2-Bindung ist eine konkrete Implementierungsänderung; sie ist kein Nachweis allgemeiner Reasoning-Kompetenz. Vollständige Trainings-/Evaluationsdetails liegen in den Quellskripten und den archivierten Resultaten; die Qwen-Vierarm-Studie verwendete `seed0/C/best.pt`.
+The model takes structured problem objects, **not free-form natural language**. The P2 slot-binding change is an implementation-level improvement, not evidence of general reasoning ability. The historical training and evaluation details are in the accompanying source and recorded results. The four-arm Qwen experiment used `models/p2/seed0/C/best.pt`.

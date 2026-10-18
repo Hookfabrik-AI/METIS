@@ -1,28 +1,32 @@
-> **Versionen trennen:** Der neuere P3-Fortschritt ist [nur als Projektmeldung dokumentiert](p3-status.md). Alle in dieser Datei aus Archivdaten dargestellten P2-/Qwen-Befunde bleiben historische P2-Befunde.
+# Findings — evidence and interpretation
 
-# Forschungsbefunde · Evidenz und Einordnung
+> **Version boundary:** P3 improvements are [reported, not independently validated](p3-status.md). The P2 and Qwen observations in this document remain historical **P2** findings.
 
-## P2: trainierter neuraler Constraint-Vorschläger
+## P2 — trained neural constraint proposals
 
-Die P2-Quelldateien und sieben Datensplits sind anhand der ursprünglichen SHA-256-Dokumentation bzw. des Datensatz-Manifests anhand der archivierten Daten geprüft. P2 ergänzt die Slot-Bindung (Variable, Koeffizient/Vorzeichen, Position). Die historische Auswertung liegt unter `evidence/p2/P2_EVAL.json` und enthält Vergleiche mit untrainiertem Modell, mit/ohne Feedback sowie mit P1. Einige P1-Abhängigkeiten fehlen hier; deshalb sind die auf P1 bezogenen Aussagen in diesem Repo vorerst **archivierte Befunde** und keine vollständig eigenständig reproduzierten Befunde.
+The archived P2 sources and seven generated dataset splits are tracked using their original and, where redacted, checked-in SHA-256 digests. P2 introduced binding of variable ID, coefficient/sign and slot position within each constraint. The archived evaluation `evidence/p2/P2_EVAL.json` includes untrained controls, feedback ablations and P1 comparisons.
 
-Auch die gelernte Strategiewahl war auf dem P2-Testset nicht überzeugend besser als eine einfache Regel: `C4` wurde laut gespeicherter Auswertung **nicht bestätigt** (p = 0,906). Ein nicht signifikanter Befund darf nicht als Erfolgsnachweis interpretiert werden.
+Because some P1 source code and checkpoints are not bundled, comparisons that require P1 are **archived findings**, not fully independently reproducible claims.
 
-## Qwen: früher Zweibedingungsvergleich (run_01 und run_02)
+Learned strategy selection on the P2 test set also did **not** outperform a simple rule convincingly: the archived C4 result was non-significant (`p = 0.906`). This cannot be presented as a successful C4 validation.
 
-Archivierte Projektnotiz `historical-qwen-note.md`: 12 Aufgaben, 11/12 Qwen allein vs. 10/12 Qwen mit vollem MÉTIS-Hinweispaket; 48.945 vs. 29.607 Output-Tokens und 2.388 vs. 1.580 Sekunden Qwen-Zeit. Die normalen Aufgaben waren in beiden Varianten 8/8 korrekt; bei schwierigen Aufgaben lag MÉTIS-Hinweis schlechter. Der Hinweis enthielt mehr Information als nur einen neutral eingefügten Lösungskandidaten. Das ist **keine** isolierte kausale Evaluation der Modellinhalte.
+## Historical Qwen two-arm experiment (run_01 and run_02)
 
-## Vierarm-Kontrollvergleich (run_03–05)
+The historical [two-arm research note](historical-qwen-note.md) reports twelve structured tasks: **11/12** correct for Qwen alone versus **10/12** with the full MÉTIS hint package; **48,945 versus 29,607** output tokens and **2,388 versus 1,580 seconds** of Qwen time. Both conditions solved all eight easier tasks; the hint condition was weaker on the four harder tasks.
 
-Alle drei Kandidatenarme B/C/D nutzen laut überliefertem Quellcode denselben Einleitungstext und unterscheiden sich im Kandidatenverfahren. Die Aufgaben liegen strukturiert, nicht in freier Alltagssprache vor. Die Vergleichssummen sind aus `results.json` neu aggregiert; keine neue Qwen-Ausführung.
+The prompt packages differed in more than learned candidate quality. This comparison does **not** isolate a causal effect of the learned MÉTIS content.
 
-| Arm | Herkunft des Kandidaten | Gelöst | Output-Tokens | Qwen-Zeit in s | korrekte Kandidaten |
+## Four-arm candidate control study (run_03 to run_05)
+
+According to the archived runner, candidate arms B, C and D share the same introductory hint text; they differ in candidate generation. The tasks were already represented as structured constraints. The following numbers were **reaggregated from recorded results**, not produced by a new Qwen run.
+
+| Arm | Candidate method | Correct | Output tokens | Qwen response time | Correct candidates |
 |---|---|---:|---:|---:|---:|
-| A | kein Kandidat | 11/12 | 40.559 | 2.045,3 | — |
-| B | MÉTIS P2 (greedy) | 10/12 | 36.241 | 1.892,8 | 5/12 |
-| C | gleichverteilt zufällig | 10/12 | 52.074 | 2.819,2 | 0/12 |
-| D | Min-Conflicts (Budget 256) | 11/12 | 24.910 | 1.367,5 | 7/12 |
+| A | None | 11/12 | 40,559 | 2,045.3 s | — |
+| B | MÉTIS P2, greedy | 10/12 | 36,241 | 1,892.8 s | 5/12 |
+| C | Uniform random | 10/12 | 52,074 | 2,819.2 s | 0/12 |
+| D | Min-Conflicts, budget 256 | 11/12 | 24,910 | 1,367.5 s | 7/12 |
 
-**Vorläufige Interpretation:** Bei den überwiegend leichteren Aufgaben helfen MÉTIS-Kandidaten gegenüber ganz ohne Kandidat oft beim Reduzieren der Generierung. Auf schwierigen Aufgaben verlagert sich das Verhältnis; dort sind MÉTIS-Kandidaten sämtlich falsch (siehe archivierte erste Vergleichsstufe), und die Gefahr von Fehlverankerung und Zusatzarbeit ist sichtbar. Die heuristische Baseline D erzielt in dieser Stichprobe die geringste Ausgabe und mindestens dieselbe Lösungsquote wie A. Weder die Güte generischer „Hints“ noch die Leistung von MÉTIS auf neuen offenen Aufgaben ist damit abschließend bestimmt.
+**Interpretation:** On mostly easier tasks, the P2 hint was sometimes associated with reduced generation, but the harder tasks exposed incorrect candidates and a risk of anchoring and additional work. The simple Min-Conflicts heuristic yielded the fewest tokens and matched or exceeded the no-hint success rate. The results do not establish whether the benefits come from learned content rather than the presence of a well-formed candidate.
 
-**Hinweis zur Zusammensetzung:** T01 wurde in run_03 und run_04 getestet. Für die Tabelle wurde explizit die spätere T01-Aufzeichnung aus run_04 verwendet. Die frühere Aufzeichnung bleibt erhalten, damit kein einzelner Wert unbemerkt verschwindet. Das Zusammenführen von Runs mit unterschiedlichen Speicherzuständen darf nicht als sauber kontrollierte replizierte Studie ausgegeben werden.
+**Selection and duplicate:** Task T01 appears in both run_03 and run_04. This table uses the later run_04 recording, while preserving the original run_03 record. Tasks T02–T05 come from run_03, T06–T09 from run_04, and T10–T12 from run_05. The runs had different memory and cache conditions, so the aggregate must not be represented as a single prospectively controlled, replicated study.

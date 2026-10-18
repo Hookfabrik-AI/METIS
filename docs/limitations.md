@@ -1,13 +1,14 @@
-# Bekannte Grenzen und offene Reproduktionslücken
+# Limitations and reproducibility gaps
 
-1. **Keine unabhängige Wiederholung durchgeführt:** Die Rohdaten wurden geprüft/neu zusammengefasst, die neuronalen bzw. Qwen-Runs aber nicht erneut gestartet.
-2. **Nicht isoliert repliziert:** Die 12-Aufgaben-Stichprobe ist klein; der Vierarm-Aggregatwert nutzt run_03, run_04 und run_05. T01 wurde mehrfach ausgeführt; die Auswertungsregel ist explizit und ändert keine Rohdaten.
-3. **Nicht vollständig portabler Qwen-Runner:** Historische Qwen-Quellen importieren `res1_instance` und `resource_profile` aus einer nicht enthaltenen, privaten MOIRAI-Runtime. Die lokalen Pfade wurden als sichtbare Platzhalter ersetzt. Keine Veröffentlichung privater Runtime-Komponenten und kein Vortäuschen eines funktionierenden Ersatzes.
-4. **Modelldigest unvollständig:** `qwen3.5:latest` ist versionsveränderlich. Hardwarezustände und Teile des Ollama-Model-Load-/Prompt-Overheads sind nicht kontinuierlich als einheitliche vollständige E2E-Kosten erfasst.
-5. **P1 fehlt:** Das P2-Evaluationsprogramm verlangt P1-Quelldateien und Checkpoints für Vergleiche C5/C6; diese lagen nicht im übergebenen Archiv. Die P2-Ergebnisse sind archiviert, aber für alle Teilfragen noch nicht eigenständig reproduziert.
-6. **Gewichte:** Sieben von vielen Trainings-Checkpoints wurden bewusst ausgewählt. Es handelt sich um ungeprüfte `.pt`-Artefakte aus dem Archiv; lade diese nur aus vertrauenswürdigen Quellen, bevorzugt mit `torch.load(..., weights_only=True)`.
-7. **Keine Aussagen über frei formulierte Probleme:** Aufgabe/Constraints wurden dem LLM bereits formalisiert übergeben. Übertragbarkeit auf Alltagssprache, neue Domänen, größere LLMs und Mehragentensysteme nicht belegt.
-8. **Erfolgsquote:** Der frühere Qwen-Hinweis konnte Ankerfehler begünstigen; in der Vierarm-Stichprobe erreichte MÉTIS mit 10/12 gegenüber 11/12 ohne Hinweis eine geringere Lösungsquote.
-9. **Keine Lizenz gewählt:** Die wissenschaftliche Veröffentlichung und Nachnutzung müssen vorher ausdrücklich freigegeben werden.
+1. **No independent experiment reruns:** Archived bytes and aggregates were checked. The original neural training and Qwen generation were not re-executed.
+2. **Small and assembled sample:** Twelve structured tasks in the four-arm comparison were selected from partial runs 03–05. T01 was run more than once; the selection rule is explicit and raw data remain unchanged.
+3. **External Qwen runtime:** Historical runners still import `res1_instance` and `resource_profile` from an external, unbundled runtime. Machine-local paths were replaced with placeholders; these scripts are **not** independently runnable as released.
+4. **Non-pinned Qwen weights and costs:** `qwen3.5:latest` is mutable. System state and some Ollama load/prompt costs were not recorded as consistent end-to-end cost measurements.
+5. **Missing P1 comparison files:** The archived P2 evaluation refers to P1 code and weights that are not included. Some comparisons cannot be fully rerun using this repository alone.
+6. **Checkpoint safety:** Seven selected `.pt` weights remain unaudited binary artifacts. Load only from trusted sources and prefer `torch.load(..., weights_only=True)`.
+7. **Structured tasks only:** Task statements were formalized before reaching Qwen. No claim about natural-language problem formalization, unrelated domains, larger LLMs or multi-agent reasoning is warranted.
+8. **Quality degradation:** In the four-arm snapshot, MÉTIS hints solved 10/12 versus 11/12 without a hint. The earlier two-arm experiment showed a potential anchoring failure.
+9. **Licensing:** Apache 2.0 covers owned source and project documentation. Redistribution and reuse rights for archival datasets and model weights still require explicit review; see [LICENSE_SCOPE.md](../LICENSE_SCOPE.md).
+10. **P3 is only reported:** P3 checkpoints, run configurations, raw tasks and independently reproducible test outputs are not included. See [P3 status](p3-status.md).
 
-10. **P3 nur als Meldung:** Für den 18.10.2026-Bericht fehlen weiterhin P3-Checkpoints, Konfigurationen, Rohresultate und replizierbare Auswertungen. Siehe `docs/p3-status.md`.
+These limitations constrain the conclusions; they do not invalidate the accurately archived observations.
