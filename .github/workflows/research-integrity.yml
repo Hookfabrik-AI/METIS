@@ -1,0 +1,28 @@
+name: Research evidence integrity
+
+on:
+  push:
+    branches:
+      - main
+      - audit/english-apache-repro-fix
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-verification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout research archive
+        uses: actions/checkout@v4
+      - name: Check Python syntax
+        run: python3 -m compileall -q research/p2 scripts tests
+      - name: Verify archived artifact hashes
+        run: python3 scripts/verify_evidence.py
+      - name: Reaggregate archived Qwen results
+        run: python3 scripts/summarize_qwen.py
+      - name: Run offline tests
+        run: python3 -m unittest discover -s tests -v
