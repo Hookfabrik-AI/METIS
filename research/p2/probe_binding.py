@@ -1,4 +1,4 @@
-"""Counter-probes for the P2 slot-binding fix (Mira P2 §1).
+"""Counter-probes for the P2 slot-binding fix (P2 protocol section 1).
 Pairs of problems that differ ONLY in coefficient-to-variable assignment, operand direction or literal
 polarity.  For each pair: are the solution sets different (semantics)?  Does a model give the two problems
 different internal representations (trunk outputs) and different output logits?

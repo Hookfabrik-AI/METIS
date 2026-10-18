@@ -1,5 +1,5 @@
 {
-  "p1_ckpt": "../NOUMORA_COGNITION_PILOT/runs_p1/seed0/B/best.pt",
+  "p1_ckpt": "<EXTERNAL_P1>/runs_p1/seed0/B/best.pt",
   "p2_ckpt": null,
   "pairs": {
     "LIN_EQ coefficient swap: x0+2x1=6 vs 2x0+x1=6": {

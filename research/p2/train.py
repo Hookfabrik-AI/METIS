@@ -1,5 +1,5 @@
 """P2 training (MÉTIS): unchanged P1 procedure - stage A (solve), B (reflection, on-policy), C (self-assessment /
-strategy heads, trunk frozen) - with the P1 protocol deviations corrected (Mira P2 §2, Codex P1 review):
+strategy heads, trunk frozen) - with the P1 protocol deviations corrected (P2 protocol review):
   * best.pt is saved on EVERY strict dev improvement (ties -> earlier); the plateau counter is separate
     (reset only by an improvement > MIN_DELTA over the last reset value);
   * the wall-time limit is checked after every step, with a reserve of the last measurement's duration,

@@ -2,7 +2,7 @@
 # Portable reconstruction of the P2 training chain.
 # CPU-heavy; not executed as part of the repository integrity check.
 set -euo pipefail
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT/research/p2"
 PY="${METIS_PYTHON:-python3}"
 DATA="$ROOT/datasets/p2"

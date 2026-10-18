@@ -1,4 +1,4 @@
-"""Smallest experimental adapter MÉTIS P2 -> text hints for an LLM (no service, no NOUMORA/MOIRAI integration).
+"""Smallest experimental adapter MÉTIS P2 -> text hints for an LLM (no service, no bundled integration).
 
 Uses the existing trained checkpoint unchanged (METIS_P2/runs_p2/seed0/C/best.pt = B trunk + stage-C heads)
 and the existing functions model.encode_static / model.collate / Net.logits / Net.heads.  Nothing is trained.

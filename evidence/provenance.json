@@ -6,8 +6,8 @@
       "archive_path": "METIS_P2/problems.py",
       "repo_path": "research/p2/problems.py",
       "original_sha256": "24f30aa226b47a4827e2950c1307eed77f4d2550de177d833e7939c0d06a7518",
-      "repo_sha256": "24f30aa226b47a4827e2950c1307eed77f4d2550de177d833e7939c0d06a7518",
-      "modified": false
+      "repo_sha256": "f5b0e02ce4c5d9ddc1095aafce6919091cf06ecea225b41e0129218814a8ad8b",
+      "modified": true
     },
     {
       "archive_path": "METIS_P2/dataset.py",
@@ -34,8 +34,8 @@
       "archive_path": "METIS_P2/train.py",
       "repo_path": "research/p2/train.py",
       "original_sha256": "88d698b1a44cd4b656b5c5184ecf43ce58921b722604164a8b66644bd4c53a13",
-      "repo_sha256": "88d698b1a44cd4b656b5c5184ecf43ce58921b722604164a8b66644bd4c53a13",
-      "modified": false
+      "repo_sha256": "53ca06fc21e7aa342c056dd3564d89a65ecb35da81caba86d9fb289e9cb5c6cb",
+      "modified": true
     },
     {
       "archive_path": "METIS_P2/evaluate.py",
@@ -48,14 +48,14 @@
       "archive_path": "METIS_P2/probe_binding.py",
       "repo_path": "research/p2/probe_binding.py",
       "original_sha256": "4f06b3fb3cca9d6d9d339a1f2911810cf03c38b98a59254fc67df869185657d8",
-      "repo_sha256": "4f06b3fb3cca9d6d9d339a1f2911810cf03c38b98a59254fc67df869185657d8",
-      "modified": false
+      "repo_sha256": "a66f149df8f08aea545e761606b78cca26088f529fe8701b2ad19434401a6ffc",
+      "modified": true
     },
     {
       "archive_path": "METIS_P2/run_p2.sh",
       "repo_path": "scripts/train_p2.sh",
       "original_sha256": "5abc8df97d8052536fd9fe4f7fe6710a1fef0f7aba2b332fd2e8740b1e456cd0",
-      "repo_sha256": "c6600ea07ca0d9b1d162b9ce564707ebcc0909edc7ed2766d501b799ba3f0501",
+      "repo_sha256": "6e77f9d00091a7f102be975b2416b21565710b3f46b6d20ab269b0479f602cfb",
       "modified": true
     },
     {
@@ -174,14 +174,14 @@
       "archive_path": "METIS_P2/results_p2/PROBE_BEFORE_TRAINING.json",
       "repo_path": "evidence/p2/PROBE_BEFORE_TRAINING.json",
       "original_sha256": "e47f5683119f432f0c385eafda07c5dda93955cac484d95ee4331f73c95c8cf2",
-      "repo_sha256": "268e5161a62a344ac7ea748bb993b8b6b198123adad29cac4f9cb14fa55c5757",
+      "repo_sha256": "580ab9f57a8cb870fc792d6def15bbcfe0d6e0bb1f1a3204007c48d015f8e513",
       "modified": true
     },
     {
       "archive_path": "METIS_P2/results_p2/PROBE_AFTER_TRAINING.json",
       "repo_path": "evidence/p2/PROBE_AFTER_TRAINING.json",
       "original_sha256": "65684dc9788950cb345e103644fe480df6f23f15459c252512e6b6d622843999",
-      "repo_sha256": "7bba1a24ff6b5ec657e11bcc827011c7f71f74b196eff361094150d7dda980a6",
+      "repo_sha256": "965fd4a50c4638d1d26828427f9116b68057b2953ec4025a79a933f3b1fd446a",
       "modified": true
     },
     {
@@ -195,7 +195,7 @@
       "archive_path": "METIS_P2/CODE_SHA256_BEFORE_TRAINING.txt",
       "repo_path": "evidence/p2/HISTORICAL_SOURCE_HASHES.txt",
       "original_sha256": "5564158b34f97777819b7e7db0c302ceabcaccde7abf6989a1da5d17e2871dae",
-      "repo_sha256": "6a21630a58564377326de45862d0505bad5ab5ad8053cfddd928c0f31148140d",
+      "repo_sha256": "711cc6ee5366847d0a358d5ac6565e5f77f31a9525c546e1df96b0e8c070ed96",
       "modified": true
     },
     {
@@ -300,7 +300,7 @@
       "archive_path": "METIS_QWEN_E2E/metis_adapter.py",
       "repo_path": "research/qwen/historical/metis_adapter.py",
       "original_sha256": "dfb88fc71113e92c6ed4d8efd278ac7e55d8a2a8236f9ce37e1707ffee4f9749",
-      "repo_sha256": "97e05857b7e585e6eeb2e63d8d495b40506249caf994c8614328aed18c07734f",
+      "repo_sha256": "6488626c9b236480aaec4e6baf8e36e27eba5a3891e0a2a6b6061a449f226e78",
       "modified": true
     },
     {
@@ -337,5 +337,26 @@
     "Machine-local paths in Qwen research scripts and JSON metadata replaced or removed",
     "P2 training shell launcher made portable and its original hash preserved",
     "All previous experimental model results retained as data; no recomputation or new LLM testing claimed"
+  ],
+  "redaction_events": [
+    {
+      "date": "2026-10-18",
+      "purpose": "Public-source attribution minimization; historical SHA-256 values retained as original_sha256",
+      "paths": [
+        "evidence/p2/HISTORICAL_SOURCE_HASHES.txt",
+        "evidence/p2/PROBE_AFTER_TRAINING.json",
+        "evidence/p2/PROBE_BEFORE_TRAINING.json",
+        "research/p2/probe_binding.py",
+        "research/p2/problems.py",
+        "research/p2/train.py",
+        "research/qwen/historical/metis_adapter.py",
+        "scripts/train_p2.sh"
+      ],
+      "rules": [
+        "Identifier redactions in comments and archival pointers only",
+        "Preserve original content hashes; verify checked-in redacted copies by repo_sha256",
+        "No dataset samples, model weights, numerical results or executable constraint logic changed"
+      ]
+    }
   ]
 }

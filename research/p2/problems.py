@@ -1,4 +1,4 @@
-"""NOUMORA cognition pilot P1: controlled, verifiable problem classes.
+"""Controlled, verifiable constraint problem classes (historical P2 implementation).
 
 Every problem is n integer variables with per-variable domains inside 0..15 and a list of
 constraints from one shared vocabulary.  `violations` is the objective verifier (one flag per
