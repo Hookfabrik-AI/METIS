@@ -1,5 +1,7 @@
 """Offline checks for the published, standalone MÉTIS research book."""
 import unittest
+import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -26,6 +28,17 @@ class ResearchBookTests(unittest.TestCase):
         for control in ("font-increase", "focus-action", "theme-action", "bookmark"):
             with self.subTest(control=control):
                 self.assertIn(control, self.html)
+
+    def test_embedded_research_data_and_english_navigation(self):
+        found = re.search(r"^const BOOK = (\\{.*\\});$", self.html, re.MULTILINE)
+        self.assertIsNotNone(found)
+        book = json.loads(found.group(1))
+        self.assertEqual(book["title"], "MÉTIS")
+        self.assertEqual(len(book["chapters"]), 9)
+        self.assertEqual(book["chapters"][0]["id"], "preface")
+        self.assertIn("2,045.3 s", self.html)
+        self.assertNotIn("Kapitel", self.html)
+        self.assertNotIn("Projekt</span>", self.html)
 
     def test_offline_references(self):
         for external in ("https://cdn.", "https://fonts.googleapis.com", "<script src="):
