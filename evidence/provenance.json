@@ -1,0 +1,341 @@
+{
+  "source_archive": "METIS_.zip",
+  "archive_sha256": "7e3ffc0b82604023d417f0880deee05984fb0e5cfc211266dad498abe2c785e7",
+  "items": [
+    {
+      "archive_path": "METIS_P2/problems.py",
+      "repo_path": "research/p2/problems.py",
+      "original_sha256": "24f30aa226b47a4827e2950c1307eed77f4d2550de177d833e7939c0d06a7518",
+      "repo_sha256": "24f30aa226b47a4827e2950c1307eed77f4d2550de177d833e7939c0d06a7518",
+      "modified": false
+    },
+    {
+      "archive_path": "METIS_P2/dataset.py",
+      "repo_path": "research/p2/dataset.py",
+      "original_sha256": "ed6b793bb616da037406db9614994dea6c0f52069ed8fded72d518a772ff1cf8",
+      "repo_sha256": "ed6b793bb616da037406db9614994dea6c0f52069ed8fded72d518a772ff1cf8",
+      "modified": false
+    },
+    {
+      "archive_path": "METIS_P2/model.py",
+      "repo_path": "research/p2/model.py",
+      "original_sha256": "0f0c14804cfefe34d6143ee490ae32fb487ad4f5af585f990c2c5ff261de97aa",
+      "repo_sha256": "0f0c14804cfefe34d6143ee490ae32fb487ad4f5af585f990c2c5ff261de97aa",
+      "modified": false
+    },
+    {
+      "archive_path": "METIS_P2/cog.py",
+      "repo_path": "research/p2/cog.py",
+      "original_sha256": "f7f3097683f137afed0082f16678ca734939c2576792426a33162c4ebec4577a",
+      "repo_sha256": "f7f3097683f137afed0082f16678ca734939c2576792426a33162c4ebec4577a",
+      "modified": false
+    },
+    {
+      "archive_path": "METIS_P2/train.py",
+      "repo_path": "research/p2/train.py",
+      "original_sha256": "88d698b1a44cd4b656b5c5184ecf43ce58921b722604164a8b66644bd4c53a13",
+      "repo_sha256": "88d698b1a44cd4b656b5c5184ecf43ce58921b722604164a8b66644bd4c53a13",
+      "modified": false
+    },
+    {
+      "archive_path": "METIS_P2/evaluate.py",
+      "repo_path": "research/p2/evaluate.py",
+      "original_sha256": "18b6c769f533f7414b630e65af99c86da1ff6cf75eb0a25a28ab0dcc737a1c4c",
+      "repo_sha256": "18b6c769f533f7414b630e65af99c86da1ff6cf75eb0a25a28ab0dcc737a1c4c",
+      "modified": false
+    },
+    {
+      "archive_path": "METIS_P2/probe_binding.py",
+      "repo_path": "research/p2/probe_binding.py",
+      "original_sha256": "4f06b3fb3cca9d6d9d339a1f2911810cf03c38b98a59254fc67df869185657d8",
+      "repo_sha256": "4f06b3fb3cca9d6d9d339a1f2911810cf03c38b98a59254fc67df869185657d8",
+      "modified": false
+    },
+    {
+      "archive_path": "METIS_P2/run_p2.sh",
+      "repo_path": "scripts/train_p2.sh",
+      "original_sha256": "5abc8df97d8052536fd9fe4f7fe6710a1fef0f7aba2b332fd2e8740b1e456cd0",
+      "repo_sha256": "c6600ea07ca0d9b1d162b9ce564707ebcc0909edc7ed2766d501b799ba3f0501",
+      "modified": true
+    },
+    {
+      "archive_path": "METIS_P2/data_p2/test.jsonl",
+      "repo_path": "datasets/p2/test.jsonl",
+      "original_sha256": "60458b5f1fff0208ab00bdd76c0ca484fe20aecfc528d38ddf849a94cd79390e",
+      "repo_sha256": "60458b5f1fff0208ab00bdd76c0ca484fe20aecfc528d38ddf849a94cd79390e",
+      "modified": false
+    },
+    {
+      "archive_path": "METIS_P2/data_p2/test_hard.jsonl",
+      "repo_path": "datasets/p2/test_hard.jsonl",
+      "original_sha256": "0a73bc36b01befa23fc8ba1daf52f4c4b42b2437adc19c03373d69b00566cb31",
+      "repo_sha256": "0a73bc36b01befa23fc8ba1daf52f4c4b42b2437adc19c03373d69b00566cb31",
+      "modified": false
+    },
+    {
+      "archive_path": "METIS_P2/data_p2/test_alt.jsonl",
+      "repo_path": "datasets/p2/test_alt.jsonl",
+      "original_sha256": "48e9c3f047ba416d017544b6d061cefd106d3e4377dda5acc4cc104da95c850a",
+      "repo_sha256": "48e9c3f047ba416d017544b6d061cefd106d3e4377dda5acc4cc104da95c850a",
+      "modified": false
+    },
+    {
+      "archive_path": "METIS_P2/data_p2/test_k5.jsonl",
+      "repo_path": "datasets/p2/test_k5.jsonl",
+      "original_sha256": "0d1452967d7fe41f724571ac6d2a69844162399e8bb657857431b1a56ec4d517",
+      "repo_sha256": "0d1452967d7fe41f724571ac6d2a69844162399e8bb657857431b1a56ec4d517",
+      "modified": false
+    },
+    {
+      "archive_path": "METIS_P2/data_p2/test_k5_hard.jsonl",
+      "repo_path": "datasets/p2/test_k5_hard.jsonl",
+      "original_sha256": "38f33e47213579c5918ee03a209a7d9c1be1082ca78954c4e8232ece25a371d7",
+      "repo_sha256": "38f33e47213579c5918ee03a209a7d9c1be1082ca78954c4e8232ece25a371d7",
+      "modified": false
+    },
+    {
+      "archive_path": "METIS_P2/data_p2/dev.jsonl",
+      "repo_path": "datasets/p2/dev.jsonl",
+      "original_sha256": "08d3bca1aa0afe88959f097642245f9ad622c9836dcec5f3ad4323096a5e4df9",
+      "repo_sha256": "08d3bca1aa0afe88959f097642245f9ad622c9836dcec5f3ad4323096a5e4df9",
+      "modified": false
+    },
+    {
+      "archive_path": "METIS_P2/data_p2/train.jsonl",
+      "repo_path": "datasets/p2/train.jsonl",
+      "original_sha256": "f5ef7b0fca6161368a4d8f8d996f1bb2dfa0ac5948bab9f1848c913bbd96e702",
+      "repo_sha256": "f5ef7b0fca6161368a4d8f8d996f1bb2dfa0ac5948bab9f1848c913bbd96e702",
+      "modified": false
+    },
+    {
+      "archive_path": "METIS_P2/data_p2/manifest.json",
+      "repo_path": "datasets/p2/manifest.json",
+      "original_sha256": "7eceaa078441158dbfd897de12defecc4869f3d59fa25bc5a2719c3118d0ee3c",
+      "repo_sha256": "7eceaa078441158dbfd897de12defecc4869f3d59fa25bc5a2719c3118d0ee3c",
+      "modified": false
+    },
+    {
+      "archive_path": "METIS_P2/runs_p2/seed0/A/best.pt",
+      "repo_path": "models/p2/seed0/A/best.pt",
+      "original_sha256": "f54fa5863e89b35acf7a83675f3d9b08eb036c2339747f8c94858f7c93381f18",
+      "repo_sha256": "f54fa5863e89b35acf7a83675f3d9b08eb036c2339747f8c94858f7c93381f18",
+      "modified": false
+    },
+    {
+      "archive_path": "METIS_P2/runs_p2/seed0/B/best.pt",
+      "repo_path": "models/p2/seed0/B/best.pt",
+      "original_sha256": "9900d4be0b698f24b3fb4927f9074073eadfaaca870d53aaa4c6fe08a8d8aa43",
+      "repo_sha256": "9900d4be0b698f24b3fb4927f9074073eadfaaca870d53aaa4c6fe08a8d8aa43",
+      "modified": false
+    },
+    {
+      "archive_path": "METIS_P2/runs_p2/seed0/C/best.pt",
+      "repo_path": "models/p2/seed0/C/best.pt",
+      "original_sha256": "78e8c42bcf3e6d64e2899312bdc9395d9604f3b711e0c50d3dbafe3a97304f8c",
+      "repo_sha256": "78e8c42bcf3e6d64e2899312bdc9395d9604f3b711e0c50d3dbafe3a97304f8c",
+      "modified": false
+    },
+    {
+      "archive_path": "METIS_P2/runs_p2/seed1/A/best.pt",
+      "repo_path": "models/p2/seed1/A/best.pt",
+      "original_sha256": "7155b0a1e66168f32f14ee938d66ccdb5ef3d1c7b9c5bcc8c4371ab84249d975",
+      "repo_sha256": "7155b0a1e66168f32f14ee938d66ccdb5ef3d1c7b9c5bcc8c4371ab84249d975",
+      "modified": false
+    },
+    {
+      "archive_path": "METIS_P2/runs_p2/seed1/B/best.pt",
+      "repo_path": "models/p2/seed1/B/best.pt",
+      "original_sha256": "cbca25ff5e790242313f7d714032edffa3f93794e633588eefcf9d3982c370ec",
+      "repo_sha256": "cbca25ff5e790242313f7d714032edffa3f93794e633588eefcf9d3982c370ec",
+      "modified": false
+    },
+    {
+      "archive_path": "METIS_P2/runs_p2/seed2/A/best.pt",
+      "repo_path": "models/p2/seed2/A/best.pt",
+      "original_sha256": "669dd5092c898da21c55843a9c9c0eead6ea1f39461f82272b7f6120359af6d0",
+      "repo_sha256": "669dd5092c898da21c55843a9c9c0eead6ea1f39461f82272b7f6120359af6d0",
+      "modified": false
+    },
+    {
+      "archive_path": "METIS_P2/runs_p2/seed2/B/best.pt",
+      "repo_path": "models/p2/seed2/B/best.pt",
+      "original_sha256": "4074e1139f7b17c1e4f14c656ea84c364ba76baca563638187c7fd9baae4e22d",
+      "repo_sha256": "4074e1139f7b17c1e4f14c656ea84c364ba76baca563638187c7fd9baae4e22d",
+      "modified": false
+    },
+    {
+      "archive_path": "METIS_P2/results_p2/P2_EVAL.json",
+      "repo_path": "evidence/p2/P2_EVAL.json",
+      "original_sha256": "93f008467bac49daf23aa970738a00a6ff4099d6d216b079ffe0f1277c344635",
+      "repo_sha256": "c4d470b32315b8a5e43c4c9b9cad638b2e081c05ca682f5bd05079ca478222bf",
+      "modified": true
+    },
+    {
+      "archive_path": "METIS_P2/results_p2/PROBE_BEFORE_TRAINING.json",
+      "repo_path": "evidence/p2/PROBE_BEFORE_TRAINING.json",
+      "original_sha256": "e47f5683119f432f0c385eafda07c5dda93955cac484d95ee4331f73c95c8cf2",
+      "repo_sha256": "268e5161a62a344ac7ea748bb993b8b6b198123adad29cac4f9cb14fa55c5757",
+      "modified": true
+    },
+    {
+      "archive_path": "METIS_P2/results_p2/PROBE_AFTER_TRAINING.json",
+      "repo_path": "evidence/p2/PROBE_AFTER_TRAINING.json",
+      "original_sha256": "65684dc9788950cb345e103644fe480df6f23f15459c252512e6b6d622843999",
+      "repo_sha256": "7bba1a24ff6b5ec657e11bcc827011c7f71f74b196eff361094150d7dda980a6",
+      "modified": true
+    },
+    {
+      "archive_path": "METIS_P2/results_p2/P2_EVAL.per_instance.npz",
+      "repo_path": "evidence/p2/P2_EVAL.per_instance.npz",
+      "original_sha256": "794b42fc5c5bcf32c7daff973eb1e845d656f19e5b3c705a14566c74d7f95b05",
+      "repo_sha256": "794b42fc5c5bcf32c7daff973eb1e845d656f19e5b3c705a14566c74d7f95b05",
+      "modified": false
+    },
+    {
+      "archive_path": "METIS_P2/CODE_SHA256_BEFORE_TRAINING.txt",
+      "repo_path": "evidence/p2/HISTORICAL_SOURCE_HASHES.txt",
+      "original_sha256": "5564158b34f97777819b7e7db0c302ceabcaccde7abf6989a1da5d17e2871dae",
+      "repo_sha256": "6a21630a58564377326de45862d0505bad5ab5ad8053cfddd928c0f31148140d",
+      "modified": true
+    },
+    {
+      "archive_path": "METIS_QWEN_E2E/run_01/tasks.json",
+      "repo_path": "evidence/qwen/run_01/tasks.json",
+      "original_sha256": "344773e0f8d1b57e24e42d49f3b0a6ffbcb6f4b1f92ba4b3d9215419ee208145",
+      "repo_sha256": "ca9686713e1a84896a1c2ff53c65106bedc59f1f75e2c136a36c5432fe03e4d3",
+      "modified": true
+    },
+    {
+      "archive_path": "METIS_QWEN_E2E/run_01/results.json",
+      "repo_path": "evidence/qwen/run_01/results.json",
+      "original_sha256": "45492d23e886f605460cea76260d672cc13225b19900c51fb8edb3a2ea1f7ea7",
+      "repo_sha256": "85eca8372319e3ea655fa1b0005c23fb3f2fd52a9804f4aa919b6ad2057e51ef",
+      "modified": true
+    },
+    {
+      "archive_path": "METIS_QWEN_E2E/run_02/tasks.json",
+      "repo_path": "evidence/qwen/run_02/tasks.json",
+      "original_sha256": "30e54cc3a6cdeb60d2eb20473b2375f3073271f73f898a1a9865c8a96e13a68a",
+      "repo_sha256": "d640c3925f10c39f82cee45ad8a522f7ab366ebd92f030d5d478ed8dae2f8755",
+      "modified": true
+    },
+    {
+      "archive_path": "METIS_QWEN_E2E/run_02/results.json",
+      "repo_path": "evidence/qwen/run_02/results.json",
+      "original_sha256": "51da8225516e309eb4c40e06d1446a4ce04f3f5674ae620d642c2647c01a65f3",
+      "repo_sha256": "468ce8bb033368b7a81e0e7e63151f3ab3faadb79b58126115a03280df0025b4",
+      "modified": true
+    },
+    {
+      "archive_path": "METIS_QWEN_E2E/run_02/SUMMARY.json",
+      "repo_path": "evidence/qwen/run_02/SUMMARY.json",
+      "original_sha256": "ec20b2a9f45eb84b4e74d014bc2e83d5a9f50a2d71d7a47483f514adf0cee623",
+      "repo_sha256": "157ed985d15f546f58836e004c92a1c7cb7b64d152931afe46ce9b2f739b7505",
+      "modified": true
+    },
+    {
+      "archive_path": "METIS_QWEN_E2E/run_03/tasks.json",
+      "repo_path": "evidence/qwen/run_03/tasks.json",
+      "original_sha256": "344773e0f8d1b57e24e42d49f3b0a6ffbcb6f4b1f92ba4b3d9215419ee208145",
+      "repo_sha256": "ca9686713e1a84896a1c2ff53c65106bedc59f1f75e2c136a36c5432fe03e4d3",
+      "modified": true
+    },
+    {
+      "archive_path": "METIS_QWEN_E2E/run_03/results.json",
+      "repo_path": "evidence/qwen/run_03/results.json",
+      "original_sha256": "d32d9ab5928c44bc0ba25cb1b2c60c836684d9c524669081d4f2d15242afbf2c",
+      "repo_sha256": "b057175a7e9cdb94cb194199a4b7c1ada67e0b7d60b3054852009308190b6a6a",
+      "modified": true
+    },
+    {
+      "archive_path": "METIS_QWEN_E2E/run_03/SUMMARY.json",
+      "repo_path": "evidence/qwen/run_03/SUMMARY.json",
+      "original_sha256": "1bb374b4fa35697988550d034cc6ff4359a13efeec9e94049070f8d1a2b2651c",
+      "repo_sha256": "c25bf623d1c04eca83ef4e42124846ea353d4a26b46c0cf8a8d982443a4ee7dd",
+      "modified": true
+    },
+    {
+      "archive_path": "METIS_QWEN_E2E/run_04/tasks.json",
+      "repo_path": "evidence/qwen/run_04/tasks.json",
+      "original_sha256": "d91911aacf5b11e51b57cd73547cc2a1a90bad3eb5c85e2f0c308a5cd5a9498d",
+      "repo_sha256": "34b421ccd2498b3565e99f848fba5dbf317db4ca814dcb5ae0fa76057892a994",
+      "modified": true
+    },
+    {
+      "archive_path": "METIS_QWEN_E2E/run_04/results.json",
+      "repo_path": "evidence/qwen/run_04/results.json",
+      "original_sha256": "64304ad98a4de9f42d33243ff5cc166afff502a0f3963a429381c1d8e8348e08",
+      "repo_sha256": "32727294a7016a7b2ffc543fb020ff6f7432ac6f420b8f51d64b3d35ba0cd867",
+      "modified": true
+    },
+    {
+      "archive_path": "METIS_QWEN_E2E/run_04/SUMMARY.json",
+      "repo_path": "evidence/qwen/run_04/SUMMARY.json",
+      "original_sha256": "151091b02f30ad049d40db31c8590179afbd8807dde7138ba7d28ebb951b2907",
+      "repo_sha256": "902b3d587a83d2530b3038e25de81c8c875ee78dedab8447743275efaa1fa24a",
+      "modified": true
+    },
+    {
+      "archive_path": "METIS_QWEN_E2E/run_05/tasks.json",
+      "repo_path": "evidence/qwen/run_05/tasks.json",
+      "original_sha256": "485905aa994da3b1cfad916028f6966d26025fe3ad98fbc813ade730dc9bda47",
+      "repo_sha256": "2c5f17492b9a8be41eb49c0bd1eea75231c1c898deb8a82009838da1dc92e4f0",
+      "modified": true
+    },
+    {
+      "archive_path": "METIS_QWEN_E2E/run_05/results.json",
+      "repo_path": "evidence/qwen/run_05/results.json",
+      "original_sha256": "3795ff598a85a75354d48b1154a4e7b14176fa1d4a33e14fbdb4f60e3ee4b369",
+      "repo_sha256": "fd4442cf378952ba52adee85244168fa42ef455a7d6d805b2fc854db6ad954aa",
+      "modified": true
+    },
+    {
+      "archive_path": "METIS_QWEN_E2E/run_05/SUMMARY.json",
+      "repo_path": "evidence/qwen/run_05/SUMMARY.json",
+      "original_sha256": "a596b9baa23071292a0543d25a1885024e3f0f1af58a4f10c86188c135f6bf6d",
+      "repo_sha256": "136376d0a2c3524d1c668542fa38e44d1f84b014c7305feebb747ad0dee2453d",
+      "modified": true
+    },
+    {
+      "archive_path": "METIS_QWEN_E2E/metis_adapter.py",
+      "repo_path": "research/qwen/historical/metis_adapter.py",
+      "original_sha256": "dfb88fc71113e92c6ed4d8efd278ac7e55d8a2a8236f9ce37e1707ffee4f9749",
+      "repo_sha256": "97e05857b7e585e6eeb2e63d8d495b40506249caf994c8614328aed18c07734f",
+      "modified": true
+    },
+    {
+      "archive_path": "METIS_QWEN_E2E/metis_qwen_e2e.py",
+      "repo_path": "research/qwen/historical/metis_qwen_e2e.py",
+      "original_sha256": "1c8d44322bed65ed2092038db55af59562ad3cd81cf4c9a51d052716d67e5b87",
+      "repo_sha256": "ccfa2d7b19927a8581f08b727a2fa813f7afebbefde8040b669ec944e80e311d",
+      "modified": true
+    },
+    {
+      "archive_path": "METIS_QWEN_E2E/metis_qwen_e2e_run01.py",
+      "repo_path": "research/qwen/historical/metis_qwen_e2e_run01.py",
+      "original_sha256": "4dde4d77cb41f8a8c9ab91b9ea012b90ba6ef6c199ca20ee50d11f60a8428051",
+      "repo_sha256": "02b812a2904b2dc7a511897ca78bb146e602be3fc3107c995417a494f7b76ba3",
+      "modified": true
+    },
+    {
+      "archive_path": "METIS_QWEN_E2E/metis_qwen_4arm.py",
+      "repo_path": "research/qwen/historical/metis_qwen_4arm.py",
+      "original_sha256": "3b21050ef99d430b8e52245ab1a51ba09d808123547f9cbcc9d8b4ef3b99eb5c",
+      "repo_sha256": "3b21050ef99d430b8e52245ab1a51ba09d808123547f9cbcc9d8b4ef3b99eb5c",
+      "modified": false
+    },
+    {
+      "archive_path": "METIS_QWEN_E2E/HOOKFABRIK_METIS_QWEN_FORSCHUNGSSCHRITT_P3.md",
+      "repo_path": "docs/historical-qwen-note.md",
+      "original_sha256": "b9fb12c4f8b7fdb5cf913b7be18ed682b0c0d668abadce114b6550beb36a4e32",
+      "repo_sha256": "77a2ef49ad1390809333b225eed580d72ab09fd2cc0d6fc378f474798c570871",
+      "modified": true
+    }
+  ],
+  "redaction_notes": [
+    "Private Ollama SSH/Ed25519 keys, runtime home directories, system caches and process logs excluded",
+    "Machine-local paths in Qwen research scripts and JSON metadata replaced or removed",
+    "P2 training shell launcher made portable and its original hash preserved",
+    "All previous experimental model results retained as data; no recomputation or new LLM testing claimed"
+  ]
+}

@@ -1,0 +1,106 @@
+{
+ "format": "METIS_P2_DATASET_V1",
+ "max_solutions": 32,
+ "problems_sha256": "24f30aa226b47a4827e2950c1307eed77f4d2550de177d833e7939c0d06a7518",
+ "splits": {
+  "test": {
+   "seed": 3103,
+   "classes": [
+    "K1_numbers",
+    "K2_schedule",
+    "K3_logic",
+    "K4_equations"
+   ],
+   "per_class": 1000,
+   "hard": false,
+   "rows": 4000,
+   "cross_split_duplicates_skipped": 42,
+   "coarse_signature_collisions_skipped": 0,
+   "sha256": "60458b5f1fff0208ab00bdd76c0ca484fe20aecfc528d38ddf849a94cd79390e"
+  },
+  "test_hard": {
+   "seed": 4104,
+   "classes": [
+    "K1_numbers",
+    "K2_schedule",
+    "K3_logic",
+    "K4_equations"
+   ],
+   "per_class": 500,
+   "hard": true,
+   "rows": 2000,
+   "cross_split_duplicates_skipped": 6,
+   "coarse_signature_collisions_skipped": 0,
+   "sha256": "0a73bc36b01befa23fc8ba1daf52f4c4b42b2437adc19c03373d69b00566cb31"
+  },
+  "test_alt": {
+   "seed": 7107,
+   "classes": [
+    "K1_numbers",
+    "K2_schedule",
+    "K3_logic",
+    "K4_equations"
+   ],
+   "per_class": 500,
+   "hard": "alt",
+   "rows": 2000,
+   "cross_split_duplicates_skipped": 10,
+   "coarse_signature_collisions_skipped": 75,
+   "sha256": "48e9c3f047ba416d017544b6d061cefd106d3e4377dda5acc4cc104da95c850a"
+  },
+  "test_k5": {
+   "seed": 5105,
+   "classes": [
+    "K5_coloring"
+   ],
+   "per_class": 1000,
+   "hard": false,
+   "rows": 1000,
+   "cross_split_duplicates_skipped": 0,
+   "coarse_signature_collisions_skipped": 0,
+   "sha256": "0d1452967d7fe41f724571ac6d2a69844162399e8bb657857431b1a56ec4d517"
+  },
+  "test_k5_hard": {
+   "seed": 6106,
+   "classes": [
+    "K5_coloring"
+   ],
+   "per_class": 500,
+   "hard": true,
+   "rows": 500,
+   "cross_split_duplicates_skipped": 0,
+   "coarse_signature_collisions_skipped": 0,
+   "sha256": "38f33e47213579c5918ee03a209a7d9c1be1082ca78954c4e8232ece25a371d7"
+  },
+  "dev": {
+   "seed": 2102,
+   "classes": [
+    "K1_numbers",
+    "K2_schedule",
+    "K3_logic",
+    "K4_equations"
+   ],
+   "per_class": 500,
+   "hard": false,
+   "rows": 2000,
+   "cross_split_duplicates_skipped": 45,
+   "coarse_signature_collisions_skipped": 1595,
+   "sha256": "08d3bca1aa0afe88959f097642245f9ad622c9836dcec5f3ad4323096a5e4df9"
+  },
+  "train": {
+   "seed": 1101,
+   "classes": [
+    "K1_numbers",
+    "K2_schedule",
+    "K3_logic",
+    "K4_equations"
+   ],
+   "per_class": 20000,
+   "hard": false,
+   "rows": 80000,
+   "cross_split_duplicates_skipped": 6495,
+   "coarse_signature_collisions_skipped": 173744,
+   "sha256": "f5ef7b0fca6161368a4d8f8d996f1bb2dfa0ac5948bab9f1848c913bbd96e702"
+  }
+ }
+}

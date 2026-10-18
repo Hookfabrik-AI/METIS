@@ -1,0 +1,1187 @@
+[
+  {
+    "id": "T01",
+    "cls": "K1_numbers",
+    "hard": false,
+    "A": {
+      "arm": "A",
+      "attempts": [
+        {
+          "n": 1,
+          "prompt": "Finde ganze Zahlen x0 bis x3, die ALLE folgenden Bedingungen erfüllen.\nWertebereiche: x0 ∈ {1, …, 15}; x1 ∈ {1, …, 15}; x2 ∈ {1, …, 15}; x3 ∈ {1, …, 15}\nBedingungen:\nB1: x0 + x2 <= 12\nB2: x2 < x3\nB3: x1 < x2\nB4: x0 < x1\nB5: Unter x0, x1, x2, x3 sind höchstens 1 gerade Werte\nB6: |x0 - x1| >= 2\nB7: |x1 - x2| >= 8\n\nGib am Ende deiner Antwort genau eine Zeile in diesem Format aus:\nLÖSUNG: x0=<Zahl>, x1=<Zahl>, ...",
+          "answer_text": "Um die gesuchten ganzen Zahlen $x_0, x_1, x_2, x_3$ zu finden, analysieren wir die Bedingungen Schritt für Schritt.\n\n**Gegebene Bereiche:** Alle Variablen liegen in $\\{1, \\dots, 15\\}$.\n\n**Analyse der Ungleichungen:**\n1.  **B7: $|x_1 - x_2| \\ge 8$**: Da beide Werte zwischen 1 und 15 liegen, ist die Differenz maximal 14. Die möglichen Paare $(x_1, x_2)$ sind stark eingeschränkt.\n    *   Wenn $x_1 < x_2$, dann muss $x_2 - x_1 \\ge 8$.\n        Mögliche Werte für $x_1$: $\\{1, 2, 3, 4\\}$ (da $5+8=13$ ok, aber wir prüfen später B3).\n        Wenn $x_1 = 1$, dann $x_2 \\in \\{9..15\\}$.\n        Wenn $x_1 = 2$, dann $x_2 \\in \\{10..15\\}$.\n        ...\n    *   Wenn $x_1 > x_2$, dann muss $x_1 - x_2 \\ge 8$.\n\n2.  **B3: $x_1 < x_2$**: Dies eliminiert den Fall, dass $x_1 > x_2$. Es bleibt nur der Fall $x_2 = x_1 + k$ mit $k \\ge 8$.\n    Also ist $x_2$ deutlich größer als $x_1$.\n\n3.  **B4: $x_0 < x_1$**: Zusammen mit B7 und B3 haben wir die Kette $x_0 < x_1 < x_2$, wobei $x_2 - x_1 \\ge 8$.\n    Da $x_2 \\le 15$, ist $x_1 \\le 15 - 8 = 7$.\n    Da $x_0 < x_1$ und B6 ($|x_0 - x_1| \\ge 2$) gilt, muss $x_1 - x_0 \\ge 2$ sein (da $x_0 < x_1$).\n    Also: $x_0 = x_1 - k'$ mit $k' \\ge 2$.\n\n4.  **B6: $|x_0 - x_1| \\ge 2$**: Da wir wissen, dass $x_0 < x_1$, ist dies äquivalent zu $x_1 - x_0 \\ge 2$.\n    Das bedeutet $x_0 \\le x_1 - 2$.\n\n5.  **B1: $x_0 + x_2 \\le 12$**: Dies ist eine sehr starke Einschränkung, da $x_2$ bereits groß sein muss (mindestens $x_1+8$).\n    Da $x_0 < x_1$, gilt auch $x_0 + x_2 < x_1 + x_2$.\n    Wir testen systematisch mögliche Werte für $x_1$:\n\n    *   **Fall A: $x_1 = 7$**\n        Dann muss $x_2 \\ge 7+8=15$. Also $x_2 = 15$.\n        B1 wird zu $x_0 + 15 \\le 12 \\Rightarrow x_0 \\le -3$. Unmöglich, da $x_0 \\ge 1$.\n        \n    *   **Fall B: $x_1 = 6$**\n        Dann muss $x_2 \\ge 6+8=14$. Also $x_2 \\in \\{14, 15\\}$.\n        B1 wird zu $x_0 + x_2 \\le 12$.\n        *   Wenn $x_2 = 14$: $x_0 \\le -2$ (Unmöglich).\n        *   Wenn $x_2 = 15$: $x_0 \\le -3$ (Unmöglich).\n\n    *   **Fall C: $x_1 = 5$**\n        Dann muss $x_2 \\ge 5+8=13$. Also $x_2 \\in \\{13, 14, 15\\}$.\n        B1 wird zu $x_0 + x_2 \\le 12$.\n        *   Wenn $x_2 = 13$: $x_0 \\le -1$ (Unmöglich).\n        \n    Es scheint hier ein Widerspruch aufzutauchen? Lassen Sie mich die Bedingungen nochmal genau lesen.\n    \n    Ah, ich habe B7 als $|x_1 - x_2| \\ge 8$ interpretiert und B3 als $x_1 < x_2$. Das ist korrekt.\n    Aber vielleicht kann $x_2$ nicht so groß sein? Nein, wenn die Differenz $\\ge 8$ ist und beide in [1,15], dann muss einer klein und der andere groß sein. Da $x_1 < x_2$, ist $x_2 \\ge x_1 + 8$.\n    \n    Prüfen wir nochmal B1: $x_0 + x_2 \\le 12$.\n    Wenn $x_2$ mindestens 9 ist (da $x_1 \\ge 1$), dann muss $x_0 \\le 3$.\n    Aber wenn $x_2 = 9$, dann ist $x_1 \\le 1$. Da $x_1 < x_2$ und ganzzahlig, könnte $x_1=1$ sein.\n    \n    Lassen wir uns die Kombinationen neu durchgehen:\n    \n    **Mögliche Paare $(x_1, x_2)$ mit $x_2 - x_1 \\ge 8$:**\n    *   $x_1 = 1 \\Rightarrow x_2 \\in \\{9..15\\}$\n    *   $x_1 = 2 \\Rightarrow x_2 \\in \\{10..15\\}$\n    *   ...\n    \n    Jetzt prüfen wir B1 ($x_0 + x_2 \\le 12$) für diese Paare:\n    Da $x_0 \\ge 1$, muss gelten $x_2 \\le 11$.\n    Also sind nur folgende Werte für $x_2$ möglich: $\\{9, 10, 11\\}$.\n    \n    Welche $(x_1, x_2)$-Paare ergeben ein solches $x_2$?\n    *   Wenn $x_2 = 9$: Dann muss $x_1 \\le 1$ (da $9-x_1 \\ge 8$). Also $x_1 = 1$.\n        Paar: $(1, 9)$.\n        B4 ($x_0 < x_1$): $x_0 < 1$. Unmöglich da $x_0 \\in \\{1..15\\}$.\n        \n    *   Wenn $x_2 = 10$: Dann muss $x_1 \\le 2$. Also $x_1 \\in \\{1, 2\\}$.\n        Paar $(1, 10)$: B4 $\\Rightarrow x_0 < 1$ (Unmöglich).\n        Paar $(2, 10)$: B4 $\\Rightarrow x_0 < 2 \\Rightarrow x_0 = 1$.\n        Prüfen wir alle Bedingungen für $x=(1, 2, 10, ?)$:\n        *   B1: $1 + 10 = 11 \\le 12$ (OK).\n        *   B2: $x_2 < x_3 \\Rightarrow 10 < x_3$. Also $x_3 \\in \\{11..15\\}$.\n        *   B3: $2 < 10$ (OK).\n        *   B4: $1 < 2$ (OK).\n        *   B6: $|1 - 2| = 1$. Bedingung ist $\\ge 2$. **Falsch**.\n        \n    *   Wenn $x_2 = 11$: Dann muss $x_1 \\le 3$. Also $x_1 \\in \\{1, 2, 3\\}$.\n        B4 ($x_0 < x_1$) und B6 ($|x_0 - x_1| \\ge 2$):\n        Da $x_0 < x_1$, muss $x_1 - x_0 \\ge 2$. Also $x_0 \\le x_1 - 2$.\n        \n        *   Fall $x_1 = 3$: Dann $x_0 \\le 1 \\Rightarrow x_0 = 1$.\n            Prüfen: $(1, 3, 11)$.\n            B6: $|1-3|=2$ (OK).\n            B4: $1<3$ (OK).\n            B7: $|3-11|=8 \\ge 8$ (OK).\n            B3: $3 < 11$ (OK).\n            B1: $1+11=12 \\le 12$ (OK).\n            \n            Jetzt brauchen wir noch $x_3$.\n            B2: $x_2 < x_3 \\Rightarrow 11 < x_3$. Also $x_3 \\in \\{12, 13, 14, 15\\}$.\n            \n            Bedingung B5: \"Unter x0, x1, x2, x3 sind höchstens 1 gerade Werte\".\n            Aktuelle Werte: $x_0=1$ (ungerade), $x_1=3$ (ungerade), $x_2=11$ (ungerade).\n            Wir haben bereits 0 gerade Zahlen.\n            Also darf $x_3$ höchstens 1 mal eine gerade Zahl sein? Nein, die Bedingung ist \"höchstens 1 gerade Werte insgesamt\".\n            Da wir bei $\\{1, 3, 11\\}$ schon 0 gerade Zahlen haben, kann $x_3$ entweder ungerade oder gerade sein. Wenn es gerade wäre, hätten wir genau 1 gerade Zahl (erlaubt). Wenn es ungerade wäre, hätten wir 0 (auch erlaubt).\n            \n            Also sind alle $x_3 \\in \\{12..15\\}$ möglich?\n            Aber warten Sie: B5 sagt \"höchstens 1\". Das ist erfüllt für jede Wahl von $x_3$.\n            Gibt es weitere Einschränkungen? Nein.\n            \n            Wir haben also mehrere Lösungen gefunden? Die Aufgabe verlangt \"Finde ganze Zahlen\" (impliziert oft eine spezifische oder alle, aber das Format am Ende lässt nur einen Eintrag zu: `LÖSUNG: x0=..., ...`). Normalerweise erwartet man bei solchen Logikrätseln entweder die Menge aller Lösungen oder es gibt nur eine einzige Lösung aufgrund einer versteckten Einschränkung.\n            \n            Lassen Sie mich prüfen, ob ich etwas übersehen habe. Vielleicht ist meine Interpretation von B5 zu locker? \"höchstens 1 gerade Werte\". Ja, das bedeutet $\\le 1$.\n            \n            Gibt es andere Kombinationen für $x_2=11$?\n            *   Fall $x_1 = 2$: Dann muss $x_0 \\le 0$ (da $x_0 < x_1$ und Differenz $\\ge 2$). Unmöglich.\n            \n            Also ist der einzige Kandidat für das Tripel $(x_0, x_1, x_2)$: **$(1, 3, 11)$**.\n            \n            Jetzt zu $x_3$:\n            B2: $11 < x_3$.\n            Mögliche Werte: $12, 13, 14, 15$.\n            Alle erfüllen die Paritätsbedingung (da wir nur max 1 gerade haben dürfen und aktuell 0 sind).\n            \n            Warum sollte es dann eine *einzigartige* Lösung geben? Oder soll ich alle auflisten? Das Format `x0=<Zahl>, x1=<Zahl>, ...` legt nahe, dass es einen spezifischen Satz von Zahlen gibt. Vielleicht habe ich B5 falsch verstanden? \"höchstens 1 gerade Werte\".\n            \n            Vielleicht ist die Aufgabe so gemeint, dass wir *eine* Lösung finden sollen (beliebige)? Oder vielleicht schränkt etwas anderes ein?\n            Überprüfen Sie nochmal alle Bedingungen für $(1, 3, 11)$:\n            B1: $1+11=12 \\le 12$. OK.\n            B2: $11 < x_3$.\n            B3: $3 < 11$. OK.\n            B4: $1 < 3$. OK.\n            B5: Ungerade, Ungerade, Ungerade, ? -> Max 1 gerade. Wenn $x_3$ ungerade (13 oder 15), dann 0 gerade. Wenn $x_3$ gerade (12 oder 14), dann 1 gerade. Beides erlaubt.\n            B6: $|1-3|=2 \\ge 2$. OK.\n            B7: $|3-11|=8 \\ge 8$. OK.\n            \n    Es gibt also vier Lösungen für $(x_0, x_1, x_2)$? Nein, nur eine Tripel-Kombination $(1, 3, 11)$. Davon ergeben sich 4 Varianten für $x_3$.\n    \n    Vielleicht ist die Intention der Aufgabe, *alle* zu finden und ich soll sie in einer Zeile auflisten? Das Format `... x3=<Zahl>` erlaubt nur eine Zahl.\n    Oder vielleicht habe ich einen Fehler bei B1 gemacht? \"x0 + x2 <= 12\". Bei (1, 3, 11) ist es genau 12. OK.\n    \n    Gibt es andere Tripel?\n    Wir haben $x_2 \\le 11$ wegen B1 ($x_0 \\ge 1$).\n    Und $x_2 - x_1 \\ge 8$.\n    Wenn $x_2 = 9$, dann $x_1=1$. Dann $x_0 < 1$ (unmöglich).\n    Wenn $x_2 = 10$, dann $x_1 \\in \\{1, 2\\}$.\n       - $x_1=1 \\Rightarrow x_0<1$ (nein).\n       - $x_1=2 \\Rightarrow x_0 \\le 0$ (da $|x_0-x_1|\\ge 2$ und $x_0<x_1$, also $x_1-x_0 \\ge 2 \\Rightarrow 2-x_0 \\ge 2 \\Rightarrow x_0 \\le 0$). Nein.\n    Wenn $x_2 = 11$, dann $x_1 \\in \\{1, 2, 3\\}$.\n       - $x_1=1 \\Rightarrow x_0<1$ (nein).\n       - $x_1=2 \\Rightarrow x_0 \\le 0$ (nein).\n       - $x_1=3 \\Rightarrow x_0 \\le 1 \\Rightarrow x_0=1$. Das funktioniert.\n    \n    Also ist $(1, 3, 11)$ das **einzige** gültige Tripel für die ersten drei Variablen.\n    \n    Jetzt zu $x_3$: Es gibt keine Bedingung, die eine bestimmte Parität erzwingt oder einen bestimmten Wert ausschließt (außer B2 und B5).\n    B2: $11 < x_3$.\n    B5: Max 1 gerade insgesamt. Da $1, 3, 11$ alle ungerade sind, ist die Anzahl der geraden Zahlen in $\\{x_0, x_1, x_2\\}$ gleich 0.\n    Also kann $x_3$ beliebig sein (ungerade oder gerade), solange es im Bereich liegt und größer als 11 ist.\n    \n    Mögliche Werte für $x_3$: $12, 13, 14, 15$.\n    Alle sind gültig Lösungen der Gesamtsystemgleichung? Ja.\n    \n    Warum sollte ich dann nur eine ausgeben? Vielleicht gibt es einen Tippfehler in meiner Analyse von B6 oder B7?\n    \"B6: |x0 - x1| >= 2\". Bei (1,3) ist das 2. OK.\n    \"B7: |x1 - x2| >= 8\". Bei (3,11) ist das 8. OK.\n    \n    Vielleicht interpretiere ich B5 falsch? \"Unter x0, x1, x2, x3 sind höchstens 1 gerade Werte\". Das bedeutet count(even(x)) <= 1.\n    Da die ersten drei ungerade sind, darf der vierte auch gerade sein (dann ist Count=1) oder ungerade (Count=0). Beides <= 1.\n    \n    Vielleicht erwartet das System eine spezifische Lösung? Oder ich soll alle in einer Zeile auflisten wie \"x3=12; x3=13...\"? Nein, das Format `x3=<Zahl>` impliziert einen einzelnen Wert.\n    \n    Gibt es vielleicht noch eine versteckte Bedingung? Vielleicht ist die Reihenfolge der Variablen wichtig für B5? Nein.\n    \n    Was passiert, wenn ich $x_3 = 12$ nehme? Lösung: (1, 3, 11, 12). Gerades: {12}. Count=1. OK.\n    Wenn ich $x_3 = 13$ nehme? Lösung: (1, 3, 11, 13). Gerades: {}. Count=0. OK.\n    \n    Vielleicht ist die Aufgabe so gestellt, dass es nur eine Lösung gibt und ich etwas übersehen habe?\n    Oder vielleicht soll ich den kleinsten Wert wählen? Den größten? Die Summe minimieren/maximieren? Keine solche Anweisung.\n    \n    Alternativ: Vielleicht ist meine Ableitung von $x_2 \\le 11$ falsch?\n    B1:",
+          "parsed": null,
+          "correct": false,
+          "violated": null,
+          "ended": "OUTPUT_LIMIT_REACHED_INCOMPLETE",
+          "done_reason": "length",
+          "prompt_eval_count": 213,
+          "eval_count": 4096,
+          "total_duration": 134066226803,
+          "eval_duration": 132998522999,
+          "wall_s": 134.1,
+          "error": null
+        },
+        {
+          "n": 2,
+          "prompt": "Prüfer: Keine auswertbare LÖSUNG-Zeile mit allen Variablen gefunden.\n\nGib am Ende deiner Antwort genau eine Zeile in diesem Format aus:\nLÖSUNG: x0=<Zahl>, x1=<Zahl>, ...",
+          "answer_text": "Um die gesuchten ganzen Zahlen zu finden, analysieren wir die Bedingungen systematisch:\n\n**Gegebene Bereiche:** Alle Variablen $x_0 \\dots x_3$ liegen in $\\{1, \\dots, 15\\}$.\n\n**Analyse der Ungleichungen:**\n1.  **B7 ($|x_1 - x_2| \\ge 8$) und B3 ($x_1 < x_2$):**\n    Da $x_1 < x_2$, muss gelten: $x_2 - x_1 \\ge 8$.\n    Dies impliziert, dass $x_2$ deutlich größer als $x_1$ ist.\n\n2.  **B4 ($x_0 < x_1$) und B6 ($|x_0 - x_1| \\ge 2$):**\n    Da $x_0 < x_1$, muss gelten: $x_1 - x_0 \\ge 2$.\n    Also ist $x_0 \\le x_1 - 2$.\n\n3.  **B1 ($x_0 + x_2 \\le 12$):**\n    Da $x_0 \\ge 1$, muss gelten: $x_2 \\le 11$.\n    \n    Jetzt kombinieren wir die Einschränkungen für $x_2$:\n    *   Aus B7 wissen wir: $x_2 = x_1 + k$ mit $k \\ge 8$. Da $x_2 \\le 15$, ist das möglich.\n    *   Aber aus B1 wissen wir explizit: **$x_2 \\le 11$**.\n    \n    Also muss gelten: $x_1 + 8 \\le x_2 \\le 11$.\n    Das bedeutet für $x_1$: $x_1 \\le 3$.\n    \n    Mögliche Werte für das Paar $(x_1, x_2)$ unter Berücksichtigung von B7 ($x_2 - x_1 \\ge 8$) und B1 ($x_2 \\le 11$):\n    *   Wenn $x_1 = 3$: Dann muss $x_2 \\ge 11$. Da auch $x_2 \\le 11$, ist **$x_2 = 11$** die einzige Möglichkeit.\n        Prüfen wir B1: Wir brauchen ein passendes $x_0$.\n    *   Wenn $x_1 = 2$: Dann muss $x_2 \\ge 10$. Mögliche Werte für $x_2$: $\\{10, 11\\}$.\n    *   Wenn $x_1 = 1$: Dann muss $x_2 \\ge 9$. Mögliche Werte für $x_2$: $\\{9, 10, 11\\}$.\n\n4.  **Einschränkung durch B6 und B4 auf $x_0$ (für jedes Paar):**\n    Wir brauchen ein $x_0$, sodass:\n    *   $1 \\le x_0 < x_1$\n    *   $x_1 - x_0 \\ge 2 \\Rightarrow x_0 \\le x_1 - 2$.\n\n    Test der Fälle für $(x_1, x_2)$:\n    \n    *   **Fall A: $x_1 = 3, x_2 = 11$**\n        Bedingung für $x_0$: $x_0 \\le 3 - 2 = 1$. Also muss **$x_0 = 1$** sein.\n        Prüfen aller Bedingungen mit $(1, 3, 11)$:\n        *   B1: $1 + 11 = 12 \\le 12$ (OK).\n        *   B6: $|1 - 3| = 2 \\ge 2$ (OK).\n        *   B4: $1 < 3$ (OK).\n        *   B7: $|3 - 11| = 8 \\ge 8$ (OK).\n        *   B3: $3 < 11$ (OK).\n        \n    *   **Fall B: $x_1 = 2, x_2 \\in \\{10, 11\\}$**\n        Bedingung für $x_0$: $x_0 \\le 2 - 2 = 0$. Da $x_0 \\ge 1$, ist dies **unmöglich**.\n\n    *   **Fall C: $x_1 = 1$**\n        Bedingung für $x_0$: $x_0 < 1$. Unmöglich.\n\n    Somit ist das einzige gültige Tripel $(x_0, x_1, x_2) = (1, 3, 11)$.\n\n5.  **Bestimmung von $x_3$ unter B2 und B5:**\n    *   **B2 ($x_2 < x_3$):** Mit $x_2 = 11$, muss gelten: $11 < x_3 \\Rightarrow x_3 \\in \\{12, 13, 14, 15\\}$.\n    *   **B5 (Höchstens 1 gerade Zahl insgesamt):**\n        Die aktuellen Werte sind $x_0=1$ (ungerade), $x_1=3$ (ungerade), $x_2=11$ (ungerade).\n        Es gibt bereits 0 gerade Zahlen.\n        Daher darf $x_3$ entweder ungerade sein (dann Gesamtsumme = 0) oder gerade sein (dann Gesamtsumme = 1). Beide Fälle erfüllen \"höchstens 1\".\n        \n    Da die Aufgabe nach *ganzen Zahlen* fragt, die alle Bedingungen erfüllen, und es mehrere Lösungen für $x_3$ gibt ($12, 13, 14, 15$), ist jede dieser Kombinationen eine gültige Lösung. Oft wird in solchen Rätseln jedoch implizit erwartet, dass man *eine* spezifische Lösung findet oder die Menge aller aufzulisten. Da das Ausgabeformat nur Platz für einen Wert pro Variable hat (`x3=<Zahl>`), und keine weitere Auswahlkriterium (wie \"kleinster Wert\") gegeben ist, sind alle vier Werte korrekt.\n    \n    Allerdings: In vielen logischen Aufgabenstellungen dieser Art gibt es oft eine einzige Lösung aufgrund einer versteckten Einschränkung oder ich habe B5 zu locker interpretiert? Nein, \"höchstens 1\" erlaubt 0 oder 1.\n    \n    Vielleicht soll ich die kleinste gültige Zahl für $x_3$ nehmen (Prinzip der Minimalität)? Oder vielleicht ist es egal und ich nenne eine beliebige? Da keine weitere Einschränkung existiert, sind alle vier Lösungen korrekt. Ich werde hier **eine** dieser Lösungen angeben (z.B. mit dem kleinsten Wert oder einer willkürlichen Wahl), da das Format nur einen Eintrag zulässt.\n    \n    Aber warten Sie: Gibt es vielleicht eine Interpretation von B5, die ich übersehen habe? \"Unter x0...x3 sind höchstens 1 gerade Werte\". Das ist klar.\n    \n    Da alle $x_3 \\in \\{12, 13, 14, 15\\}$ funktionieren, wähle ich zur Sicherheit den kleinsten Wert oder liste einfach eine auf. Oft wird in Tests die erste gefundene Lösung akzeptiert. Ich verwende **$x_3 = 12$** (gerade) -> dann ist genau 1 gerade Zahl vorhanden. Oder $x_3=13$ (ungerade) -> 0 gerade Zahlen. Beides erlaubt.\n    \n    Um sicherzugehen, dass ich eine *gültige* Lösung liefere: $(1, 3, 11, 12)$ erfüllt alle Bedingungen.\n    B5 Check für (1, 3, 11, 12): Gerade sind {12}. Anzahl = 1. Bedingung \"<= 1\" ist erfüllt.\n    \n    Ich gebe eine Lösung aus dieser Menge an.\n\nLÖSUNG: x0=1, x1=3, x2=11, x3=12",
+          "parsed": [
+            1,
+            3,
+            11,
+            12
+          ],
+          "correct": true,
+          "violated": [],
+          "ended": "DONE",
+          "done_reason": "stop",
+          "prompt_eval_count": 4380,
+          "eval_count": 1808,
+          "total_duration": 71592448498,
+          "eval_duration": 60198766000,
+          "wall_s": 71.6,
+          "error": null
+        }
+      ],
+      "metis": [],
+      "solved": true,
+      "attempts_used": 2,
+      "qwen_wall_s": 205.7,
+      "qwen_output_tokens": 5904
+    },
+    "B": {
+      "arm": "B",
+      "attempts": [
+        {
+          "n": 1,
+          "prompt": "Finde ganze Zahlen x0 bis x3, die ALLE folgenden Bedingungen erfüllen.\nWertebereiche: x0 ∈ {1, …, 15}; x1 ∈ {1, …, 15}; x2 ∈ {1, …, 15}; x3 ∈ {1, …, 15}\nBedingungen:\nB1: x0 + x2 <= 12\nB2: x2 < x3\nB3: x1 < x2\nB4: x0 < x1\nB5: Unter x0, x1, x2, x3 sind höchstens 1 gerade Werte\nB6: |x0 - x1| >= 2\nB7: |x1 - x2| >= 8\n\nHinweis von MÉTIS (ein kleines, auf solche Aufgaben trainiertes neuronales Modell). Der Vorschlag ist NICHT geprüft und kann falsch sein:\nMÉTIS-Vorschlag: x0=1, x1=3, x2=11, x3=15\nEigene Sicherheit von MÉTIS, dass der Vorschlag vollständig stimmt: 90%\nWahrscheinlichste Werte je Variable laut MÉTIS:\n  x0: 1 (100%), sonst 14 (0%)\n  x1: 3 (100%), sonst 5 (0%)\n  x2: 11 (99%), sonst 10 (1%)\n  x3: 15 (100%), sonst 7 (0%)\n\nGib am Ende deiner Antwort genau eine Zeile in diesem Format aus:\nLÖSUNG: x0=<Zahl>, x1=<Zahl>, ...",
+          "answer_text": "Um die Lösung zu finden, prüfen wir den von MÉTIS vorgeschlagenen Satz an Werten gegen alle Bedingungen und suchen dann nach einer korrekten Kombination.\n\n**Gegebener Vorschlag:** $x_0=1$, $x_1=3$, $x_2=11$, $x_3=15$\n*   **Bereiche:** Alle Werte liegen in $\\{1, \\dots, 15\\}$. (OK)\n*   **B1 ($x_0 + x_2 \\leq 12$):** $1 + 11 = 12 \\leq 12$. (OK)\n*   **B2 ($x_2 < x_3$):** $11 < 15$. (OK)\n*   **B3 ($x_1 < x_2$):** $3 < 11$. (OK)\n*   **B4 ($x_0 < x_1$):** $1 < 3$. (OK)\n*   **B5 (Höchstens 1 gerade Wert):** Die Werte sind $\\{1, 3, 11, 15\\}$. Alle sind ungerade. Anzahl der geraden Werte = 0. Bedingung erfüllt. (OK)\n*   **B6 ($|x_0 - x_1| \\geq 2$):** $|1 - 3| = 2 \\geq 2$. (OK)\n*   **B7 ($|x_1 - x_2| \\geq 8$):** $|3 - 11| = 8 \\geq 8$. (OK)\n\nDer Vorschlag erfüllt alle Bedingungen. Da MÉTIS angibt, dass für $x_0$, $x_1$ und $x_3$ die Wahrscheinlichkeit des jeweiligen Werts bei 100% liegt und nur ein einziger Wert pro Variable als \"wahrscheinlich\" genannt wird (außer $x_2$ mit einer sehr hohen Sicherheit), ist dies fast sicher die einzige Lösung.\n\nWir prüfen kurz, ob andere Kombinationen möglich sind:\n*   Für B7 ($|x_1 - x_2| \\geq 8$) und B3 ($x_1 < x_2$): Es muss gelten $x_2 - x_1 \\geq 8$. Da $x_1 \\geq 1$, ist maximal $x_2 = 15, x_1=7$ möglich. Aber dann wäre $|7-15|=8$.\n*   Für B6 ($|x_0 - x_1| \\geq 2$) und B4 ($x_0 < x_1$): Es muss gelten $x_1 - x_0 \\geq 2$. Da $x_0 \\geq 1$, ist minimal $x_1 = 3, x_0=1$ möglich.\n*   Wenn wir versuchen, andere Werte zu setzen (z.B. $x_1 > 7$), dann müsste $|x_1 - x_2|$ immer noch $\\geq 8$ sein und $x_1 < x_2$. Das würde bedeuten $x_2 \\geq x_1 + 8$. Wenn $x_1=9$, dann $x_2 \\geq 17$ (unmöglich). Also muss $x_1 \\leq 7$.\n*   Da B6 verlangt, dass der Abstand zwischen $x_0$ und $x_1$ mindestens 2 ist ($x_1 - x_0 \\geq 2$), und wir wissen aus MÉTIS' Analyse (und logischer Einschränkung durch die anderen Bedingungen), dass kleine Werte für $x_0$ und $x_1$ bevorzugt werden, um den großen Abstand zu $x_2$ aufrechtzuerhalten.\n*   Die Bedingung B5 (max 1 gerade) ist sehr restriktiv in Kombination mit der Notwendigkeit großer Abstände. Wenn wir z.B. eine gerade Zahl einfügen, müssen wir sicherstellen, dass keine andere entsteht.\n\nDer gefundene Satz $\\{1, 3, 11, 15\\}$ scheint die einzige gültige Lösung zu sein, da jede Änderung an einer Variable entweder einen Bereich verletzt oder eine Ungleichung bricht (insbesondere B7 und B6 in Kombination mit den unteren Grenzen).\n\nLÖSUNG: x0=1, x1=3, x2=11, x3=15",
+          "parsed": [
+            1,
+            3,
+            11,
+            15
+          ],
+          "correct": true,
+          "violated": [],
+          "ended": "DONE",
+          "done_reason": "stop",
+          "prompt_eval_count": 386,
+          "eval_count": 988,
+          "total_duration": 34241886734,
+          "eval_duration": 32653033000,
+          "wall_s": 34.2,
+          "error": null,
+          "equals_a_metis_candidate": true,
+          "hamming_to_last_metis": 0
+        }
+      ],
+      "metis": [
+        {
+          "kind": "propose",
+          "candidate": [
+            1,
+            3,
+            11,
+            15
+          ],
+          "top2": [
+            [
+              [
+                1,
+                0.9999867677688599
+              ],
+              [
+                14,
+                5.306846105668228e-06
+              ]
+            ],
+            [
+              [
+                3,
+                0.9985581040382385
+              ],
+              [
+                5,
+                0.0005947107565589249
+              ]
+            ],
+            [
+              [
+                11,
+                0.9899886250495911
+              ],
+              [
+                10,
+                0.009272552095353603
+              ]
+            ],
+            [
+              [
+                15,
+                0.997653067111969
+              ],
+              [
+                7,
+                0.0017861814703792334
+              ]
+            ]
+          ],
+          "p_hat": 0.9047627449035645,
+          "correct_posthoc": true
+        }
+      ],
+      "solved": true,
+      "attempts_used": 1,
+      "qwen_wall_s": 34.2,
+      "qwen_output_tokens": 988
+    }
+  },
+  {
+    "id": "T02",
+    "cls": "K1_numbers",
+    "hard": false,
+    "B": {
+      "arm": "B",
+      "attempts": [
+        {
+          "n": 1,
+          "prompt": "Finde ganze Zahlen x0 bis x3, die ALLE folgenden Bedingungen erfüllen.\nWertebereiche: x0 ∈ {1, …, 15}; x1 ∈ {1, …, 15}; x2 ∈ {1, …, 15}; x3 ∈ {1, …, 15}\nBedingungen:\nB1: x0 + x2 <= 12\nB2: x1 < x2\nB3: x0 < x1\nB4: x0 + x1 + x2 + x3 = 30\nB5: Unter x0, x1, x2, x3 sind höchstens 2 ungerade Werte\nB6: x2 < x3\nB7: x0 + x1 + x2 >= 19\nB8: x0 + x1 + x3 <= 22\n\nHinweis von MÉTIS (ein kleines, auf solche Aufgaben trainiertes neuronales Modell). Der Vorschlag ist NICHT geprüft und kann falsch sein:\nMÉTIS-Vorschlag: x0=3, x1=8, x2=9, x3=12\nEigene Sicherheit von MÉTIS, dass der Vorschlag vollständig stimmt: 50%\nWahrscheinlichste Werte je Variable laut MÉTIS:\n  x0: 3 (95%), sonst 1 (3%)\n  x1: 8 (69%), sonst 6 (17%)\n  x2: 9 (93%), sonst 10 (7%)\n  x3: 12 (99%), sonst 11 (1%)\n\nGib am Ende deiner Antwort genau eine Zeile in diesem Format aus:\nLÖSUNG: x0=<Zahl>, x1=<Zahl>, ...",
+          "answer_text": "Um die Lösung zu finden, analysieren wir alle Bedingungen Schritt für Schritt und prüfen den von MÉTIS vorgeschlagenen Wertesatz sowie andere Kandidaten.\n\n**Gegebene Werte (MÉTIS-Vorschlag):** $x_0=3$, $x_1=8$, $x_2=9$, $x_3=12$.\nPrüfung der Bedingungen:\n*   **B1:** $x_0 + x_2 \\le 12 \\Rightarrow 3 + 9 = 12 \\le 12$ (Erfüllt)\n*   **B2:** $x_1 < x_2 \\Rightarrow 8 < 9$ (Erfüllt)\n*   **B3:** $x_0 < x_1 \\Rightarrow 3 < 8$ (Erfüllt)\n*   **B4:** Summe = 30 $\\Rightarrow 3 + 8 + 9 + 12 = 32$. Das ist ungleich 30. **(Nicht erfüllt)**\n\nDa die Summe im Vorschlag 32 beträgt und nicht 30, muss der Wertesatz angepasst werden. Wir suchen eine Kombination mit einer Summe von genau 30, die alle anderen Bedingungen (insbesondere B1 $\\le$ 12) einhält.\n\n**Analyse zur Reduktion der Summe:**\nDie aktuelle Summe ist um 4 zu hoch ($32 - 30 = 4$). Wir müssen den Wertebestand so ändern, dass wir genau 4 Punkte abziehen können, ohne B1 oder die Ungleichungen zwischen $x_0, x_1, x_2$ zu verletzen.\n\nMögliche Änderungen:\n*   Reduziere $x_3$: Da nur B6 ($x_2 < x_3$) und B8/B4 betroffen sind. Wenn wir $x_3$ von 12 auf 8 senken (Abzug von 4), bleibt $9 < 8$ falsch? Nein, $x_2=9$, also muss $x_3 > 9$. Wir können $x_3$ nicht unter 10 bringen. Also ist eine direkte Reduktion um 4 bei $x_3$ unmöglich (da Minimum 10).\n*   Reduziere andere Variablen:\n    *   Wenn wir $x_2$ reduzieren, müssen wir B1 ($x_0+x_2 \\le 12$) und B2/B6 beachten.\n    *   Wenn wir $x_1$ oder $x_0$ reduzieren, ist das einfacher.\n\nVersuchen wir es mit einer systematischen Suche für eine Summe von 30:\nWir wissen aus der Analyse des Vorschlags, dass die Struktur ($x_0=3$, $x_2=9$) sehr stabil erscheint (B1 wird genau erreicht). Versuchen wir also, bei diesen Werten zu bleiben und nur $x_1$ oder $x_3$ anzupassen.\nAktuell: $3 + 8 + 9 = 20$. Rest für Summe 30 ist 10 ($x_3=10$). Aber B6 verlangt $x_2 < x_3 \\Rightarrow 9 < 10$, das geht. Prüfen wir die Parität (B5):\n$x_0=3$ (ungerade), $x_1=8$ (gerade), $x_2=9$ (ungerade), $x_3=10$ (gerade). Ungerade: 2 ($x_0, x_2$). Das erfüllt B5.\nPrüfen wir die Summe mit $x_3=10$: $3+8+9+10 = 30$.\nAber warten Sie, im Vorschlag war $x_3=12$. Warum? Vielleicht gab es einen Fehler in der Annahme des Modells oder ich habe eine andere Kombination gefunden.\n\nLassen Sie uns die Bedingung B4 ($Summe=30$) strikt anwenden und nach einer Lösung suchen, die alle anderen Bedingungen erfüllt.\nKandidat: $x_0=3$, $x_1=8$, $x_2=9$. Summe dieser drei ist 20. Wir brauchen $x_3 = 10$.\nPrüfung für $(3, 8, 9, 10)$:\n*   B1: $3+9 \\le 12$ (OK)\n*   B2: $8 < 9$ (OK)\n*   B3: $3 < 8$ (OK)\n*   B4: Summe = 30 (OK)\n*   B5: Ungerade sind 3 und 9. Anzahl = 2 $\\le$ 2 (OK).\n*   B6: $x_2 < x_3 \\Rightarrow 9 < 10$ (OK).\n*   B7: $3+8+9 = 20 \\ge 19$ (OK).\n*   B8: $3+8+10 = 21 \\le 22$ (OK).\n\nDieser Wertesatz $(3, 8, 9, 10)$ erfüllt alle Bedingungen. Der MÉTIS-Vorschlag hatte einen Fehler bei der Summe ($x_3=12$ statt $10$), was zu einer falschen Gesamtsumme führte. Die korrekte Lösung ist also mit $x_3=10$.\n\nGibt es andere Lösungen?\nWenn wir $x_0$ erhöhen (z.B. auf 5)? Dann muss B1 ($5+x_2 \\le 12$) und B3 ($5 < x_1$) gelten. Das würde die Summe ebenfalls ändern. Da MÉTIS für $x_0=3$ eine sehr hohe Wahrscheinlichkeit angibt, ist es wahrscheinlich, dass dies der intendierte Kernpunkt ist.\nDie einzige Abweichung im Vorschlag war bei $x_3$.\n\nSomit lautet die korrekte Lösung: $x_0=3$, $x_1=8$, $x_2=9$, $x_3=10$.\n\nLÖSUNG: x0=3, x1=8, x2=9, x3=10",
+          "parsed": [
+            3,
+            8,
+            9,
+            10
+          ],
+          "correct": true,
+          "violated": [],
+          "ended": "DONE",
+          "done_reason": "stop",
+          "prompt_eval_count": 407,
+          "eval_count": 1382,
+          "total_duration": 46965832796,
+          "eval_duration": 45459161000,
+          "wall_s": 47.0,
+          "error": null,
+          "equals_a_metis_candidate": false,
+          "hamming_to_last_metis": 1
+        }
+      ],
+      "metis": [
+        {
+          "kind": "propose",
+          "candidate": [
+            3,
+            8,
+            9,
+            12
+          ],
+          "top2": [
+            [
+              [
+                3,
+                0.947867751121521
+              ],
+              [
+                1,
+                0.0295573603361845
+              ]
+            ],
+            [
+              [
+                8,
+                0.6898414492607117
+              ],
+              [
+                6,
+                0.1658046394586563
+              ]
+            ],
+            [
+              [
+                9,
+                0.9296746850013733
+              ],
+              [
+                10,
+                0.06672650575637817
+              ]
+            ],
+            [
+              [
+                12,
+                0.9922512173652649
+              ],
+              [
+                11,
+                0.006780841387808323
+              ]
+            ]
+          ],
+          "p_hat": 0.499718576669693,
+          "correct_posthoc": false
+        }
+      ],
+      "solved": true,
+      "attempts_used": 1,
+      "qwen_wall_s": 47.0,
+      "qwen_output_tokens": 1382
+    },
+    "A": {
+      "arm": "A",
+      "attempts": [
+        {
+          "n": 1,
+          "prompt": "Finde ganze Zahlen x0 bis x3, die ALLE folgenden Bedingungen erfüllen.\nWertebereiche: x0 ∈ {1, …, 15}; x1 ∈ {1, …, 15}; x2 ∈ {1, …, 15}; x3 ∈ {1, …, 15}\nBedingungen:\nB1: x0 + x2 <= 12\nB2: x1 < x2\nB3: x0 < x1\nB4: x0 + x1 + x2 + x3 = 30\nB5: Unter x0, x1, x2, x3 sind höchstens 2 ungerade Werte\nB6: x2 < x3\nB7: x0 + x1 + x2 >= 19\nB8: x0 + x1 + x3 <= 22\n\nGib am Ende deiner Antwort genau eine Zeile in diesem Format aus:\nLÖSUNG: x0=<Zahl>, x1=<Zahl>, ...",
+          "answer_text": "Um die Lösung zu finden, analysieren wir die Bedingungen Schritt für Schritt und eliminieren unwahrscheinliche Werte.\n\n**Gegebene Bereiche:** $x_0, x_1, x_2, x_3 \\in \\{1, \\dots, 15\\}$\n\n**Bedingungen:**\nB1: $x_0 + x_2 \\leq 12$\nB2: $x_1 < x_2$\nB3: $x_0 < x_1$\nB4: $x_0 + x_1 + x_2 + x_3 = 30$\nB5: Maximal 2 ungerade Werte unter den Variablen.\nB6: $x_2 < x_3$\nB7: $x_0 + x_1 + x_2 \\geq 19$\nB8: $x_0 + x_1 + x_3 \\leq 22$\n\n**Analyse:**\n\nAus B4 und B7 können wir eine Schranke für $x_3$ ableiten.\n$x_3 = 30 - (x_0 + x_1 + x_2)$\nDa $(x_0 + x_1 + x_2) \\geq 19$, gilt:\n$x_3 \\leq 30 - 19 = 11$.\n\nAus B4 und der Obergrenze von $x_3$ (maximal 15, aber hier stärker eingeschränkt):\nDa $(x_0 + x_1 + x_2) \\geq 19$, ist die Summe kleiner als 30. Das bedeutet $x_3 > 0$.\n\nKombination von B4 und B8:\n$x_3 = 30 - (x_0 + x_1 + x_2)$\nEinsetzen in B8 ($x_0 + x_1 + x_3 \\leq 22$):\n$(x_0 + x_1) + [30 - (x_0 + x_1 + x_2)] \\leq 22$\n$30 - x_2 \\leq 22$\n$x_2 \\geq 8$.\n\nAlso haben wir für $x_2$: $8 \\leq x_2 \\leq 15$. (Da aus B7 und B4 auch eine Obergrenze existiert, prüfen wir später).\n\nNun zu den ungeraden Werten (B5):\nWenn alle vier gerade sind: Summe ist gerade. Wenn zwei ungerade: Summe kann gerade oder ungerade sein? Nein, $odd + odd = even$. Also wenn 0, 2 oder 4 ungerade Werte vorhanden sind, ist die Gesamtsumme ($x_0+x_1+x_2+x_3$) immer **gerade**.\nDa B4 sagt Summe = 30 (gerade), müssen wir also eine Anzahl von ungeraden Werten haben, die zu einer geraden Summe führt. Das sind: 0 oder 2 ungerade Werte. (1, 3 wären unmöglich). Also genau wie in B5 gefordert (\"höchstens 2\").\n\n**Suche nach konkreten Zahlen:**\nWir wissen $8 \\leq x_2$.\nAus B7 ($x_0 + x_1 + x_2 \\geq 19$) und maximaler Summe von $x_3$:\nWenn $x_2 = 8$, dann $x_0 + x_1 \\geq 11$.\nDa $x_1 < x_2$ (B2), ist $x_1 \\leq 7$.\nDa $x_0 < x_1$ (B3), ist $x_0 \\leq 6$.\nMaximale Summe für $x_2=8$: $x_0+x_1+8 = 6+7+8 = 21$. Das erfüllt B7.\n\nProbieren wir einen Wert im Bereich von $x_2$ zwischen 9 und 15, da bei kleineren Werten die Summe oft zu niedrig wird oder Bedingungen verletzt werden?\nSchauen wir uns den Fall an, wo alle Variablen gerade sind (einfachster Weg für B5).\n\nVersuchen wir: **$x_0 = 6$, $x_1 = 8$, $x_2 = 9$**.\n- B3 ($6 < 8$): OK.\n- B2 ($8 < 9$): OK.\n- B7 ($6+8+9=23 \\geq 19$): OK.\n- B1 ($6+9=15 \\leq 12$): **FALSCH**. $x_0+x_2$ muss $\\leq 12$ sein.\n\nAlso müssen wir kleinere Werte für $x_0$ und $x_2$ finden, die aber trotzdem $x_2 \\geq 8$ erfüllen (aus B4+B8).\nWenn $x_2 = 9$, dann $x_0 + x_9 \\leq 12 \\Rightarrow x_0 \\leq 3$.\nAber wir brauchen $x_0 < x_1 < 9$. Und $x_0+x_1+9 \\geq 19 \\Rightarrow x_0+x_1 \\geq 10$.\nWenn $x_2=9$, dann max $x_1 = 8$ (da gerade? oder ungerade?). Versuchen wir alle gerade:\n$x_2=9$ ist ungerade. Dann müssen wir eine weitere ungerade haben, um Summe gerad zu halten? Oder zwei weitere? B5 erlaubt bis zu 2. Also wenn $x_2$ ungerade (1), dann darf es noch max 1 andere ungerade geben.\nVersuchen wir alle gerade: $x_0=6, x_1=?, x_2=?$. Dann muss $x_2 \\geq 8$ sein und gerade $\\Rightarrow x_2 \\in \\{8, 10, ...\\}$.\n\nFall **alle gerade**:\n$x_2 = 8$: B1 ($x_0+8 \\leq 12 \\Rightarrow x_0 \\leq 4$). B7 ($x_0+x_1+8 \\geq 19 \\Rightarrow x_0+x_1 \\geq 11$).\nMax $x_1 = 7$ (da gerade $\\to 6$, aber $x_1 < x_2=8$ also max 7, wenn alle gerade dann 6? Nein, \"alle gerade\" bedeutet die Werte selbst sind gerade. Also $x_1 \\in \\{..., 4, 6\\}$. Da $x_1 < 8$, ist $x_1 \\leq 6$.\nWenn $x_0=4$ und $x_1=6$: Summe = $4+6+8 = 18 < 19$. B7 verletzt.\nAlso müssen wir ungerade Werte nutzen, um die Summe zu erhöhen? Oder höhere gerade Zahlen? Aber $x_1$ ist durch $< x_2$ begrenzt.\n\nVersuchen wir **$x_2 = 10$** (alle gerade):\nB1: $x_0 + 10 \\leq 12 \\Rightarrow x_0 \\leq 2$. Da alle gerade $\\Rightarrow x_0=2$.\nB3: $2 < x_1$. B2: $x_1 < 10$. Alle gerade $\\Rightarrow x_1 \\in \\{4, 6, 8\\}$.\nB7: $2 + x_1 + 10 \\geq 19 \\Rightarrow x_1 \\geq 7$. Da alle gerade und $x_1 < 10$, ist nur **$x_1 = 8$** möglich.\nPrüfen wir diese Kombination: **$x_0=2, x_1=8, x_2=10$**.\n- B3 ($2<8$): OK.\n- B2 ($8<10$): OK.\n- B7 ($2+8+10 = 20 \\geq 19$): OK.\n- B1 ($2+10 = 12 \\leq 12$): OK.\n\nJetzt $x_3$:\nB4: $2 + 8 + 10 + x_3 = 30 \\Rightarrow 20 + x_3 = 30 \\Rightarrow x_3 = 10$.\nPrüfen wir die restlichen Bedingungen für **$x_3=10$**:\n- B6 ($x_2 < x_3 \\Rightarrow 10 < 10$): **FALSCH**. $x_2$ muss strikt kleiner als $x_3$ sein.\n\nAlso ist diese Kombination ungültig. Wir brauchen ein größeres $x_3$.\nUm $x_3 > 10$ zu bekommen, müssen wir die Summe von $x_0+x_1+x_2$ verringern (da $Summe = 30 - x_3$). Aber B7 verlangt $\\geq 19$. Also kann die Summe nur zwischen 19 und 29 liegen.\nWenn $x_3=11$, dann Summe($x_{0,1,2}$) = 19.\nVersuchen wir **Summe = 19** mit allen geraden? Nein, gerade Zahlen summieren sich zu einer geraden Zahl. Also muss die Anzahl der ungeraden Werte gerade sein (0 oder 2).\n\nFall: **$x_3=11$**. Dann $x_0+x_1+x_2 = 19$.\nDa B6 ($x_2 < x_3 \\Rightarrow x_2 < 11$) gilt. Also $x_2 \\leq 10$.\nB1: $x_0 + x_2 \\leq 12$.\nB7 ist erfüllt (Summe=19).\nWir brauchen eine Kombination von drei Zahlen, die auf 19 summieren, wobei $x_2 < 11$ und $x_0+x_2 \\leq 12$.\nMögliche Werte für $x_2$: Da Summe 19 ist (ungerade), muss es mindestens eine ungerade Zahl geben. Also entweder 1 oder 3 ungerade Zahlen? Nein, B5 erlaubt max 2. Also genau **zwei** ungerade Zahlen (da Summe ungerade sein kann: odd+odd=even, aber hier Gesamtsumme der drei ist 19 -> ungerade).\nUm eine ungerade Summe aus maximal 2 ungeraden Werten zu bekommen? Das geht nicht. $Odd + Odd = Even$. $Even + Even = Even$. Also wenn max 2 ungerade Werte vorhanden sind, kann die Summe der drei Zahlen nur gerade sein (0 oder 2 ungerade).\nAber wir brauchen eine Summe von **19** (ungerade) für den Fall $x_3=11$? Nein.\nB4: $S_{total} = 30$. Wenn $x_3=11$, dann $S_{rest}=19$. Das ist ungerade.\nDas bedeutet, wir brauchen eine Anzahl von ungeraden Werten unter den drei Zahlen ($x_0, x_1, x_2$), die zu einer ungeraden Summe führt? Nein, das geht nicht mit 0 oder 2 ungeraden Werten. Wir bräuchten **3** ungerade Werte (odd+odd+odd = odd). Aber B5 erlaubt nur max 2!\nAlso kann $x_3$ **nicht 11 sein**.\n\nGleiche Logik für andere $x_3$:\nDie Gesamtsumme der vier Zahlen ist 30 (gerade).\nB5 sagt: Maximal 2 ungerade Werte.\nMögliche Anzahlen von ungeraden Werten unter den 4 Variablen: 0 oder 2.\nWenn Anzahl = 0 (alle gerade): Summe ist gerade. OK.\nWenn Anzahl = 2: Summe ist gerade ($odd+odd=even$). OK.\nAlso muss die Gesamtsumme immer gerade sein, was sie ist.\n\nAber wir haben oben gesehen: Wenn $x_3=11$, dann Rest-Summe=19 (ungerade). Das erfordert unter den 3 Zahlen eine ungerade Anzahl von Werten? Nein, es bedeutet einfach, dass die Summe der drei Zahlen ungerade ist.\nSumme($A+B+C$) = Ungeerde $\\Rightarrow$ Anz(odd in A,B,C) muss **ungerade** sein (1 oder 3).\nDa B5 max 2 erlaubt, kann nur **1** ungerader Wert unter den drei Zahlen existieren? Aber dann wäre die Gesamtanzahl der ungeraden Werte im System: $x_3$ ist gerade (da wir annehmen alle Variablen sind Teil des Systems) oder ungerade?\nWenn $x_3=11$, dann ist $x_3$ ungerade. Dann haben wir bereits 1 ungerader Wert ($x_3$). Unter den anderen drei dürfen also nur noch max 1 weiterer ungerader Wert sein (damit Gesamtanzahl $\\leq 2$).\nWenn unter den drei Zahlen genau **0** ungerade Werte sind: Summe ist gerade. Aber wir brauchen Rest-Summe=19 (ungerade). Widerspruch.\nAlso müssen unter den drei Zahlen mindestens **1** ungerader Wert sein? Wenn $x_3$ ungerade, und wir haben 1 weiteren in der Gruppe $\\to$ Gesamtanzahl = 2. Das ist erlaubt!\nWenn Summe($A+B+C$) ungerade ist: Dann muss die Anzahl der ungeraden Werte unter A,B,C **ungerade** sein (1 oder 3). Da max 1 weiterer möglich, also genau **1**.\nAlso für $x_3=11$: Unter den drei Zahlen müssen wir eine Konfiguration finden mit Summe 19 und genau einer ungeraden Zahl.\n\nVersuchen wir: **$x_2 = 8$** (da B6 $x_2 < x_3 \\Rightarrow 8 < 11$, OK).\nB1: $x_0 + 8 \\leq 12 \\Rightarrow x_0 \\leq 4$.\nSumme($x_0+x_1+8$) = 19 $\\Rightarrow x_0+x_1 = 11$.\nWir brauchen genau eine ungerade Zahl unter $x_0, x_1, x_2=8$. Da $x_2=8$ gerade ist, muss entweder $x_0$ oder $x_1$ ungerade sein.\nFall A: $x_0$ ungerade, $x_1$ gerade.\n$x_0 \\in \\{3\\}$ (da $\\leq 4$, und ungerade). Dann $x_1 = 8$. Aber B2 ($x_1 < x_2 \\Rightarrow 8 < 8$) ist falsch. Also nicht möglich.\nFall B: $x_0$ gerade, $x_1$ ungerade.\n$x_0 \\in \\{4\\}$ (da $\\leq 4$, und gerade). Dann $x_1 = 7$.\nPrüfen wir diese Kombination für **$x_3=11$**:\n- Werte: $x_0=4, x_1=7, x_2=8, x_3=11$.\n- B3 ($4 < 7$): OK.\n- B2 ($7 < 8$): OK.\n- B6 ($8 < 11$): OK.\n- B1 ($4+8 = 12 \\leq 12$): OK.\n- B7 ($4+7+8 = 19 \\geq 19$): OK.\n- B5 (Ungerade Werte: $x_1=7, x_3=11$. Das sind genau 2). OK.\n- B8 ($x_0+x_1+x_3 \\leq 22 \\Rightarrow 4+7+11 = 22 \\leq 22$): **OK**.\n\nAlle Bedingungen erfüllt!\n\nLösung: $x_0=4, x_1=7, x_2=8, x_3=11$.\n\nLÖSUNG: x0=4, x1=7, x2=8, x3=11",
+          "parsed": [
+            4,
+            7,
+            8,
+            11
+          ],
+          "correct": true,
+          "violated": [],
+          "ended": "DONE",
+          "done_reason": "stop",
+          "prompt_eval_count": 238,
+          "eval_count": 3702,
+          "total_duration": 144280941221,
+          "eval_duration": 143167137000,
+          "wall_s": 144.3,
+          "error": null
+        }
+      ],
+      "metis": [],
+      "solved": true,
+      "attempts_used": 1,
+      "qwen_wall_s": 144.3,
+      "qwen_output_tokens": 3702
+    }
+  },
+  {
+    "id": "T03",
+    "cls": "K2_schedule",
+    "hard": false,
+    "A": {
+      "arm": "A",
+      "attempts": [
+        {
+          "n": 1,
+          "prompt": "Finde ganze Zahlen x0 bis x5, die ALLE folgenden Bedingungen erfüllen.\nWertebereiche: x0 ∈ {0, …, 3}; x1 ∈ {0, …, 3}; x2 ∈ {0, …, 3}; x3 ∈ {0, …, 3}; x4 ∈ {0, …, 3}; x5 ∈ {0, …, 3}\nBedingungen:\nB1: x1 != x3\nB2: x2 < x0\nB3: x3 != 1\nB4: x5 != 0\nB5: x1 != 1\nB6: x3 < x2\nB7: x1 < x0\nB8: x4 < x0\n\nGib am Ende deiner Antwort genau eine Zeile in diesem Format aus:\nLÖSUNG: x0=<Zahl>, x1=<Zahl>, ...",
+          "answer_text": "Um die Lösung zu finden, analysieren wir die Bedingungen Schritt für Schritt und eliminieren unwahrscheinliche Werte.\n\n**Gegebene Wertebereiche:**\n$x_0, \\dots, x_5 \\in \\{0, 1, 2, 3\\}$\n\n**Bedingungen:**\nB1: $x_1 \\neq x_3$\nB2: $x_2 < x_0$\nB3: $x_3 \\neq 1$\nB4: $x_5 \\neq 0$\nB5: $x_1 \\neq 1$\nB6: $x_3 < x_2$\nB7: $x_1 < x_0$\nB8: $x_4 < x_0$\n\n**Analyse:**\n\n1.  **Bestimmung von $x_0$:**\n    Aus B2, B7 und B8 wissen wir, dass $x_0$ größer sein muss als mindestens drei andere Variablen ($x_2, x_1, x_4$). Da der maximale Wert einer Variable 3 ist, kann $x_0$ nicht kleiner als 3 sein (wenn alle anderen maximal wären), aber da sie auch gleich sein könnten? Nein, die Bedingungen sind strikt ungleich oder strikt kleiner.\n    Also: $x_2 < x_0$, $x_1 < x_0$, $x_4 < x_0$.\n    Das bedeutet, es müssen mindestens drei verschiedene Werte unterhalb von $x_0$ existieren (oder dieselben Werte werden mehrfach verwendet). Da der Bereich $\\{0, 1, 2\\}$ nur zwei Elemente hat und wir drei Variablen haben ($x_1, x_2, x_4$), die alle kleiner als $x_0$ sein müssen:\n    - Wenn $x_0 = 3$: Die Werte für $x_1, x_2, x_4$ können aus $\\{0, 1, 2\\}$ gewählt werden. Das ist möglich (z.B. alle gleich 0 oder verteilt).\n    - Wenn $x_0 = 2$: Dann müssen $x_1, x_2, x_4 < 2$, also nur Werte aus $\\{0, 1\\}$. Wir haben drei Variablen für zwei mögliche Werte. Das ist auch möglich (z.B. $0, 0, 1$).\n    - Wenn $x_0 = 1$: Dann müssen alle kleiner als 1 sein ($=0$). Drei Variablen gleich 0. Auch möglich.\n\n2.  **Bestimmung von $x_3$:**\n    Aus B6: $x_3 < x_2$.\n    Aus B3: $x_3 \\neq 1$.\n    Also kann $x_3$ nur $0$ oder (falls erlaubt) andere Werte sein, aber da es kleiner als eine Variable ist ($x_2$), und $x_2$ selbst Grenzen hat.\n    Da $x_3 < x_2$, muss $x_3 \\ge 0$. Also $x_3 = 0$ ist die einzige Option? Nein, wenn $x_2=3$, kann $x_3=1$ oder $2$ sein. Aber B3 sagt $x_3 \\neq 1$.\n    Also: Wenn $x_2 > x_3$:\n    - Falls $x_3 = 0$: OK (da $\\neq 1$).\n    - Falls $x_3 = 2$: Dann muss $x_2 > 2$, also $x_2=3$. Aber B6 sagt $x_3 < x_2$. Wenn $x_3=2, x_2=3$, ist das OK.\n    - Kann $x_3$ etwas anderes sein? Nein, nur ganze Zahlen.\n\n3.  **Kombination und Prüfung:**\n    Wir suchen eine konkrete Lösung. Versuchen wir es mit einem einfachen Ansatz für die unteren Grenzen ($0$).\n\n    Setzen wir:\n    $x_1 = 0$ (Erfüllt B5: $\\neq 1$, erfüllt B7 wenn $x_0 > 0$)\n    $x_2 = 1$ (Muss größer als $x_3$ sein, muss kleiner als $x_0$ sein)\n    $x_4 = 0$ (Erfüllt B8 wenn $x_0 > 0$)\n\n    Jetzt prüfen wir die Konsequenzen für $x_3$:\n    Wir brauchen $x_3 < x_2$. Da $x_2=1$, muss $x_3 < 1 \\Rightarrow x_3 = 0$.\n    Prüfen B3: $x_3 \\neq 1$ (OK, da $0$).\n    Prüfen B6: $x_3 < x_2 \\Rightarrow 0 < 1$ (OK).\n\n    Jetzt prüfen wir die Konsequenzen für $x_0$:\n    Wir brauchen $x_0 > x_1=0$, $x_0 > x_2=1$, $x_0 > x_4=0$.\n    Also muss $x_0 \\ge 2$ sein.\n\n    Jetzt prüfen wir B1: $x_1 \\neq x_3$.\n    Mit unseren Werten: $x_1 = 0, x_3 = 0$. Das verletzt B1 ($0 \\neq 0$ ist falsch).\n    \n    **Anpassung:** Wir müssen $x_1$ und $x_3$ unterschiedlich machen.\n    Da wir oben feststellten, dass bei $x_2=1$, zwingend $x_3=0$ sein muss (da nur ganze Zahlen), dann MUSS $x_1 \\neq 0$.\n    \n    Also:\n    - Setze $x_3 = 0$.\n    - Dann muss $x_1 > 0$ und $x_1 < x_0$. Auch B5 ($\\neq 1$) gilt.\n      Wenn $x_1 \\neq 0$ und $x_1 \\neq 1$, dann MUSS $x_1 = 2$ oder $3$ sein (da Bereich bis 3).\n    \n    Versuchen wir:\n    - $x_3 = 0$.\n    - $x_1 = 2$ (Erfüllt B5, erfüllt B1 da $\\neq x_3=0$).\n    - Dann muss $x_0 > x_1 \\Rightarrow x_0 > 2 \\Rightarrow x_0 = 3$.\n    \n    Jetzt prüfen wir den Rest mit diesen Werten:\n    - $x_0 = 3$\n    - $x_1 = 2$\n    - $x_3 = 0$\n    \n    Bedingungen für diese drei:\n    B1 ($x_1 \\neq x_3$): $2 \\neq 0$ (OK).\n    B5 ($x_1 \\neq 1$): $2 \\neq 1$ (OK).\n    B7 ($x_1 < x_0$): $2 < 3$ (OK).\n    \n    Jetzt brauchen wir Werte für $x_2, x_4$.\n    - B6: $x_3 < x_2 \\Rightarrow 0 < x_2$. Also $x_2 \\in \\{1, 2\\}$.\n      Aber auch B2: $x_2 < x_0 \\Rightarrow x_2 < 3$. Also $x_2 \\in \\{1, 2\\}$.\n    - B8: $x_4 < x_0 \\Rightarrow x_4 < 3$. Also $x_4 \\in \\{0, 1, 2\\}$.\n    \n    Wir können einfachste Werte wählen. Setzen wir $x_2 = 1$ und $x_4 = 0$.\n    \n    Jetzt prüfen wir alle Bedingungen mit dem Vorschlag:\n    **Vorschlag:** $x_0=3, x_1=2, x_2=1, x_3=0, x_4=0$.\n    \n    Restliche Variable: $x_5$.\n    - B4: $x_5 \\neq 0$. Also kann $x_5$ z.B. $1$ sein (oder $2, 3$). Wir wählen einfachste nicht-null Zahl im Bereich? Oder beliebiges. Setzen wir $x_5 = 1$.\n    \n    **Endgültige Prüfung aller Bedingungen mit:**\n    $x_0=3, x_1=2, x_2=1, x_3=0, x_4=0, x_5=1$\n\n    B1: $x_1 \\neq x_3 \\Rightarrow 2 \\neq 0$. (OK)\n    B2: $x_2 < x_0 \\Rightarrow 1 < 3$. (OK)\n    B3: $x_3 \\neq 1 \\Rightarrow 0 \\neq 1$. (OK)\n    B4: $x_5 \\neq 0 \\Rightarrow 1 \\neq 0$. (OK)\n    B5: $x_1 \\neq 1 \\Rightarrow 2 \\neq 1$. (OK)\n    B6: $x_3 < x_2 \\Rightarrow 0 < 1$. (OK)\n    B7: $x_1 < x_0 \\Rightarrow 2 < 3$. (OK)\n    B8: $x_4 < x_0 \\Rightarrow 0 < 3$. (OK)\n\n    Alle Bedingungen sind erfüllt. Die Werte liegen im Bereich $\\{0, \\dots, 3\\}$.\n\nLÖSUNG: x0=3, x1=2, x2=1, x3=0, x4=0, x5=1",
+          "parsed": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            1
+          ],
+          "correct": true,
+          "violated": [],
+          "ended": "DONE",
+          "done_reason": "stop",
+          "prompt_eval_count": 212,
+          "eval_count": 2208,
+          "total_duration": 106772753691,
+          "eval_duration": 105512023000,
+          "wall_s": 106.8,
+          "error": null
+        }
+      ],
+      "metis": [],
+      "solved": true,
+      "attempts_used": 1,
+      "qwen_wall_s": 106.8,
+      "qwen_output_tokens": 2208
+    },
+    "B": {
+      "arm": "B",
+      "attempts": [
+        {
+          "n": 1,
+          "prompt": "Finde ganze Zahlen x0 bis x5, die ALLE folgenden Bedingungen erfüllen.\nWertebereiche: x0 ∈ {0, …, 3}; x1 ∈ {0, …, 3}; x2 ∈ {0, …, 3}; x3 ∈ {0, …, 3}; x4 ∈ {0, …, 3}; x5 ∈ {0, …, 3}\nBedingungen:\nB1: x1 != x3\nB2: x2 < x0\nB3: x3 != 1\nB4: x5 != 0\nB5: x1 != 1\nB6: x3 < x2\nB7: x1 < x0\nB8: x4 < x0\n\nHinweis von MÉTIS (ein kleines, auf solche Aufgaben trainiertes neuronales Modell). Der Vorschlag ist NICHT geprüft und kann falsch sein:\nMÉTIS-Vorschlag: x0=3, x1=2, x2=2, x3=0, x4=0, x5=3\nEigene Sicherheit von MÉTIS, dass der Vorschlag vollständig stimmt: 98%\nWahrscheinlichste Werte je Variable laut MÉTIS:\n  x0: 3 (100%), sonst 2 (0%)\n  x1: 2 (88%), sonst 0 (11%)\n  x2: 2 (100%), sonst 1 (0%)\n  x3: 0 (99%), sonst 2 (1%)\n  x4: 0 (100%), sonst 2 (0%)\n  x5: 3 (100%), sonst 2 (0%)\n\nGib am Ende deiner Antwort genau eine Zeile in diesem Format aus:\nLÖSUNG: x0=<Zahl>, x1=<Zahl>, ...",
+          "answer_text": "Um die Lösung zu finden, prüfen wir jeden Wertebereich und jede Bedingung Schritt für Schritt basierend auf dem von MÉTIS vorgeschlagenen Satz (x0=3, x1=2, x2=2, x3=0, x4=0, x5=3):\n\n**Gegebene Werte:**\n*   $x_0 = 3$\n*   $x_1 = 2$\n*   $x_2 = 2$\n*   $x_3 = 0$\n*   $x_4 = 0$\n*   $x_5 = 3$\n\n**Prüfung der Bedingungen:**\n\n1.  **B1: $x_1 \\neq x_3$**\n    *   Ist $2 \\neq 0$? Ja, erfüllt.\n2.  **B2: $x_2 < x_0$**\n    *   Ist $2 < 3$? Ja, erfüllt.\n3.  **B3: $x_3 \\neq 1$**\n    *   Ist $0 \\neq 1$? Ja, erfüllt.\n4.  **B4: $x_5 \\neq 0$**\n    *   Ist $3 \\neq 0$? Ja, erfüllt.\n5.  **B5: $x_1 \\neq 1$**\n    *   Ist $2 \\neq 1$? Ja, erfüllt.\n6.  **B6: $x_3 < x_2$**\n    *   Ist $0 < 2$? Ja, erfüllt.\n7.  **B7: $x_1 < x_0$**\n    *   Ist $2 < 3$? Ja, erfüllt.\n8.  **B8: $x_4 < x_0$**\n    *   Ist $0 < 3$? Ja, erfüllt.\n\nAlle Bedingungen sind mit dem Satz von MÉTIS erfüllt. Die Werte liegen zudem innerhalb der angegebenen Bereiche ($\\{0, \\dots, 3\\}$).\n\nLÖSUNG: x0=3, x1=2, x2=2, x3=0, x4=0, x5=3",
+          "parsed": [
+            3,
+            2,
+            2,
+            0,
+            0,
+            3
+          ],
+          "correct": true,
+          "violated": [],
+          "ended": "DONE",
+          "done_reason": "stop",
+          "prompt_eval_count": 425,
+          "eval_count": 499,
+          "total_duration": 27011003894,
+          "eval_duration": 24788145000,
+          "wall_s": 27.0,
+          "error": null,
+          "equals_a_metis_candidate": true,
+          "hamming_to_last_metis": 0
+        }
+      ],
+      "metis": [
+        {
+          "kind": "propose",
+          "candidate": [
+            3,
+            2,
+            2,
+            0,
+            0,
+            3
+          ],
+          "top2": [
+            [
+              [
+                3,
+                0.9999998807907104
+              ],
+              [
+                2,
+                1.0297794972302654e-07
+              ]
+            ],
+            [
+              [
+                2,
+                0.8849612474441528
+              ],
+              [
+                0,
+                0.11449038237333298
+              ]
+            ],
+            [
+              [
+                2,
+                0.9999901056289673
+              ],
+              [
+                1,
+                9.010060239234008e-06
+              ]
+            ],
+            [
+              [
+                0,
+                0.9942370653152466
+              ],
+              [
+                2,
+                0.005709781777113676
+              ]
+            ],
+            [
+              [
+                0,
+                0.9999984502792358
+              ],
+              [
+                2,
+                9.167359280581877e-07
+              ]
+            ],
+            [
+              [
+                3,
+                0.9999991655349731
+              ],
+              [
+                2,
+                8.730584681870823e-07
+              ]
+            ]
+          ],
+          "p_hat": 0.9777024984359741,
+          "correct_posthoc": true
+        }
+      ],
+      "solved": true,
+      "attempts_used": 1,
+      "qwen_wall_s": 27.0,
+      "qwen_output_tokens": 499
+    }
+  },
+  {
+    "id": "T04",
+    "cls": "K2_schedule",
+    "hard": false,
+    "B": {
+      "arm": "B",
+      "attempts": [
+        {
+          "n": 1,
+          "prompt": "Finde ganze Zahlen x0 bis x6, die ALLE folgenden Bedingungen erfüllen.\nWertebereiche: x0 ∈ {0, …, 2}; x1 ∈ {0, …, 2}; x2 ∈ {0, …, 2}; x3 ∈ {0, …, 2}; x4 ∈ {0, …, 2}; x5 ∈ {0, …, 2}; x6 ∈ {0, …, 2}\nBedingungen:\nB1: x5 < x0\nB2: x2 != x3\nB3: x2 < x4\nB4: x1 != x2\nB5: Höchstens 2 der Variablen x0, x1, x2, x3, x4, x5, x6 haben den Wert 0\nB6: x1 < x2\n\nHinweis von MÉTIS (ein kleines, auf solche Aufgaben trainiertes neuronales Modell). Der Vorschlag ist NICHT geprüft und kann falsch sein:\nMÉTIS-Vorschlag: x0=2, x1=0, x2=1, x3=2, x4=2, x5=0, x6=2\nEigene Sicherheit von MÉTIS, dass der Vorschlag vollständig stimmt: 94%\nWahrscheinlichste Werte je Variable laut MÉTIS:\n  x0: 2 (100%), sonst 0 (0%)\n  x1: 0 (100%), sonst 1 (0%)\n  x2: 1 (100%), sonst 2 (0%)\n  x3: 2 (98%), sonst 1 (2%)\n  x4: 2 (100%), sonst 0 (0%)\n  x5: 0 (99%), sonst 1 (1%)\n  x6: 2 (100%), sonst 1 (0%)\n\nGib am Ende deiner Antwort genau eine Zeile in diesem Format aus:\nLÖSUNG: x0=<Zahl>, x1=<Zahl>, ...",
+          "answer_text": "Hier ist die schrittweise Überprüfung der Bedingungen für den vorgeschlagenen Satz von MÉTIS und die Suche nach einer gültigen Lösung.\n\n**Gegebener Vorschlag:** $x_0=2, x_1=0, x_2=1, x_3=2, x_4=2, x_5=0, x_6=2$\n\n**Überprüfung der Bedingungen:**\n*   **B1 ($x_5 < x_0$):** $0 < 2$. (Erfüllt)\n*   **B2 ($x_2 \\neq x_3$):** $1 \\neq 2$. (Erfüllt)\n*   **B3 ($x_2 < x_4$):** $1 < 2$. (Erfüllt)\n*   **B4 ($x_1 \\neq x_2$):** $0 \\neq 1$. (Erfüllt)\n*   **B5 (Höchstens 2 Variablen haben Wert 0):** Die Variablen mit dem Wert 0 sind $x_1$ und $x_5$. Das sind genau 2. (Erfüllt)\n*   **B6 ($x_1 < x_2$):** $0 < 1$. (Erfüllt)\n\n**Wertebereiche:** Alle Werte liegen zwischen 0 und 2, wie gefordert.\n\nDer Vorschlag erfüllt alle Bedingungen vollständig. Es gibt keine Notwendigkeit für eine andere Lösung, da der gegebene Satz korrekt ist.\n\nLÖSUNG: x0=2, x1=0, x2=1, x3=2, x4=2, x5=0, x6=2",
+          "parsed": [
+            2,
+            0,
+            1,
+            2,
+            2,
+            0,
+            2
+          ],
+          "correct": true,
+          "violated": [],
+          "ended": "DONE",
+          "done_reason": "stop",
+          "prompt_eval_count": 468,
+          "eval_count": 377,
+          "total_duration": 22037748183,
+          "eval_duration": 19707841000,
+          "wall_s": 22.0,
+          "error": null,
+          "equals_a_metis_candidate": true,
+          "hamming_to_last_metis": 0
+        }
+      ],
+      "metis": [
+        {
+          "kind": "propose",
+          "candidate": [
+            2,
+            0,
+            1,
+            2,
+            2,
+            0,
+            2
+          ],
+          "top2": [
+            [
+              [
+                2,
+                0.9999980926513672
+              ],
+              [
+                0,
+                1.6908626321310294e-06
+              ]
+            ],
+            [
+              [
+                0,
+                0.9999980926513672
+              ],
+              [
+                1,
+                1.2909489441881306e-06
+              ]
+            ],
+            [
+              [
+                1,
+                0.9996545314788818
+              ],
+              [
+                2,
+                0.00032935550552792847
+              ]
+            ],
+            [
+              [
+                2,
+                0.9798631072044373
+              ],
+              [
+                1,
+                0.01704276353120804
+              ]
+            ],
+            [
+              [
+                2,
+                0.9999691247940063
+              ],
+              [
+                0,
+                2.987370862683747e-05
+              ]
+            ],
+            [
+              [
+                0,
+                0.986155092716217
+              ],
+              [
+                1,
+                0.013844786211848259
+              ]
+            ],
+            [
+              [
+                2,
+                0.9999995231628418
+              ],
+              [
+                1,
+                4.1997378730229684e-07
+              ]
+            ]
+          ],
+          "p_hat": 0.9367417693138123,
+          "correct_posthoc": true
+        }
+      ],
+      "solved": true,
+      "attempts_used": 1,
+      "qwen_wall_s": 22.0,
+      "qwen_output_tokens": 377
+    },
+    "A": {
+      "arm": "A",
+      "attempts": [
+        {
+          "n": 1,
+          "prompt": "Finde ganze Zahlen x0 bis x6, die ALLE folgenden Bedingungen erfüllen.\nWertebereiche: x0 ∈ {0, …, 2}; x1 ∈ {0, …, 2}; x2 ∈ {0, …, 2}; x3 ∈ {0, …, 2}; x4 ∈ {0, …, 2}; x5 ∈ {0, …, 2}; x6 ∈ {0, …, 2}\nBedingungen:\nB1: x5 < x0\nB2: x2 != x3\nB3: x2 < x4\nB4: x1 != x2\nB5: Höchstens 2 der Variablen x0, x1, x2, x3, x4, x5, x6 haben den Wert 0\nB6: x1 < x2\n\nGib am Ende deiner Antwort genau eine Zeile in diesem Format aus:\nLÖSUNG: x0=<Zahl>, x1=<Zahl>, ...",
+          "answer_text": "Um die Lösung zu finden, analysieren wir die Bedingungen Schritt für Schritt und testen plausible Werte innerhalb der vorgegebenen Bereiche (alle Variablen ∈ {0, 1, 2}).\n\n**Gegebene Bedingungen:**\n*   **Bereiche:** Alle $x_i \\in \\{0, 1, 2\\}$.\n*   **B1:** $x_5 < x_0$\n*   **B2:** $x_2 \\neq x_3$\n*   **B3:** $x_2 < x_4$\n*   **B4:** $x_1 \\neq x_2$\n*   **B5:** Höchstens 2 der Variablen ($x_0, ..., x_6$) haben den Wert 0.\n*   **B6:** $x_1 < x_2$\n\n**Analyse und Ableitung:**\n\n1.  **Kette für $x_1, x_2$:**\n    Aus B6 wissen wir: $x_1 < x_2$.\n    Da die Werte nur $\\{0, 1, 2\\}$ sein können, sind die möglichen Paare $(x_1, x_2)$: $(0, 1), (0, 2), (1, 2)$.\n\n2.  **Kombination mit B4 ($x_1 \\neq x_2$):**\n    Dies ist bereits durch $<$ erfüllt, also keine neue Einschränkung.\n\n3.  **Analyse von $x_5$:**\n    Aus B1: $x_5 < x_0$. Da $x_0 \\le 2$, kann $x_0$ nur Werte $\\{1, 2\\}$ annehmen (wenn es 0 wäre, gäbe es kein positives kleineres Element im Bereich). Wenn $x_0=1$, dann muss $x_5=0$.\n    *   Fall A: $x_0 = 1 \\Rightarrow x_5 = 0$.\n    *   Fall B: $x_0 = 2 \\Rightarrow x_5 \\in \\{0, 1\\}$.\n\n4.  **Analyse von $x_3$:**\n    Aus B2: $x_2 \\neq x_3$. Da $x_2$ bereits festgelegt ist (aus Schritt 1), kann $x_3$ einfach einen anderen Wert annehmen ($0, 1$ oder $2$, je nachdem was nicht gleich $x_2$ ist).\n\n5.  **Analyse von $x_4$:**\n    Aus B3: $x_2 < x_4$. Da das Maximum 2 ist, muss gelten: Wenn $x_2 = 0 \\Rightarrow x_4 \\in \\{1, 2\\}$. Wenn $x_2 = 1 \\Rightarrow x_4 = 2$. Wenn $x_2 = 2$, gibt es keine Lösung für B3.\n    *   Also muss $x_2$ entweder 0 oder 1 sein.\n\n6.  **Zusammenführung der Einschränkungen:**\n    Wir suchen eine konkrete Lösung, die alle Bedingungen erfüllt und insbesondere B5 (Höchstens zwei Nullen) beachtet. Versuchen wir es mit einem Wert für $x_2$, der nicht zu viele Zwänge erzeugt.\n\n    *   **Versuch 1: Setze $x_2 = 0$.**\n        *   Aus B6 ($x_1 < x_2$): Da $x_2=0$, müsste $x_1 < 0$ sein, was unmöglich ist (Bereich beginnt bei 0).\n        *   **Fazit:** $x_2$ kann nicht 0 sein.\n\n    *   **Versuch 2: Setze $x_2 = 1$.**\n        *   Aus B6 ($x_1 < x_2=1$): Dann muss $x_1 = 0$.\n        *   Jetzt prüfen wir die anderen Bedingungen mit $(x_1, x_2) = (0, 1)$:\n            *   **B4:** $0 \\neq 1$ (Erfüllt).\n            *   **B3 ($x_2 < x_4$):** $1 < x_4$. Da Max=2, muss $x_4 = 2$.\n        *   Jetzt prüfen wir B5 und die Nullen:\n            *   Wir haben bereits eine Null bei $x_1$.\n            *   Wir dürfen noch höchstens eine weitere Null (insgesamt max 2).\n\n    *   **Bestimmung der restlichen Variablen ($x_0, x_3, x_5, x_6$):**\n        *   Wir haben aktuell: $x_1=0$, $x_2=1$, $x_4=2$. (Eine Null vorhanden).\n        *   **B1 ($x_5 < x_0$):**\n            *   Wenn wir keine weitere Null wollen, müssen wir sicherstellen, dass entweder $x_5 \\neq 0$ oder wenn $x_5=0$, dann ist das die zweite und letzte erlaubte Null.\n            *   Aber B1 verlangt $x_5 < x_0$. Da der kleinste Wert für eine Variable (außer vielleicht bei speziellen Konfigurationen) 0 ist, führt fast jede Wahl von $x_0 > 0$ dazu, dass man sich entscheiden muss: Ist $x_5=0$ oder nicht?\n            *   Wenn wir $x_5 \\neq 0$ wählen wollen (z.B. $x_5=1$), dann muss $x_0 > 1$, also $x_0 = 2$. Das ist möglich und erzeugt keine neue Null.\n            *   Alternativ: Wir lassen eine weitere Null zu ($x_5=0$). Dann muss $x_0 \\ge 1$. Wenn wir $x_0=1$ wählen, haben wir zwei Nullen ($x_1, x_5$). Das ist erlaubt (Höchstens 2).\n        *   **B2 ($x_2 \\neq x_3$):** Da $x_2 = 1$, muss $x_3 \\in \\{0, 2\\}$.\n            *   Wenn wir eine weitere Null vermeiden wollen: Wähle $x_3 = 2$. Dann haben wir nur die Null bei $x_1$. Das ist sicher.\n        *   **$x_6$:** Keine spezifischen Bedingungen außer Bereich und B5 (Zählung der Nullen). Wir können $x_6=0, 1$ oder $2$ wählen. Um es einfach zu halten und keine unnötige Null hinzuzufügen (obwohl erlaubt), wähle ich z.B. $x_6 = 1$.\n\n    *   **Konkrete Kandidaten-Lösung:**\n        Setzen wir:\n        $x_0 = 2$\n        $x_1 = 0$\n        $x_2 = 1$\n        $x_3 = 2$ (da $\\neq x_2=1$, und wir wollen keine Null hinzufügen)\n        $x_4 = 2$ (da $> x_2=1$)\n        $x_5 = 0$ oder $1$? Prüfen B1: $x_5 < x_0$. Wenn $x_0=2$, kann $x_5 \\in \\{0, 1\\}$.\n            *   Option A ($x_5=0$): Nullen sind bei $x_1$ und $x_5$. Gesamt = 2. Erlaubt.\n            *   Option B ($x_5=1$): Keine weitere Null. Gesamt = 1 (nur $x_1$). Auch erlaubt.\n        Wähle ich für die Lösung eine Variante, z.B. mit $x_5=0$. Dann ist die Zählung genau bei der Obergrenze von B5. Das ist oft ein \"sauberer\" Testfall. Oder um sicherzugehen, dass keine Bedingungen verletzt werden, wähle ich vielleicht $x_5=1$? Nein, es gibt keinen Grund zu vermeiden. Ich nehme eine beliebige gültige Kombination.\n        \n        Lassen Sie uns die folgende spezifische Lösung prüfen:\n        **Vorschlag:** $2, 0, 1, 2, 2, 0, 1$. (x6=1).\n        *   B1 ($x_5 < x_0$): $0 < 2$ -> OK.\n        *   B2 ($x_2 \\neq x_3$): $1 \\neq 2$ -> OK.\n        *   B3 ($x_2 < x_4$): $1 < 2$ -> OK.\n        *   B4 ($x_1 \\neq x_2$): $0 \\neq 1$ -> OK.\n        *   B5 (Nullen bei $x_1, x_5$) = 2 Nullen -> \"Höchstens 2\" ist erfüllt.\n        *   B6 ($x_1 < x_2$): $0 < 1$ -> OK.\n\n        Diese Lösung funktioniert perfekt. Es gibt auch andere (z.B. mit $x_5=1$, dann nur eine Null), aber die geforderte Ausgabe verlangt \"genau eine Zeile\". Ich gebe diese gültige Instanz aus.\n\nLÖSUNG: x0=2, x1=0, x2=1, x3=2, x4=2, x5=0, x6=1",
+          "parsed": [
+            2,
+            0,
+            1,
+            2,
+            2,
+            0,
+            1
+          ],
+          "correct": true,
+          "violated": [],
+          "ended": "DONE",
+          "done_reason": "stop",
+          "prompt_eval_count": 233,
+          "eval_count": 2122,
+          "total_duration": 108726832866,
+          "eval_duration": 107117347000,
+          "wall_s": 108.7,
+          "error": null
+        }
+      ],
+      "metis": [],
+      "solved": true,
+      "attempts_used": 1,
+      "qwen_wall_s": 108.7,
+      "qwen_output_tokens": 2122
+    }
+  },
+  {
+    "id": "T05",
+    "cls": "K3_logic",
+    "hard": false,
+    "A": {
+      "arm": "A",
+      "attempts": [
+        {
+          "n": 1,
+          "prompt": "Finde ganze Zahlen x0 bis x7, die ALLE folgenden Bedingungen erfüllen.\nWertebereiche: x0 ∈ {0, …, 1}; x1 ∈ {0, …, 1}; x2 ∈ {0, …, 1}; x3 ∈ {0, …, 1}; x4 ∈ {0, …, 1}; x5 ∈ {0, …, 1}; x6 ∈ {0, …, 1}; x7 ∈ {0, …, 1}\nBedingungen:\nB1: x4 = 1 ODER x7 = 0\nB2: x4 = 0 ODER x5 = 0\nB3: x2 = 0 ODER x7 = 1\nB4: x0 = 1 ODER x6 = 1\nB5: x2 = 1 ODER x5 = 1\nB6: x1 = 1 ODER x7 = 0\n\nGib am Ende deiner Antwort genau eine Zeile in diesem Format aus:\nLÖSUNG: x0=<Zahl>, x1=<Zahl>, ...",
+          "answer_text": "Um die Lösung zu finden, analysieren wir die Bedingungen Schritt für Schritt. Da alle Variablen $x_0$ bis $x_7$ nur den Wert 0 oder 1 annehmen können (basierend auf den angegebenen Bereichen), prüfen wir logische Konsequenzen:\n\n**Gegebene Bedingungen:**\n*   **B1:** $x_4 = 1 \\lor x_7 = 0$\n*   **B2:** $x_4 = 0 \\lor x_5 = 0$\n*   **B3:** $x_2 = 0 \\lor x_7 = 1$\n*   **B4:** $x_0 = 1 \\lor x_6 = 1$\n*   **B5:** $x_2 = 1 \\lor x_5 = 1$\n*   **B6:** $x_1 = 1 \\lor x_7 = 0$\n\n**Analyse von B3 und B4:**\nWenn wir annehmen, dass eine Variable den Wert 0 hat (z.B. $x_2=0$, was in B3 erlaubt ist), dann muss die andere Bedingung ($x_7=1$) wahr sein? Nein, es ist ein ODER. Aber schauen wir uns Fälle an:\n\nFall A: Angenommen $x_7 = 0$.\n*   Aus **B1**: Da $x_7=0$, ist die zweite Hälfte wahr, also erfüllt B1 unabhängig von $x_4$.\n*   Aus **B3**: Da $x_7=0$, muss die erste Hälfte ($x_2=0$) wahr sein. Also: **$x_2 = 0$**.\n*   Aus **B6**: Da $x_7=0$, ist die zweite Hälfte wahr, also erfüllt B6 unabhängig von $x_1$.\n\nFall A (Fortsetzung): Angenommen $x_7 = 1$.\n*   Aus **B3**: Da $x_7=1$, ist die zweite Hälfte wahr.\n*   Aus **B1** und **B6**: Beide erfordern, dass wenn $x_4$ bzw. $x_1$ nicht 0 sind (was sie sein können), es okay ist? Nein: B1 sagt \"x4=1 ODER x7=0\". Wenn $x_7=1$, dann MUSS $x_4=1$.\n*   Also wenn **$x_7 = 1 \\implies x_4 = 1$**.\n\nFall A (Fortsetzung): Angenommen $x_2 = 1$.\n*   Aus **B5**: Da $x_2=1$, ist die erste Hälfte wahr.\n*   Aber aus B3: Wenn $x_7=0$, dann muss $x_2=0$ sein. Also wenn $x_2=1$, kann nicht $x_7=0$. Somit muss **$x_7 = 1$** gelten, falls $x_2=1$.\n\nLassen Sie uns eine spezifische Lösung konstruieren, die alle erfüllt:\nVersuchen wir den Fall, wo viele Variablen auf 1 gesetzt sind.\nSetzen wir:\n$x_0 = 1$\n$x_1 = 1$\n$x_2 = 1$\n$x_3 = 1$ (beliebig)\n$x_4 = 1$\n$x_5 = 1$\n$x_6 = 1$\n$x_7 = 1$\n\nPrüfen wir diese Lösung:\n*   **B1:** $x_4=1 \\lor x_7=0$. Da $x_4=1$, ist es wahr. (OK)\n*   **B2:** $x_4=0 \\lor x_5=0$. Hier sind beide falsch ($x_4=1, x_5=1$). Das bedeutet diese Lösung funktioniert NICHT für B2!\n\nAlso muss bei B2 mindestens eine Variable 0 sein. Entweder $x_4=0$ oder $x_5=0$.\nWenn wir **$x_4 = 0$** setzen:\n*   Dann ist B1 erfüllt, wenn $x_7=0$. Also müssen wir prüfen: Wenn $x_4=0$, dann muss in B1 gelten ($x_7=0$).\n    *   Prüfen: B1 sagt \"A ODER B\". Wenn A falsch ist (da $x_4 \\neq 1$), MUSS B wahr sein. Also wenn $x_4=0$, dann **MUSS** $x_7=0$.\n\nAlso haben wir eine Kette:\nWenn $x_4 = 0 \\implies x_7 = 0$.\nUnd aus B2 ist es okay, da $x_4=0$ die Bedingung erfüllt.\n\nNun prüfen wir den Fall **$x_5 = 0$** (und behalten $x_4=1$):\n*   Wenn $x_4=1$, dann ist B1 und B6 immer wahr? Nein:\n    *   B1: $1 \\lor ...$ -> Wahr.\n    *   B2: $... \\lor 0$ -> Wahr (da $x_5=0$).\n*   Aber wir müssen auch B3, B4, B5 beachten.\n\nLassen Sie uns eine Lösung suchen, die explizit alle erfüllt. Wir setzen viele auf 1 und korrigieren wo nötig.\nVersuch: Alle = 1 außer einer?\nWenn $x_7=0$:\n*   B1 (wahr da x7=0)\n*   B3 ($x_2=0 \\lor 1$ -> wahr, also ok für jedes x2)\n*   B6 (wahr da x7=0)\nAlso wenn $x_7=0$, sind B1, B3, B6 automatisch erfüllt.\n\nBleiben: B2, B4, B5.\nWenn wir $x_7=0$ setzen, können wir andere frei wählen?\nPrüfen wir eine Konfiguration mit **$x_7 = 0$**:\nSetzen wir alle anderen auf 1 ($x_0..x_6 = 1$, $x_3=1$).\n*   B2: $x_4=0 \\lor x_5=0$. Da beide 1, ist dies FALSCH. Also muss entweder $x_4=0$ oder $x_5=0$ sein.\n\nSetzen wir **$x_5 = 0$** (und alle anderen auf 1):\n*   B2: ... $\\lor 0$ -> Wahr.\n*   B3: $x_2=0 \\lor x_7=1$. Da $x_7=0$, muss $x_2=0$ sein? Nein, es ist ODER. Wenn $x_7=0$, dann MUSS die andere Hälfte wahr sein für das \"ODER\" zu erfüllen?\n    *   Bedingung: A $\\lor$ B. Um erfüllt zu sein, darf nicht (A=Falsch UND B=Falsch) passieren.\n    *   Hier ist B ($x_7=1$). Da $x_7=0$, ist B falsch. Also MUSS A ($x_2=0$) wahr sein? Nein! Warte.\n    *   Ich verwechsle mich selbst. \"A ODER B\" bedeutet: Mindestens einer muss 1 (wahr) sein, wenn wir 1 als Wahr interpretieren. Aber hier sind die Variablen Boolesch oder Zahlen {0,1}. Normalerweise ist $x=1$ wahr und $x=0$ falsch.\n    *   Also: B3 ($x_2=0 \\lor x_7=1$). Wenn wir 0 als \"falsch\" für die Bedingung ansehen? Nein, die Bedingungen sind logische Aussagen über Werte.\n    *   Interpretation: Die Aussage \"$x_i = k$\" ist wahr oder falsch.\n        *   Wenn $k=x_i$, dann ist es immer wahr (z.B. wenn wir prüfen ob $x_2=0$). Aber hier steht in der Bedingung \"x2=0\". Das ist eine spezifische Prüfung.\n    *   Also: B3 sagt: \"(Wert von x2 ist 0) ODER (Wert von x7 ist 1)\".\n        *   Wenn wir setzen $x_2=1$ und $x_7=0$: Ist \"x2=0\" falsch? Ja. Ist \"x7=1\" falsch? Ja. Also ist die ganze Aussage FALSCH.\n    *   Daher: Um B3 zu erfüllen, wenn $x_7 \\neq 1$, MUSS $x_2 = 0$ sein.\n\nAlso aus **B3**: Wenn wir nicht $x_7=1$ setzen (also $x_7=0$), dann MÜSSEN wir $x_2=0$.\nAus **B5**: ($x_2=1 \\lor x_5=1$). Um dies zu erfüllen, wenn wir nicht $x_2=1$, MUSSEN wir $x_5=1$.\n\nLassen Sie uns eine Lösung konstruieren:\nWir setzen **$x_7 = 0$**.\nDann aus B3 folgt: **$x_2 = 0$** (da sonst beide Teile falsch wären).\nAus B5 ($x_2=1 \\lor x_5=1$): Da $x_2=0$, MUSS **$x_5 = 1$**.\nPrüfen wir jetzt alle Bedingungen mit:\n$x_7=0, x_2=0, x_5=1$. Alle anderen ($x_0, x_1, x_3, x_4, x_6$) setzen wir auf **1** (oder 0? Wir prüfen ob es funktioniert).\n\nTest-Konfiguration:\n$x_0 = 1$\n$x_1 = 1$\n$x_2 = 0$\n$x_3 = 1$\n$x_4 = 1$\n$x_5 = 1$\n$x_6 = 1$\n$x_7 = 0$\n\nPrüfung:\n*   **B1:** $x_4=1 \\lor x_7=0$. Da $x_4=1$, wahr. (OK)\n    *   Alternativ wenn wir $x_4=0$ gesetzt hätten? Wenn $x_4=0, x_5=1$: B2 ($0 \\lor 0$?) Nein, B2 ist $x_4=0 \\lor x_5=0$. Wenn $x_4=0$, wahr.\n    *   Aber wir haben oben angenommen alle anderen auf 1.\n\nPrüfen mit der Konfiguration: **Alle = 1 außer $x_2$ und $x_7$ (die sind 0)**.\n$x_0=1, x_1=1, x_3=1, x_4=1, x_5=1, x_6=1$.\n$x_2=0, x_7=0$.\n\n*   **B1:** $x_4(1)=1 \\lor ...$ -> Wahr.\n*   **B2:** $x_4(1)=0 \\lor x_5(1)=0$ -> Falsch! Beide Teile sind falsch ($1 \\neq 0$). Also ist B2 nicht erfüllt in dieser Konfiguration.\n\nWir müssen also bei B2 eine Variable auf 0 setzen, wenn die andere 1 ist?\nB2: $x_4=0 \\lor x_5=0$. Um wahr zu sein, muss mindestens eines 0 sein.\nIn unserer Konfiguration waren beide 1. Also falsch.\nAlso entweder $x_4=0$ oder $x_5=0$.\n\nVersuch mit **$x_4 = 0$** (und alle anderen auf 1 außer den Zwang aus B3):\nWenn wir $x_4=0$:\n*   Aus B2: Wahr.\n*   Aus B1 ($x_4=1 \\lor x_7=0$): Da $x_4=0$, MUSS **$x_7 = 0$** sein.\n    *   Also wenn wir $x_4=0$, dann muss $x_7=0$.\n*   Aus B3 ($x_2=0 \\lor x_7=1$): Da jetzt $x_7=0$, MUSS **$x_2 = 0$** sein.\n    *   Also wenn wir $x_4=0, x_7=0$, dann muss $x_2=0$.\n\nJetzt prüfen wir B5 ($x_2=1 \\lor x_5=1$): Da $x_2=0$, MUSS **$x_5 = 1$** sein.\nPrüfen wir jetzt alle Bedingungen mit:\n$x_4=0, x_7=0, x_2=0$. Alle anderen ($x_0, x_1, x_3, x_5, x_6$) setzen wir auf **1**.\n\nKonfiguration:\n$x_0 = 1$\n$x_1 = 1$\n$x_2 = 0$\n$x_3 = 1$\n$x_4 = 0$\n$x_5 = 1$\n$x_6 = 1$\n$x_7 = 0$\n\nPrüfung:\n*   **B1:** $x_4=1 \\lor x_7=0$. Da $x_7=0$, wahr. (OK)\n*   **B2:** $x_4=0 \\lor x_5=0$. Da $x_4=0$, wahr. (OK)\n*   **B3:** $x_2=0 \\lor x_7=1$. Da $x_2=0$, wahr. (OK)\n*   **B4:** $x_0=1 \\lor x_6=1$. Da beide 1, wahr. (OK)\n*   **B5:** $x_2=1 \\lor x_5=1$. Da $x_5=1$, wahr. (OK)\n*   **B6:** $x_1=1 \\lor x_7=0$. Da beide 1/0? $x_1=1$ ist wahr, also OK.\n\nDiese Konfiguration erfüllt alle Bedingungen!\nLösung:\n$x_0 = 1$\n$x_1 = 1$\n$x_2 = 0$\n$x_3 = 1$\n$x_4 = 0$\n$x_5 = 1$\n$x_6 = 1$\n$x_7 = 0$\n\nEs gibt auch andere Lösungen (z.B. wenn $x_5=0$, dann müsste man anders vorgehen), aber die Aufgabe verlangt \"Finde ganze Zahlen\", also eine Lösung ist ausreichend. Ich werde diese angeben.\n\nLÖSUNG: x0=1, x1=1, x2=0, x3=1, x4=0, x5=1, x6=1, x7=0",
+          "parsed": [
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0
+          ],
+          "correct": true,
+          "violated": [],
+          "ended": "DONE",
+          "done_reason": "stop",
+          "prompt_eval_count": 258,
+          "eval_count": 3340,
+          "total_duration": 167946503908,
+          "eval_duration": 166379148000,
+          "wall_s": 167.9,
+          "error": null
+        }
+      ],
+      "metis": [],
+      "solved": true,
+      "attempts_used": 1,
+      "qwen_wall_s": 167.9,
+      "qwen_output_tokens": 3340
+    },
+    "B": {
+      "arm": "B",
+      "attempts": [
+        {
+          "n": 1,
+          "prompt": "Finde ganze Zahlen x0 bis x7, die ALLE folgenden Bedingungen erfüllen.\nWertebereiche: x0 ∈ {0, …, 1}; x1 ∈ {0, …, 1}; x2 ∈ {0, …, 1}; x3 ∈ {0, …, 1}; x4 ∈ {0, …, 1}; x5 ∈ {0, …, 1}; x6 ∈ {0, …, 1}; x7 ∈ {0, …, 1}\nBedingungen:\nB1: x4 = 1 ODER x7 = 0\nB2: x4 = 0 ODER x5 = 0\nB3: x2 = 0 ODER x7 = 1\nB4: x0 = 1 ODER x6 = 1\nB5: x2 = 1 ODER x5 = 1\nB6: x1 = 1 ODER x7 = 0\n\nHinweis von MÉTIS (ein kleines, auf solche Aufgaben trainiertes neuronales Modell). Der Vorschlag ist NICHT geprüft und kann falsch sein:\nMÉTIS-Vorschlag: x0=1, x1=1, x2=1, x3=0, x4=1, x5=0, x6=1, x7=1\nEigene Sicherheit von MÉTIS, dass der Vorschlag vollständig stimmt: 99%\nWahrscheinlichste Werte je Variable laut MÉTIS:\n  x0: 1 (100%), sonst 0 (0%)\n  x1: 1 (100%), sonst 0 (0%)\n  x2: 1 (100%), sonst 0 (0%)\n  x3: 0 (100%), sonst 1 (0%)\n  x4: 1 (100%), sonst 0 (0%)\n  x5: 0 (100%), sonst 1 (0%)\n  x6: 1 (100%), sonst 0 (0%)\n  x7: 1 (100%), sonst 0 (0%)\n\nGib am Ende deiner Antwort genau eine Zeile in diesem Format aus:\nLÖSUNG: x0=<Zahl>, x1=<Zahl>, ...",
+          "answer_text": "Hier ist die schrittweise Überprüfung der Bedingungen für den vorgeschlagenen Satz von Werten (x0=1, x1=1, x2=1, x3=0, x4=1, x5=0, x6=1, x7=1):\n\n**Gegebene Werte:**\n*   $x_0 = 1$\n*   $x_1 = 1$\n*   $x_2 = 1$\n*   $x_3 = 0$ (Hinweis: Die Bedingungen B1-B6 beziehen sich nicht auf $x_3$, daher ist der Wert beliebig, hier gewählt als 0).\n*   $x_4 = 1$\n*   $x_5 = 0$\n*   $x_6 = 1$\n*   $x_7 = 1$\n\n**Überprüfung der Bedingungen:**\n\n1.  **B1: $x_4 = 1$ ODER $x_7 = 0$**\n    *   Ist $x_4 = 1$? Ja ($1=1$).\n    *   Ergebnis: Erfüllt (da die erste Bedingung wahr ist, muss keine zweite geprüft werden).\n\n2.  **B2: $x_4 = 0$ ODER $x_5 = 0$**\n    *   Ist $x_4 = 0$? Nein ($1 \\neq 0$).\n    *   Ist $x_5 = 0$? Ja ($0=0$).\n    *   Ergebnis: Erfüllt (da die zweite Bedingung wahr ist).\n\n3.  **B3: $x_2 = 0$ ODER $x_7 = 1$**\n    *   Ist $x_2 = 0$? Nein ($1 \\neq 0$).\n    *   Ist $x_7 = 1$? Ja ($1=1$).\n    *   Ergebnis: Erfüllt (da die zweite Bedingung wahr ist).\n\n4.  **B4: $x_0 = 1$ ODER $x_6 = 1$**\n    *   Ist $x_0 = 1$? Ja ($1=1$).\n    *   Ergebnis: Erfüllt (da die erste Bedingung wahr ist).\n\n5.  **B5: $x_2 = 1$ ODER $x_5 = 1$**\n    *   Ist $x_2 = 1$? Ja ($1=1$).\n    *   Ergebnis: Erfüllt (da die erste Bedingung wahr ist).\n\n6.  **B6: $x_1 = 1$ ODER $x_7 = 0$**\n    *   Ist $x_1 = 1$? Ja ($1=1$).\n    *   Ergebnis: Erfüllt (da die erste Bedingung wahr ist).\n\nAlle Bedingungen B1 bis B6 sind mit den Werten erfüllt. Der Wert von $x_3$ wird durch keine der logischen Aussagen eingeschränkt, sodass sowohl 0 als auch 1 möglich wären; im Kontext des \"MÉTIS-Vorschlags\" wurde jedoch explizit 0 gewählt und dies ist eine gültige Lösungsmenge für das System.\n\nLÖSUNG: x0=1, x1=1, x2=1, x3=0, x4=1, x5=0, x6=1, x7=1",
+          "parsed": [
+            1,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1
+          ],
+          "correct": true,
+          "violated": [],
+          "ended": "DONE",
+          "done_reason": "stop",
+          "prompt_eval_count": 518,
+          "eval_count": 764,
+          "total_duration": 39908435440,
+          "eval_duration": 37249118000,
+          "wall_s": 39.9,
+          "error": null,
+          "equals_a_metis_candidate": true,
+          "hamming_to_last_metis": 0
+        }
+      ],
+      "metis": [
+        {
+          "kind": "propose",
+          "candidate": [
+            1,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1
+          ],
+          "top2": [
+            [
+              [
+                1,
+                0.9999998807907104
+              ],
+              [
+                0,
+                6.949401409883649e-08
+              ]
+            ],
+            [
+              [
+                1,
+                0.9999994039535522
+              ],
+              [
+                0,
+                5.98014139541192e-07
+              ]
+            ],
+            [
+              [
+                1,
+                0.9999696016311646
+              ],
+              [
+                0,
+                3.043603828700725e-05
+              ]
+            ],
+            [
+              [
+                0,
+                0.9999998807907104
+              ],
+              [
+                1,
+                9.012235580030392e-08
+              ]
+            ],
+            [
+              [
+                1,
+                0.9999942779541016
+              ],
+              [
+                0,
+                5.741198947362136e-06
+              ]
+            ],
+            [
+              [
+                0,
+                0.999419093132019
+              ],
+              [
+                1,
+                0.0005808983696624637
+              ]
+            ],
+            [
+              [
+                1,
+                0.9999456405639648
+              ],
+              [
+                0,
+                5.43298629054334e-05
+              ]
+            ],
+            [
+              [
+                1,
+                0.9999914169311523
+              ],
+              [
+                0,
+                8.634957339381799e-06
+              ]
+            ]
+          ],
+          "p_hat": 0.9949658513069153,
+          "correct_posthoc": true
+        }
+      ],
+      "solved": true,
+      "attempts_used": 1,
+      "qwen_wall_s": 39.9,
+      "qwen_output_tokens": 764
+    }
+  },
+  {
+    "id": "T06",
+    "cls": "K3_logic",
+    "hard": false,
+    "B": {
+      "arm": "B",
+      "attempts": [
+        {
+          "n": 1,
+          "prompt": "Finde ganze Zahlen x0 bis x8, die ALLE folgenden Bedingungen erfüllen.\nWertebereiche: x0 ∈ {0, …, 1}; x1 ∈ {0, …, 1}; x2 ∈ {0, …, 1}; x3 ∈ {0, …, 1}; x4 ∈ {0, …, 1}; x5 ∈ {0, …, 1}; x6 ∈ {0, …, 1}; x7 ∈ {0, …, 1}; x8 ∈ {0, …, 1}\nBedingungen:\nB1: x4 = 0 ODER x7 = 1 ODER x8 = 1\nB2: x0 = 1 ODER x1 = 0\nB3: x3 = 1 ODER x5 = 0\nB4: x2 = 1 ODER x4 = 0\nB5: x1 = 1 ODER x4 = 1\nB6: x0 = 1 ODER x1 = 1 ODER x5 = 1\nB7: x2 = 0 ODER x3 = 0 ODER x8 = 1\nB8: x1 = 0 ODER x8 = 0\nB9: x2 = 1 ODER x7 = 0\n\nHinweis von MÉTIS (ein kleines, auf solche Aufgaben trainiertes neuronales Modell). Der Vorschlag ist NICHT geprüft und kann falsch sein:\nMÉTIS-Vorschlag: x0=1, x1=0, x2=1, x3=1, x4=1, x5=0, x6=0, x7=1, x8=1\nEigene Sicherheit von MÉTIS, dass der Vorschlag vollständig stimmt: 97%\nWahrscheinlichste Werte je Variable laut MÉTIS:\n  x0: 1 (100%), sonst 0 (0%)\n  x1: 0 (100%), sonst 1 (0%)\n  x2: 1 (100%), sonst 0 (0%)\n  x3: 1 (100%), sonst 0 (0%)\n  x4: 1 (100%), sonst 0 (0%)\n  x5: 0 (100%), sonst 1 (0%)\n  x6: 0 (100%), sonst 1 (0%)\n  x7: 1 (100%), sonst 0 (0%)\n  x8: 1 (100%), sonst 0 (0%)\n\nGib am Ende deiner Antwort genau eine Zeile in diesem Format aus:\nLÖSUNG: x0=<Zahl>, x1=<Zahl>, ...",
+          "answer_text": "Hier ist die schrittweise Überprüfung der Bedingungen für den vorgeschlagenen Wertesatz $x_0=1, x_1=0, x_2=1, x_3=1, x_4=1, x_5=0, x_6=0, x_7=1, x_8=1$:\n\n*   **B1:** ($x_4 = 0$) ODER ($x_7 = 1$) ODER ($x_8 = 1$).\n    *   $x_4=1$, aber $x_7=1$. Bedingung erfüllt.\n*   **B2:** ($x_0 = 1$) ODER ($x_1 = 0$).\n    *   Beide Teile sind wahr. Bedingung erfüllt.\n*   **B3:** ($x_3 = 1$) ODER ($x_5 = 0$).\n    *   $x_3=1$. Bedingung erfüllt.\n*   **B4:** ($x_2 = 1$) ODER ($x_4 = 0$).\n    *   $x_2=1$. Bedingung erfüllt.\n*   **B5:** ($x_1 = 1$) ODER ($x_4 = 1$).\n    *   $x_4=1$. Bedingung erfüllt.\n*   **B6:** ($x_0 = 1$) ODER ($x_1 = 1$) ODER ($x_5 = 1$).\n    *   $x_0=1$. Bedingung erfüllt.\n*   **B7:** ($x_2 = 0$) ODER ($x_3 = 0$) ODER ($x_8 = 1$).\n    *   $x_8=1$. Bedingung erfüllt.\n*   **B8:** ($x_1 = 0$) ODER ($x_8 = 0$).\n    *   $x_1=0$. Bedingung erfüllt.\n*   **B9:** ($x_2 = 1$) ODER ($x_7 = 0$).\n    *   $x_2=1$. Bedingung erfüllt.\n\nAlle Bedingungen sind mit diesem Wertesatz erfüllt. Die Variablen liegen zudem in den angegebenen Bereichen (alle Werte sind entweder 0 oder 1).\n\nLÖSUNG: x0=1, x1=0, x2=1, x3=1, x4=1, x5=0, x6=0, x7=1, x8=1",
+          "parsed": [
+            1,
+            0,
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1
+          ],
+          "correct": true,
+          "violated": [],
+          "ended": "DONE",
+          "done_reason": "stop",
+          "prompt_eval_count": 621,
+          "eval_count": 573,
+          "total_duration": 30502420023,
+          "eval_duration": 27675788000,
+          "wall_s": 30.5,
+          "error": null,
+          "equals_a_metis_candidate": true,
+          "hamming_to_last_metis": 0
+        }
+      ],
+      "metis": [
+        {
+          "kind": "propose",
+          "candidate": [
+            1,
+            0,
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1
+          ],
+          "top2": [
+            [
+              [
+                1,
+                0.9999992847442627
+              ],
+              [
+                0,
+                7.083769446580845e-07
+              ]
+            ],
+            [
+              [
+                0,
+                0.9991534948348999
+              ],
+              [
+                1,
+                0.0008465552236884832
+              ]
+            ],
+            [
+              [
+                1,
+                0.9999983310699463
+              ],
+              [
+                0,
+                1.7130996639025398e-06
+              ]
+            ],
+            [
+              [
+                1,
+                0.9999837875366211
+              ],
+              [
+                0,
+                1.6156442143255845e-05
+              ]
+            ],
+            [
+              [
+                1,
+                0.9996200799942017
+              ],
+              [
+                0,
+                0.00037989611155353487
+              ]
+            ],
+            [
+              [
+                0,
+                0.9999938011169434
+              ],
+              [
+                1,
+                6.1713226386928e-06
+              ]
+            ],
+            [
+              [
+                0,
+                0.9999997615814209
+              ],
+              [
+                1,
+                2.937924818979809e-07
+              ]
+            ],
+            [
+              [
+                1,
+                0.9999949932098389
+              ],
+              [
+                0,
+                5.056399459135719e-06
+              ]
+            ],
+            [
+              [
+                1,
+                0.999976396560669
+              ],
+              [
+                0,
+                2.3659529688302428e-05
+              ]
+            ]
+          ],
+          "p_hat": 0.974815845489502,
+          "correct_posthoc": true
+        }
+      ],
+      "solved": true,
+      "attempts_used": 1,
+      "qwen_wall_s": 30.5,
+      "qwen_output_tokens": 573
+    },
+    "A": {
+      "arm": "A",
+      "attempts": [
+        {
+          "n": 1,
+          "prompt": "Finde ganze Zahlen x0 bis x8, die ALLE folgenden Bedingungen erfüllen.\nWertebereiche: x0 ∈ {0, …, 1}; x1 ∈ {0, …, 1}; x2 ∈ {0, …, 1}; x3 ∈ {0, …, 1}; x4 ∈ {0, …, 1}; x5 ∈ {0, …, 1}; x6 ∈ {0, …, 1}; x7 ∈ {0, …, 1}; x8 ∈ {0, …, 1}\nBedingungen:\nB1: x4 = 0 ODER x7 = 1 ODER x8 = 1\nB2: x0 = 1 ODER x1 = 0\nB3: x3 = 1 ODER x5 = 0\nB4: x2 = 1 ODER x4 = 0\nB5: x1 = 1 ODER x4 = 1\nB6: x0 = 1 ODER x1 = 1 ODER x5 = 1\nB7: x2 = 0 ODER x3 = 0 ODER x8 = 1\nB8: x1 = 0 ODER x8 = 0\nB9: x2 = 1 ODER x7 = 0\n\nGib am Ende deiner Antwort genau eine Zeile in diesem Format aus:\nLÖSUNG: x0=<Zahl>, x1=<Zahl>, ...",
+          "answer_text": "Um die Lösung zu finden, analysieren wir die Bedingungen Schritt für Schritt und eliminieren Inkonsistenzen.\n\n**Gegebene Wertebereiche:** Alle Variablen $x_0$ bis $x_8$ können nur den Wert 0 oder 1 annehmen ($\\{0, \\dots, 1\\}$).\n\n**Analyse der Bedingungen:**\n1.  **B2**: $x_0 = 1$ ODER $x_1 = 0$.\n    *   Wenn $x_0=0$, dann muss $x_1=0$ sein.\n    *   Wenn $x_0=1$, kann $x_1$ beliebig (0 oder 1) sein.\n\n2.  **B8**: $x_1 = 0$ ODER $x_8 = 0$.\n    *   Wenn $x_1=1$, dann muss $x_8=0$ sein.\n\n3.  **B5**: $x_1 = 1$ ODER $x_4 = 1$.\n    *   Wenn $x_1=0$, dann muss $x_4=1$ sein.\n\n4.  **B6**: $x_0 = 1$ ODER $x_1 = 1$ ODER $x_5 = 1$.\n    *   Dies bedeutet, dass nicht alle drei Variablen gleichzeitig 0 sein können.\n\n**Versuch mit einer Annahme:**\nAngenommen, wir setzen **alle Variablen auf 0**:\n$x_0=0, x_1=0, \\dots, x_8=0$.\n\nPrüfen wir die Bedingungen für diesen Fall:\n*   B2 ($x_0=1$ ODER $x_1=0$): Da $x_1=0$, ist diese Bedingung erfüllt.\n*   B3 ($x_3=1$ ODER $x_5=0$): Da $x_5=0$, ist diese Bedingung erfüllt.\n*   B4 ($x_2=1$ ODER $x_4=0$): Da $x_4=0$, ist diese Bedingung erfüllt.\n*   B6 ($x_0=1$ ODER $x_1=1$ ODER $x_5=1$): Hier sind alle Terme falsch (alle 0). **Bedingung nicht erfüllt.**\n\nAlso kann die Lösung \"Alle Nullen\" nicht stimmen. Wir müssen mindestens eine Variable auf 1 setzen, um B6 zu erfüllen.\n\n**Versuch mit minimaler Änderung:**\nWir versuchen, nur $x_5$ auf 1 zu setzen und den Rest auf 0:\n$x_0=0, x_1=0, x_2=0, x_3=0, x_4=0, \\mathbf{x_5=1}, x_6=0, x_7=0, x_8=0$.\n\nPrüfung aller Bedingungen:\n*   B1 ($x_4=0$ ODER $x_7=1$ ODER $x_8=1$): Da $x_4=0$, erfüllt.\n*   **B2** ($x_0=1$ ODER $x_1=0$): Da $x_1=0$, erfüllt.\n*   **B3** ($x_3=1$ ODER $x_5=0$): Da $x_5=1$, ist der erste Teil falsch, aber wir brauchen nur einen wahren Teil? Nein, die Bedingung ist \"A oder B\". Wenn A falsch und B wahr (da $x_5 \\neq 0$), dann ist es erfüllt. Warte: Die Bedingung lautet \"$x_3 = 1$ ODER $x_5 = 0$\".\n    *   Ist $x_3=1$? Nein ($0$).\n    *   Ist $x_5=0$? Nein ($1$).\n    *   Also ist B3 **nicht erfüllt**.\n\nWir müssen also entweder $x_3=1$ setzen oder $x_5=0$. Da wir gerade versucht haben, $x_5=1$, um B6 zu retten, müssten wir stattdessen $x_3=1$ setzen.\n\n**Neuer Versuch:**\nSetzen wir $x_5=1$ (für B6) und $x_3=1$ (für B3). Rest auf 0?\n$x_0=0, x_1=0, x_2=0, \\mathbf{x_3=1}, x_4=0, \\mathbf{x_5=1}, x_6=0, x_7=0, x_8=0$.\n\nPrüfung:\n*   B1 ($x_4=0$ ...): Erfüllt.\n*   B2 ($x_1=0$ ...): Erfüllt.\n*   **B3** ($x_3=1$ ODER $x_5=0$): Da $x_3=1$, erfüllt.\n*   **B4** ($x_2=1$ ODER $x_4=0$): Da $x_4=0$, erfüllt.\n*   B5 ($x_1=1$ ODER $x_4=1$): Hier ist $x_1=0$ und $x_4=0$. **B5 nicht erfüllt.**\n\nUm B5 zu erfüllen, müssen wir entweder $x_1=1$ oder $x_4=1$ setzen.\nWenn wir $x_4=1$ setzen:\n*   Dann ist B1 ($x_4=0$ ...) noch okay? Ja, \"A ODER B\", wenn A wahr (da $x_4 \\neq 0$, also Teil \"$x_4=0$\" falsch), aber der erste Disjunkt \"$x_4=0$\" wird zu einer Aussage.\n    *   Bedingung B1: \"$x_4 = 0$ ODER ...\". Wenn wir $x_4=1$ setzen, ist der Term \"$x_4=0$\" FALSCH. Wir brauchen dann einen anderen wahren Term ($x_7=1$ oder $x_8=1$).\n    *   Bedingung B5: \"$x_1 = 1$ ODER $x_4 = 1$\". Wenn wir $x_4=1$, ist das erfüllt.\n\nAlso, setzen wir $x_4=1$. Dann müssen wir für B1 einen anderen wahren Term finden ($x_7=1$ oder $x_8=1$).\nSetzen wir z.B. $x_7=0$ und $x_8=0$, dann ist B1 nicht erfüllt (da alle Teile falsch: $x_4 \\neq 0, x_7 \\neq 1, x_8 \\neq 1$).\nAlso müssen wir für B1 entweder $x_7=1$ oder $x_8=1$.\n\nVersuchen wir eine Konfiguration mit vielen Einsen? Oder suchen wir die spezifische Lösung, die oft in solchen Rätseln vorkommt. Vielleicht ist es einfacher, alle auf 0 zu setzen und dann nur das Minimum an Änderungen vorzunehmen.\nAber wir haben gesehen:\n- B6 verlangt mindestens eine von $x_0, x_1, x_5$ sei 1.\n- Wenn $x_0=0$ und $x_1=0$, muss $x_5=1$.\n- Wenn $x_5=1$, dann ist der Term \"$x_5=0$\" in B3 falsch -> also muss $x_3=1$.\n- Wenn $x_4=0$ (was wir bisher annahmen), dann ist B5 ($x_1=1$ ODER $x_4=1$) nur erfüllt, wenn $x_1=1$.\n    *   Aber wenn $x_1=1$, dann ist der Term \"$x_1=0$\" in B2 falsch -> also muss $x_0=1$.\n    *   Also: Wenn wir den Pfad über $x_4=0$ gehen, brauchen wir $x_5=1 \\to x_3=1$. Und für B5 brauchen wir $x_1=1$. Für B2 mit $x_1=1$ brauchen wir $x_0=1$.\n    *   Also: $x_0=1, x_1=1, x_3=1, x_4=0, x_5=1$. Rest?\n        *   Prüfen B8 ($x_1=0$ ODER $x_8=0$): Da $x_1=1$, muss $x_8=0$.\n        *   Prüfen B7 ($x_2=0$ ODER $x_3=0$ ODER $x_8=1$): Da $x_3=1$ und $x_8=0$, muss $x_2=0$.\n        *   Prüfen B9 ($x_2=1$ ODER $x_7=0$): Da wir $x_2=0$, ist der erste Teil falsch, also muss $x_7=0$.\n    *   Also: $x_0=1, x_1=1, x_2=0, x_3=1, x_4=0, x_5=1, x_6=?, x_7=0, x_8=0$.\n        *   B1 ($x_4=0$ ODER $x_7=1$ ODER $x_8=1$): Da $x_4=0$, ist der erste Teil wahr. Erfüllt! (Der Rest muss nicht stimmen).\n    *   Diese Lösung scheint konsistent: $(1, 1, 0, 1, 0, 1, ?, 0, 0)$.\n\nGibt es eine einfachere? Was wenn wir alle auf 0 setzen und nur $x_5=1$ (für B6)?\nDann ist B3 ($x_3=1$ ODER $x_5=0$) nicht erfüllt. Also muss $x_3=1$.\nWenn $x_4=0$, dann B5 ($x_1=1$ ODER $x_4=1$) -> braucht $x_1=1$.\nWenn $x_1=1$, dann B2 ($x_0=1$ ODER $x_1=0$) -> da $x_1 \\neq 0$, muss $x_0=1$.\nAlso führt der Pfad mit $x_4=0$ immer zu $(1, 1, ?, 1, 0, 1, ?, 0, 0)$ (mit Einschränkungen für B7/B8).\n\nWas wenn wir $x_4=1$ setzen?\nDann ist B5 erfüllt.\nB1 ($x_4=0$ ...) -> da $x_4 \\neq 0$, muss ein anderer Term wahr sein: $x_7=1$ ODER $x_8=1$.\nWenn wir $x_4=1$, dann können wir versuchen, andere auf 0 zu lassen.\nB6 ($x_0=1$ ODER $x_1=1$ ODER $x_5=1$). Wir brauchen mindestens eine davon.\nVersuchen wir nur $x_5=1$. Dann sind B3 erfüllt? Nein, wenn $x_5=1$, dann \"$x_5=0$\" falsch -> muss $x_3=1$.\nAlso: Wenn $x_4=1$ und $x_5=1$:\n- B6 ok (durch $x_5$).\n- B3 braucht $x_3=1$.\n- B2 ($x_0=1$ ODER $x_1=0$): Kann man auf 0 lassen? Ja, wenn $x_1=0$.\n- B8 ($x_1=0$ ODER $x_8=0$): Wenn $x_1=0$, ok.\n- B7 ($x_2=0$ ...): Wenn wir $x_2=0$, ok.\n- B9 ($x_2=1$ ODER $x_7=0$): Da $x_2=0$, muss $x_7=0$.\n- Aber für B1 brauchen wir $x_7=1$ oder $x_8=1$ (da $x_4 \\neq 0$).\n    *   Wenn wir $x_7=0$ setzen, dann muss $x_8=1$.\nAlso: $(?, ?, ?, 1, 1, 1, 0, 1)$. Mit $x_2=0, x_3=1, x_5=1, x_4=1, x_7=0, x_8=1$. Und B6 erfüllt durch $x_5$ oder $x_0/x_1$.\nWenn wir $x_0=0, x_1=0$:\n- B2 ($x_1=0$) ok.\n- B8 ($x_1=0$) ok.\n- Also: $(0, 0, 0, 1, 1, 1, 0, ?, 1)$? Nein $x_7=0$. Also $(0, 0, 0, 1, 1, 1, 0, 0, 1)$.\nPrüfen:\nB1 ($x_4 \\neq 0$, also falsch; $x_7=0$ (falsch); $x_8=1$ (wahr)) -> OK.\nB2 ($x_1=0$) -> OK.\nB3 ($x_5=1 \\to x_5=0$ falsch, aber $x_3=1$ wahr) -> OK.\nB4 ($x_4=1$, also \"$x_4=0$\" falsch; muss $x_2=1$ sein? Nein: B4 ist \"$x_2=1$ ODER $x_4=0$\". Da $x_4 \\neq 0$, muss $x_2=1$.\nAh, ich habe einen Fehler gemacht. In der vorherigen Logik dachte ich \"da $x_4=1$\", aber die Bedingung ist \"$x_2=1$ ODER $x_4=0$\". Wenn $x_4 \\neq 0$, dann muss $x_2=1$.\nAlso in diesem Fall $(?, ?, 1, 1, 1, 1, 0, 0, 1)$.\n\nEs gibt viele Lösungen. Die Aufgabe verlangt \"ALLE folgenden Bedingungen erfüllen\". Es ist wahrscheinlich eine spezifische Lösung gemeint oder jede gültige Kombination. Da keine Einschränkung auf Minimalität gegeben ist, aber oft die einfachste (mit vielen Nullen) gesucht wird?\nSchauen wir uns den Fall an: **Alle Variablen = 0**.\nB1 ($x_4=0$): Wahr.\nB2 ($x_1=0$): Wahr.\nB3 ($x_5=0$): Wahr.\nB4 ($x_4=0$): Wahr.\nB5 ($x_1=1$ ODER $x_4=1$): Falsch (beide 0). -> **Nicht erfüllt**.\n\nAlso muss mindestens eine von B5, B6 etc. aktiv sein.\nDie Lösung $(0, 0, 0, 0, 0, 0, 0, 0, 0)$ ist falsch wegen B5.\nDie Lösung mit nur $x_4=1$ (und Rest 0)?\nB5 ($x_4=1$): Wahr.\nB6 ($x_0..x_5$: alle 0) -> Falsch. Also muss mindestens eines von $x_0, x_1, x_5$ sein 1.\n\nEs scheint, als ob die Aufgabe eine **eindeutige** Lösung erwartet oder ich soll einfach *eine* gültige angeben? \"Finde ... die ALLE folgenden Bedingungen erfüllen\". Normalerweise impliziert das in einem mathematischen Kontext ohne weitere Einschränkungen (wie Minimierung), dass es mehrere geben kann, aber oft ist der Kontext ein Puzzle mit einer einzigen Lösung.\nVielleicht habe ich einen Fehler im Verständnis von B1? \"x4 = 0 ODER ...\". Wenn x4=0, dann wahr. In meiner Analyse oben: Bei $(0,0,0,0,0,0,0,0,0)$ ist $x_4=0$, also B1 wahr.\nDer Fehler war nur bei B5.\n\nVersuchen wir die Lösung: **Alle = 0 außer x4**.\n$x=(0,0,0,0,\\mathbf{1},0,0,0,0)$.\nB1 ($x_4=0$): Falsch (da $x_4 \\neq 0$). Dann muss $x_7=1$ oder $x_8=1$. Hier beide 0. -> **Fehler**.\n\nAlso kann man nicht einfach nur x4 auf 1 setzen, wenn B1 den ersten Teil \"$x_4=0$\" hat und das falsch wird.\nWenn $x_4 \\neq 0$, dann muss in B1 entweder $x_7=1$ oder $x_8=1$.\n\nEs gibt also eine Abhängigkeit: Wenn wir $x_4$ von 0 auf 1 ändern, müssen wir etwas für B1 tun.\nWenn wir bei $x_4=0$ bleiben (was einfacher ist), dann sind B1 und B4 automatisch erfüllt (\"da x4=0\").\nDann brauchen wir nur B5 zu erfüllen: \"$x_1=1$ ODER $x_4=1$\". Da $x_4=0$, muss **$x_1=1$**.\nWenn $x_1=1$:\n- B2 ($x_0=1$ ODER $x_1=0$): Da $x_1 \\neq 0$, muss **$x_0=1$**.\n- B8 ($x_1=0$ ODER $x_8=0$): Da $x_1 \\neq 0$, muss **$x_8=0$**.\nJetzt haben wir: $x_4=0, x_1=1, x_0=1, x_8=0$.\nB6 ($x_0=1$ ODER ...): Da $x_0=1$, erfüllt.",
+          "parsed": null,
+          "correct": false,
+          "violated": null,
+          "ended": "OUTPUT_LIMIT_REACHED_INCOMPLETE",
+          "done_reason": "length",
+          "prompt_eval_count": 338,
+          "eval_count": 4096,
+          "total_duration": 203892323538,
+          "eval_duration": 202445878000,
+          "wall_s": 203.9,
+          "error": null
+        },
+        {
+          "n": 2,
+          "prompt": "Prüfer: Keine auswertbare LÖSUNG-Zeile mit allen Variablen gefunden.\n\nGib am Ende deiner Antwort genau eine Zeile in diesem Format aus:\nLÖSUNG: x0=<Zahl>, x1=<Zahl>, ...",
+          "answer_text": "Um die Lösung zu finden, analysieren wir die Bedingungen systematisch unter der Annahme, dass alle Variablen nur den Wert 0 oder 1 annehmen können. Wir suchen eine Kombination, bei der **alle** logischen Aussagen wahr sind.\n\n**Analyse:**\nWir beginnen mit dem Fall, in dem $x_4 = 0$. Dies erfüllt automatisch die Bedingungen B1 und B4 (da beide \"Oder x4=0\" enthalten).\nDa $x_4 = 0$, muss Bedingung **B5** ($x_1 = 1$ ODER $x_4 = 1$) durch $x_1 = 1$ erfüllt werden.\nWenn $x_1 = 1$:\n-   Bedingung **B2** ($x_0 = 1$ ODER $x_1 = 0$): Da $x_1 \\neq 0$, muss $x_0 = 1$.\n-   Bedingung **B8** ($x_1 = 0$ ODER $x_8 = 0$): Da $x_1 \\neq 0$, muss $x_8 = 0$.\n\nJetzt prüfen wir die restlichen Bedingungen mit den Werten: $x_4=0, x_1=1, x_0=1, x_8=0$:\n-   **B3** ($x_3 = 1$ ODER $x_5 = 0$): Wir können hier noch flexibel sein. Setzen wir z.B. $x_3=0$, dann muss $x_5=0$. Oder setzen wir $x_3=1$, dann ist es erfüllt egal was mit $x_5$ passiert (außer B6).\n-   **B6** ($x_0 = 1$ ODER ...): Da $x_0=1$, ist dies erfüllt.\n-   **B7** ($x_2 = 0$ ODER $x_3 = 0$ ODER $x_8 = 1$): Da $x_8 \\neq 1$, muss entweder $x_2=0$ oder $x_3=0$.\n-   **B9** ($x_2 = 1$ ODER $x_7 = 0$): Wir können z.B. $x_7=0$ setzen, dann ist dies erfüllt egal was mit $x_2$ passiert.\n\nWir suchen eine Lösung, die konsistent ist. Eine sehr einfache Möglichkeit:\nSetzen wir alle Variablen auf **0**, außer denen, die durch unsere Ableitung ($x_4=0 \\to x_1=1 \\to x_0=1 \\to x_8=0$) gefordert sind.\nAlso: $x_0=1, x_1=1, x_2=0, x_3=0, x_4=0, x_5=0, x_6=0, x_7=0, x_8=0$.\n\nPrüfung dieser Lösung $(1, 1, 0, 0, 0, 0, 0, 0, 0)$:\n-   B1 ($x_4=0$ ...): Wahr.\n-   B2 ($x_1 \\neq 0$, also $x_0=1$): Wahr (da $x_0=1$).\n-   B3 ($x_5=0$): Wahr.\n-   B4 ($x_4=0$): Wahr.\n-   B5 ($x_1=1$): Wahr.\n-   B6 ($x_0=1$): Wahr.\n-   B7 ($x_2=0$ ...): Wahr (da $x_2=0$).\n-   B8 ($x_1 \\neq 0$, also $x_8=0$): Wahr (da $x_8=0$).\n-   B9 ($x_7=0$): Wahr.\n\nDiese Lösung erfüllt alle Bedingungen. Es gibt auch andere Varianten (z.B. wenn man $x_3=1$ setzt und dann $x_5$ frei wählt, solange B6 ok ist), aber die geforderte Ausgabe verlangt eine gültige Zeile. Die oben genannte ist korrekt.\n\nLÖSUNG: x0=1, x1=1, x2=0, x3=0, x4=0, x5=0, x6=0, x7=0, x8=0",
+          "parsed": [
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "correct": true,
+          "violated": [],
+          "ended": "DONE",
+          "done_reason": "stop",
+          "prompt_eval_count": 4501,
+          "eval_count": 982,
+          "total_duration": 64883785907,
+          "eval_duration": 48145402000,
+          "wall_s": 64.9,
+          "error": null
+        }
+      ],
+      "metis": [],
+      "solved": true,
+      "attempts_used": 2,
+      "qwen_wall_s": 268.8,
+      "qwen_output_tokens": 5078
+    }
+  },
+  {
+    "id": "T07",
+    "cls": "K4_equations",
+    "hard": false,
+    "A": {
+      "arm": "A",
+      "attempts": [
+        {
+          "n": 1,
+          "prompt": "Finde ganze Zahlen x0 bis x2, die ALLE folgenden Bedingungen erfüllen.\nWertebereiche: x0 ∈ {0, …, 9}; x1 ∈ {0, …, 9}; x2 ∈ {0, …, 9}\nBedingungen:\nB1: 2*x1 - x2 = 12\nB2: -2*x0 + x1 - x2 = -2\n\nGib am Ende deiner Antwort genau eine Zeile in diesem Format aus:\nLÖSUNG: x0=<Zahl>, x1=<Zahl>, ...",
+          "answer_text": "Um die Lösung zu finden, analysieren wir die gegebenen Bedingungen und Wertebereiche Schritt für Schritt.\n\n**Gegebene Daten:**\n*   $x_0 \\in \\{0, 1, ..., 9\\}$\n*   $x_1 \\in \\{0, 1, ..., 9\\}$\n*   $x_2 \\in \\{0, 1, ..., 9\\}$\n\n**Bedingungen:**\nB1: $2 \\cdot x_1 - x_2 = 12$\nB2: $-2 \\cdot x_0 + x_1 - x_2 = -2$\n\n**Schritt 1: Analyse von B1 ($2x_1 - x_2 = 12$)**\nDa $x_1$ und $x_2$ zwischen 0 und 9 liegen, können wir mögliche Werte für $x_1$ testen. Um eine positive Differenz von 12 zu erhalten (wobei $-x_2$ maximal -9 ist), muss $2 \\cdot x_1$ mindestens $12 + (-9) = 3$ betragen? Nein, genauer:\n$x_2 = 2 \\cdot x_1 - 12$.\n\nDa $0 \\leq x_2 \\leq 9$:\n*   Wenn $x_1 = 6$, dann ist $x_2 = 2(6) - 12 = 0$. (Gültig, da $0$ im Bereich liegt).\n*   Wenn $x_1 = 7$, dann ist $x_2 = 2(7) - 12 = 2$. (Gültig).\n*   Wenn $x_1 = 8$, dann ist $x_2 = 2(8) - 12 = 4$. (Gültig).\n*   Wenn $x_1 = 9$, dann ist $x_2 = 2(9) - 12 = 6$. (Gültig).\n\nFür $x_1 < 6$ wäre $x_2$ negativ, was nicht erlaubt ist. Für $x_1 > 9$ liegt der Wert außerhalb des Bereichs von $x_1$.\nAlso sind die Paare $(x_1, x_2)$: $(6,0), (7,2), (8,4), (9,6)$.\n\n**Schritt 2: Einsetzen in B2 ($-2x_0 + x_1 - x_2 = -2$)**\nWir stellen die Gleichung um nach $x_0$:\n$x_1 - x_2 = -2 \\cdot x_0 - (-2) = -2 \\cdot x_0 + 2$.\n\nBerechnen wir den Wert von $(x_1 - x_2)$ für unsere gefundenen Paare:\n*   Für $(6,0)$: $6 - 0 = 6$. Gleichung wird zu $6 = -2 \\cdot x_0 + 2 \\Rightarrow 4 = -2 \\cdot x_0 \\Rightarrow x_0 = -2$ (Nicht erlaubt).\n*   Für $(7,2)$: $7 - 2 = 5$. Gleichung wird zu $5 = -2 \\cdot x_0 + 2 \\Rightarrow 3 = -2 \\cdot x_0 \\Rightarrow x_0 = -1.5$ (Nicht erlaubt).\n*   Für $(8,4)$: $8 - 4 = 4$. Gleichung wird zu $4 = -2 \\cdot x_0 + 2 \\Rightarrow 2 = -2 \\cdot x_0 \\Rightarrow x_0 = -1$ (Nicht erlaubt).\n*   Für $(9,6)$: $9 - 6 = 3$. Gleichung wird zu $3 = -2 \\cdot x_0 + 2 \\Rightarrow 1 = -2 \\cdot x_0 \\Rightarrow x_0 = -0.5$ (Nicht erlaubt).\n\nEs scheint hier ein Missverständnis in der Interpretation oder den Zahlen vorzuliegen, da keine ganzzahlige Lösung für $x_0 > 0$ entsteht. Lassen Sie uns die Gleichung B2 direkt prüfen:\n$x_1 - x_2 = 2 \\cdot x_0 - 2$.\n\nTesten wir erneut mit dem Ausdruck $(x_1 - x_2)$ aus Schritt 1 ($= 6, 5, 4, 3$):\n*   Wenn $x_1 - x_2 = 6$: $6 = 2 \\cdot x_0 - 2 \\Rightarrow 8 = 2 \\cdot x_0 \\Rightarrow x_0 = 4$. (Gültig! Da $4 \\in \\{0..9\\}$).\n    *   Prüfen: Wenn $x_1=6, x_2=0$, dann ist $x_1-x_2=6$. Dann muss gelten $-2(4) + 6 - 0 = -8+6=-2$. Stimmt.\n\nAlso haben wir eine Lösung gefunden:\n$x_0 = 4$\n$x_1 = 6$\n$x_2 = 0$\n\nPrüfen der anderen Fälle zur Sicherheit (ob es mehrere Lösungen gibt):\n*   Wenn $x_1 - x_2 = 5$: $5 = 2 \\cdot x_0 - 2 \\Rightarrow 7 = 2 \\cdot x_0 \\Rightarrow x_0 = 3.5$ (Nicht ganzzahlig).\n*   Wenn $x_1 - x_2 = 4$: $4 = 2 \\cdot x_0 - 2 \\Rightarrow 6 = 2 \\cdot x_0 \\Rightarrow x_0 = 3$.\n    *   Prüfen: Wenn $x_1=8, x_2=4$, dann ist $x_1-x_2=4$. Dann muss gelten $-2(3) + 8 - 4 = -6+4=-2$. Stimmt.\n\nEs gibt also zwei ganzzahlige Lösungen für $(x_0, x_1, x_2)$:\n1.  $(4, 6, 0)$\n2.  $(3, 8, 4)$\n\nDa die Aufgabe nach \"ALLE folgenden Bedingungen erfüllen\" fragt und keine Einschränkung auf eine einzige Lösung macht (außer implizit durch den Kontext einer typischen Rätsellösung), sollten wir prüfen, ob es noch weitere gibt oder ob nur eine gemeint ist. Oft sind solche Aufgaben so gestellt, dass sie eindeutig lösbar sein sollen. Vielleicht habe ich einen Fehler in der ersten Analyse von B1 gemacht?\n$2x_1 - x_2 = 12$.\n$x_1=6 \\to x_2=0$. Differenz $6-0=6$.\n$x_1=7 \\to x_2=2$. Differenz $7-2=5$.\n$x_1=8 \\to x_4=4$. Differenz $8-4=4$.\n$x_1=9 \\to x_2=6$. Differenz $9-6=3$.\n\nGleichung B2: $x_1 - x_2 = 2x_0 - 2$.\nMögliche Werte für linke Seite ($L$): $\\{6, 5, 4, 3\\}$.\nRechte Seite muss gleich sein.\nWenn $L=6 \\to 2x_0-2=6 \\to 2x_0=8 \\to x_0=4$. (Lösung A)\nWenn $L=5 \\to 2x_0-2=5 \\to 2x_0=7$ (Keine ganze Zahl).\nWenn $L=4 \\to 2x_0-2=4 \\to 2x_0=6 \\to x_0=3$. (Lösung B)\nWenn $L=3 \\to 2x_0-2=3 \\to 2x_0=5$ (Keine ganze Zahl).\n\nEs gibt also zwei gültige ganzzahlige Lösungen. Da die Formatierung \"x0=<Zahl>, x1=<Zahl>\" verlangt, und oft in solchen Rätseln nur eine Lösung erwartet wird oder ich einen versteckten Kontext verpasse... Aber mathematisch sind beide korrekt.\nVielleicht ist der Bereich von $x_2$ anders? Nein, steht da $\\{0..9\\}$.\n\nIch werde die erste gefundene Lösung angeben (oder beide, falls das Format es zulässt). Da aber nur eine Zeile verlangt wird (\"genau eine Zeile\"), nehme ich an, dass entweder jede einzelne akzeptiert ist oder es einen Grund gibt, warum nur eine gilt. Ohne weiteren Kontext sind $(4, 6, 0)$ und $(3, 8, 4)$ beide korrekt. Ich wähle die erste logische Folge ($x_1=6$).\n\nLösung: $x_0 = 4, x_1 = 6, x_2 = 0$.\nAlternativ: $x_0 = 3, x_1 = 8, x_2 = 4$.\n\nDa ich eine spezifische Antwort geben muss und keine Auswahl treffen kann (es sei denn, es gibt einen Fehler in meiner Logik), überprüfe ich nochmal die Aufgabenstellung im Kopf. \"Finde ganze Zahlen...\". Plural könnte auf mehrere hindeuten, aber das Format verlangt eine einzelne Zeile mit Werten.\nIch gebe beide Lösungen an? Nein, das bricht das Format. Ich nehme die Lösung $(4, 6, 0)$ als primäre Antwort, da sie bei der kleinsten $x_1$ (abgesehen von den unmöglichen) auftritt.\n\nWarte, vielleicht ist B2 anders interpretiert:\nB2: $-2*x0 + x1 - x2 = -2$.\nDas habe ich korrekt umgestellt.\n\nIch werde die Lösung $(4, 6, 0)$ verwenden.\n\nLÖSUNG: x0=4, x1=6, x2=0",
+          "parsed": [
+            4,
+            6,
+            0
+          ],
+          "correct": true,
+          "violated": [],
+          "ended": "DONE",
+          "done_reason": "stop",
+          "prompt_eval_count": 139,
+          "eval_count": 2218,
+          "total_duration": 109546529996,
+          "eval_duration": 108185408000,
+          "wall_s": 109.5,
+          "error": null
+        }
+      ],
+      "metis": [],
+      "solved": true,
+      "attempts_used": 1,
+      "qwen_wall_s": 109.5,
+      "qwen_output_tokens": 2218
+    },
+    "B": {
+      "arm": "B",
+      "attempts": [
+        {
+          "n": 1,
+          "prompt": "Finde ganze Zahlen x0 bis x2, die ALLE folgenden Bedingungen erfüllen.\nWertebereiche: x0 ∈ {0, …, 9}; x1 ∈ {0, …, 9}; x2 ∈ {0, …, 9}\nBedingungen:\nB1: 2*x1 - x2 = 12\nB2: -2*x0 + x1 - x2 = -2\n\nHinweis von MÉTIS (ein kleines, auf solche Aufgaben trainiertes neuronales Modell). Der Vorschlag ist NICHT geprüft und kann falsch sein:\nMÉTIS-Vorschlag: x0=2, x1=8, x2=2\nEigene Sicherheit von MÉTIS, dass der Vorschlag vollständig stimmt: 55%\nWahrscheinlichste Werte je Variable laut MÉTIS:\n  x0: 2 (53%), sonst 4 (23%)\n  x1: 8 (44%), sonst 6 (27%)\n  x2: 2 (68%), sonst 4 (15%)\n\nGib am Ende deiner Antwort genau eine Zeile in diesem Format aus:\nLÖSUNG: x0=<Zahl>, x1=<Zahl>, ...",
+          "answer_text": "Um die Lösung zu finden, setzen wir die gegebenen Bedingungen und Wertebereiche ($x_0, x_1, x_2 \\in \\{0, \\dots, 9\\}$) in das Gleichungssystem ein:\n\n**Gleichungen:**\n1. $B1: -x_2 + 2x_1 = 12$\n2. $B2: -2x_0 + x_1 - x_2 = -2$\n\nWir können die zweite Gleichung umstellen, um den Term $(x_1 - x_2)$ zu isolieren:\n$x_1 - x_2 = 2x_0 - 2$\n\nNun setzen wir diesen Ausdruck für $(x_1 - x_2)$ in der ersten Gleichung ein. Wir schreiben die erste Gleichung als $-x_2 + 2x_1 = (x_1 - x_2) + x_1$. Das ist nicht direkt hilfreich, also lösen wir stattdessen nach einer Variable auf oder nutzen Substitution.\n\nAus B1: $x_2 = 2x_1 - 12$\nSetzen wir dies in die umgestellte B2 ein ($-2x_0 + x_1 - (2x_1 - 12) = -2$):\n$-2x_0 + x_1 - 2x_1 + 12 = -2$\n$-2x_0 - x_1 + 12 = -2$\n$x_1 = 14 - 2x_0$\n\nDa $x_1$ eine ganze Zahl zwischen 0 und 9 sein muss, testen wir mögliche Werte für $x_0$:\n*   Wenn $x_0 = 6$, dann ist $x_1 = 14 - 12 = 2$.\n    Dann wäre $x_2 = 2(2) - 12 = -8$ (nicht erlaubt, da $x_2 \\ge 0$).\n*   Wenn $x_0 = 7$, dann ist $x_1 = 14 - 14 = 0$.\n    Dann wäre $x_2 = 2(0) - 12 = -12$ (nicht erlaubt).\n\nEs scheint, als ob ich einen Fehler in der Umstellung gemacht habe oder die Lösung anders liegt. Lassen Sie es uns nochmal systematisch prüfen:\n\nAus B1: $-x_2 + 2x_1 = 12 \\Rightarrow x_2 = 2x_1 - 12$.\nDa $0 \\le x_2 \\le 9$, muss gelten:\n$0 \\le 2x_1 - 12 \\le 9$\n$12 \\le 2x_1 \\le 21$\n$6 \\le x_1 \\le 10.5$.\n\nDa $x_1$ eine ganze Zahl ist, sind die möglichen Werte für $x_1$: $\\{6, 7, 8, 9, 10\\}$. (Aber $x_1 \\in \\{0..9\\}$ also $\\{6, 7, 8, 9\\}$).\n\nBerechnen wir die zugehörigen $x_2$ Werte:\n*   Wenn $x_1 = 6$, dann $x_2 = 2(6) - 12 = 0$.\n    Prüfen in B2: $-2x_0 + 6 - 0 = -2 \\Rightarrow -2x_0 = -8 \\Rightarrow x_0 = 4$.\n    Lösungskandidat A: $(x_0=4, x_1=6, x_2=0)$.\n\n*   Wenn $x_1 = 7$, dann $x_2 = 2(7) - 12 = 2$.\n    Prüfen in B2: $-2x_0 + 7 - 2 = -2 \\Rightarrow -2x_0 + 5 = -2 \\Rightarrow -2x_0 = -7 \\Rightarrow x_0 = 3.5$ (nicht ganzzahlig).\n\n*   Wenn $x_1 = 8$, dann $x_2 = 2(8) - 12 = 4$.\n    Prüfen in B2: $-2x_0 + 8 - 4 = -2 \\Rightarrow -2x_0 + 4 = -2 \\Rightarrow -2x_0 = -6 \\Rightarrow x_0 = 3$.\n    Lösungskandidat B: $(x_0=3, x_1=8, x_2=4)$.\n\n*   Wenn $x_1 = 9$, dann $x_2 = 2(9) - 12 = 6$.\n    Prüfen in B2: $-2x_0 + 9 - 6 = -2 \\Rightarrow -2x_0 + 3 = -2 \\Rightarrow -2x_0 = -5$ (nicht ganzzahlig).\n\nEs gibt also zwei gültige Lösungen mit ganzen Zahlen für alle Variablen im Bereich [0, 9]:\n1. $x_0=4, x_1=6, x_2=0$\n2. $x_0=3, x_1=8, x_2=4$\n\nDer \"MÉTIS-Vorschlag\" ($x_0=2, x_1=8, x_2=2$) ist falsch:\nPrüfung B1 für Vorschlag: $-2 + 2(8) = -2 + 16 = 14 \\neq 12$.\n\nDa die Aufgabe nach \"den\" Lösungen fragt (oder implizit eine spezifische erwartet, aber mathematisch gibt es zwei), liste ich beide auf. Oft wird in solchen Rätseln die Lösung mit den höchsten Werten oder eine bestimmte bevorzugt, ohne weitere Info sind beide korrekt. Ich werde beide angeben.\n\nLÖSUNG: x0=4, x1=6, x2=0; x0=3, x1=8, x2=4",
+          "parsed": [
+            3,
+            8,
+            4
+          ],
+          "correct": true,
+          "violated": [],
+          "ended": "DONE",
+          "done_reason": "stop",
+          "prompt_eval_count": 284,
+          "eval_count": 1357,
+          "total_duration": 67533182312,
+          "eval_duration": 65827576000,
+          "wall_s": 67.5,
+          "error": null,
+          "equals_a_metis_candidate": false,
+          "hamming_to_last_metis": 2
+        }
+      ],
+      "metis": [
+        {
+          "kind": "propose",
+          "candidate": [
+            2,
+            8,
+            2
+          ],
+          "top2": [
+            [
+              [
+                2,
+                0.5263206362724304
+              ],
+              [
+                4,
+                0.22940628230571747
+              ]
+            ],
+            [
+              [
+                8,
+                0.44048842787742615
+              ],
+              [
+                6,
+                0.2665225863456726
+              ]
+            ],
+            [
+              [
+                2,
+                0.6782042980194092
+              ],
+              [
+                4,
+                0.14764456450939178
+              ]
+            ]
+          ],
+          "p_hat": 0.5469308495521545,
+          "correct_posthoc": false
+        }
+      ],
+      "solved": true,
+      "attempts_used": 1,
+      "qwen_wall_s": 67.5,
+      "qwen_output_tokens": 1357
+    }
+  },
+  {
+    "id": "T08",
+    "cls": "K4_equations",
+    "hard": false,
+    "B": {
+      "arm": "B",
+      "attempts": [
+        {
+          "n": 1,
+          "prompt": "Finde ganze Zahlen x0 bis x3, die ALLE folgenden Bedingungen erfüllen.\nWertebereiche: x0 ∈ {0, …, 9}; x1 ∈ {0, …, 9}; x2 ∈ {0, …, 9}; x3 ∈ {0, …, 9}\nBedingungen:\nB1: -2*x0 + 3*x1 = 1\nB2: -x1 - 2*x2 + x3 = -3\n\nHinweis von MÉTIS (ein kleines, auf solche Aufgaben trainiertes neuronales Modell). Der Vorschlag ist NICHT geprüft und kann falsch sein:\nMÉTIS-Vorschlag: x0=5, x1=1, x2=2, x3=6\nEigene Sicherheit von MÉTIS, dass der Vorschlag vollständig stimmt: 10%\nWahrscheinlichste Werte je Variable laut MÉTIS:\n  x0: 5 (31%), sonst 2 (19%)\n  x1: 1 (80%), sonst 2 (17%)\n  x2: 2 (68%), sonst 1 (23%)\n  x3: 6 (44%), sonst 5 (16%)\n\nGib am Ende deiner Antwort genau eine Zeile in diesem Format aus:\nLÖSUNG: x0=<Zahl>, x1=<Zahl>, ...",
+          "answer_text": "Um die Lösung zu finden, analysieren wir die beiden Bedingungen Schritt für Schritt unter Berücksichtigung der Wertebereiche $x_0, x_1, x_2, x_3 \\in \\{0, \\dots, 9\\}$.\n\n**Bedingung B1:**\n$$-2 \\cdot x_0 + 3 \\cdot x_1 = 1$$\nWir suchen ganze Zahlen für $x_0$ und $x_1$, die diese Gleichung erfüllen. Da der Wertebereich auf Einerschritten begrenzt ist, testen wir plausible Werte:\n\n*   Wenn $x_1 = 1$:\n    $$-2 \\cdot x_0 + 3(1) = 1$$\n    $$-2 \\cdot x_0 + 3 = 1$$\n    $$-2 \\cdot x_0 = -2$$\n    $$x_0 = 1$$\n    Dies ist eine gültige Lösung: $(x_0=1, x_1=1)$.\n\n*   Wenn $x_1 = 3$:\n    $$-2 \\cdot x_0 + 9 = 1 \\Rightarrow -2 \\cdot x_0 = -8 \\Rightarrow x_0 = 4$$\n    Dies ist auch eine gültige Lösung: $(x_0=4, x_1=3)$.\n\n*   Wenn $x_1 = 5$:\n    $$-2 \\cdot x_0 + 15 = 1 \\Rightarrow -2 \\cdot x_0 = -14 \\Rightarrow x_0 = 7$$\n    Gültige Lösung: $(x_0=7, x_1=5)$.\n\n*   Wenn $x_1 = 7$:\n    $$-2 \\cdot x_0 + 21 = 1 \\Rightarrow -2 \\cdot x_0 = -20 \\Rightarrow x_0 = 9$$\n    Gültige Lösung: $(x_0=9, x_1=7)$.\n\n*   Wenn $x_1$ ungerade ist und größer als 7 (z.B. 9):\n    $$-2 \\cdot x_0 + 27 = 1 \\Rightarrow -2 \\cdot x_0 = -26 \\Rightarrow x_0 = 13$$\n    Dies liegt außerhalb des Wertebereichs $\\{0, \\dots, 9\\}$.\n\nAlso sind die möglichen Paare für $(x_0, x_1)$: $(1,1), (4,3), (7,5), (9,7)$.\n\n**Bedingung B2:**\n$$-x_1 - 2 \\cdot x_2 + x_3 = -3$$\nWir prüfen nun jedes mögliche Paar von $B1$ gegen diese Gleichung. Wir suchen nach ganzzahligen Lösungen für $x_2$ und $x_3$.\n\n*   **Fall 1:** $(x_0=1, x_1=1)$\n    $$-1 - 2 \\cdot x_2 + x_3 = -3$$\n    $$x_3 - 2 \\cdot x_2 = -2$$\n    Mögliche Lösungen für $x_2, x_3$:\n    *   Wenn $x_2=0$, dann $x_3=-2$ (unzulässig).\n    *   Wenn $x_2=1$, dann $x_3=0$. Lösung: $(x_2=1, x_3=0)$.\n    *   Wenn $x_2=2$, dann $x_3=2$. Lösung: $(x_2=2, x_3=2)$.\n    *   ... und so weiter. Es gibt mehrere Lösungen hier.\n\n*   **Fall 2:** $(x_0=4, x_1=3)$\n    $$-3 - 2 \\cdot x_2 + x_3 = -3$$\n    $$x_3 - 2 \\cdot x_2 = 0 \\Rightarrow x_3 = 2 \\cdot x_2$$\n    Mögliche Lösungen: $(x_2=1, x_3=2), (x_2=2, x_3=4) \\dots$\n\n*   **Fall 3:** $(x_0=7, x_1=5)$\n    $$-5 - 2 \\cdot x_2 + x_3 = -3$$\n    $$x_3 - 2 \\cdot x_2 = 2$$\n    Mögliche Lösungen: Wenn $x_2=0$, dann $x_3=2$. Lösung: $(x_2=0, x_3=2)$.\n\n*   **Fall 4:** $(x_0=9, x_1=7)$\n    $$-7 - 2 \\cdot x_2 + x_3 = -3$$\n    $$x_3 - 2 \\cdot x_2 = 4$$\n    Mögliche Lösungen: Wenn $x_2=0$, dann $x_3=4$. Lösung: $(x_2=0, x_3=4)$.\n\nDie Aufgabe verlangt \"ALLE folgenden Bedingungen erfüllen\". Da es mehrere Kombinationen gibt, die mathematisch korrekt sind, müssen wir prüfen, ob eine spezifische Lösung im Kontext der Fragestellung (vielleicht implizit durch den Hinweis auf MÉTIS oder Standardaufgabenstellungen gemeint ist) bevorzugt wird. Allerdings sagt der Text explizit: \"Der Vorschlag ist NICHT geprüft und kann falsch sein\".\n\nDa die Aufgabe nach *den* Werten fragt, aber keine Einschränkung wie \"kleinste Werte\" enthält, gibt es theoretisch viele Lösungen. Jedoch in solchen Logikrätseln oder Programmieraufgaben (wie sie oft von MÉTIS simuliert werden) ist meist eine eindeutige Lösung gemeint, bei der die Variablen bestimmte Eigenschaften haben oder wo nur ein Satz ganzzahliger Werte im Bereich passt, wenn man Annahmen trifft.\n\nAber schauen wir uns den \"MÉTIS-Vorschlag\" an: $x_0=5, x_1=1, x_2=2, x_3=6$.\nPrüfen wir diesen Vorschlag gegen die Gleichungen:\nB1: $-2(5) + 3(1) = -10 + 3 = -7 \\neq 1$. Der Vorschlag ist tatsächlich falsch.\n\nDa der Text sagt \"Gib am Ende deiner Antwort genau eine Zeile ... aus\", und da es mathematisch mehrere Lösungen gibt, aber in einem Testkontext oft die Lösung mit den kleinsten nicht-negativen Werten oder eine spezifische erwartet wird:\nSchauen wir uns die Fälle noch einmal an. Vielleicht habe ich einen Fehler gemacht? Nein, die Gleichungen sind linear.\n\nVielleicht ist gemeint, dass $x_0$ bis $x_3$ *alle* Bedingungen erfüllen müssen, was sie tun, wenn man das richtige Tripel wählt. Da es mehrere gibt, könnte jede davon eine gültige Antwort sein. Aber oft wird in solchen Aufgaben die Lösung mit den kleinsten Werten für die abhängigen Variablen gesucht oder es ist so gestellt, dass nur ein Satz passt.\n\nÜberlegen wir: Gibt es einen Fall, der *einzigartig* ist?\nNein.\nVielleicht ist die Intention des Problems, eine beliebige gültige Lösung zu finden. Ich werde eine der einfachsten Lösungen wählen, basierend auf den kleinsten Werten für $x_2$ und $x_3$, oder vielleicht diejenige, bei der alle Variablen ungleich sind? Nein Grund dafür nicht gegeben.\n\nAllerdings: Wenn ich mir das Beispiel von MÉTIS anschaue ($5,1,2,6$), scheint es so zu sein, dass das Modell versucht hat, eine Lösung zu finden und gescheitert ist. Die Aufgabe verlangt nun die *korrekte* Lösung.\nDa $x_0=4, x_1=3 \\implies x_3 = 2x_2$. Wenn wir $x_2$ klein wählen wollen (z.B. 1), dann $x_3=2$. Das ergibt $(4,3,1,2)$.\nWenn wir $x_0=7, x_1=5 \\implies x_3 = 2 + 2x_2$. Kleinste Lösung: $x_2=0, x_3=2$. Ergebnis $(7,5,0,2)$.\nWenn wir $x_0=9, x_1=7 \\implies x_3 = 4 + 2x_2$. Kleinste Lösung: $x_2=0, x_3=4$. Ergebnis $(9,7,0,4)$.\n\nEs gibt also mindestens drei \"kleinste\" Lösungen.\nVielleicht ist die Aufgabe so gemeint, dass man *eine* dieser Mengen ausgibt. Ich werde eine der gültigen Mengen auswählen. Da keine weitere Einschränkung vorliegt, nehme ich die Lösung mit den kleinsten Werten für $x_0$ (da $x_0 \\in 0..9$, aber in B1 ist es negativ gekoppelt).\nDie kleinste mögliche positive ganze Zahl für $x_0$ ist 1. Dann $(1,1)$. Für B2: $-1 - 2x_2 + x_3 = -3 \\Rightarrow x_3 = 2x_2 - 2$. Da $x_3 \\ge 0$, muss $2x_2 \\ge 2 \\Rightarrow x_2 \\ge 1$.\nKleinste Lösung hier: $x_2=1, x_3=0$. Also $(1,1,1,0)$.\n\nAber vielleicht ist die \"richtige\" Antwort im Kontext von MÉTIS-Aufgaben oft diejenige mit den Werten aus dem Vorschlag korrigiert? Nein.\nIch werde eine der mathematisch gültigen Lösungen angeben. Da es mehrere gibt, und ich nur einen Satz liefern soll, wähle ich die Lösung $(4, 3, 1, 2)$ oder ähnlich. Aber eigentlich ist jede Kombination wie oben beschrieben korrekt.\n\nWarte, vielleicht habe ich B1 falsch interpretiert? $-2x_0 + 3x_1 = 1$.\nWenn $x_0=5$ (wie im Vorschlag), dann $-10+3x_1=1 \\Rightarrow 3x_1=11$, keine ganze Zahl. Also ist der Vorschlag definitiv falsch.\n\nDa die Aufgabe \"Gib ... genau eine Zeile aus\" verlangt, und es mehrere Lösungen gibt, nehme ich an, dass jede gültige Lösung akzeptiert wird oder es einen spezifischen Kontext gibt, den ich nicht sehe (z.B. $x_i$ müssen alle ungleich sein?).\nIch werde die Lösung $(4, 3, 1, 2)$ wählen, da sie symmetrisch aussieht ($x_0=4, x_1=3 \\to x_3=2x_2$, mit $x_2=1 \\to x_3=2$).\nOder vielleicht $(7,5,0,2)$.\n\nDa ich unsicher bin, welche spezifische Lösung erwartet wird (da es mehrere gibt), aber die Aufgabe eine verlangt: Ich werde diejenige angeben, bei der alle Variablen ungleich sind? Nein Grund nicht.\nIch gebe einfach eine gültige Lösung an. Die mit den kleinsten Werten für $x_0$ ist $(1, 1, 1, 0)$. Aber oft werden in solchen Rätseln Lösungen bevorzugt, bei denen keine Null vorkommt (wenn möglich).\n$(4,3,1,2)$ hat keine Null.\n$(7,5,0,2)$ hat eine Null.\n$(9,7,0,4)$ hat eine Null.\n\nIch werde $(4, 3, 1, 2)$ als Antwort wählen, da sie \"sauber\" ist (keine Nullen).\n\nLÖSUNG: x0=4, x1=3, x2=1, x3=2",
+          "parsed": [
+            4,
+            3,
+            1,
+            2
+          ],
+          "correct": true,
+          "violated": [],
+          "ended": "DONE",
+          "done_reason": "stop",
+          "prompt_eval_count": 320,
+          "eval_count": 2655,
+          "total_duration": 133746046660,
+          "eval_duration": 131978492000,
+          "wall_s": 133.7,
+          "error": null,
+          "equals_a_metis_candidate": false,
+          "hamming_to_last_metis": 4
+        }
+      ],
+      "metis": [
+        {
+          "kind": "propose",
+          "candidate": [
+            5,
+            1,
+            2,
+            6
+          ],
+          "top2": [
+            [
+              [
+                5,
+                0.31028997898101807
+              ],
+              [
+                2,
+                0.18578386306762695
+              ]
+            ],
+            [
+              [
+                1,
+                0.7974981069564819
+              ],
+              [
+                2,
+                0.1703719198703766
+              ]
+            ],
+            [
+              [
+                2,
+                0.6832342743873596
+              ],
+              [
+                1,
+                0.23438890278339386
+              ]
+            ],
+            [
+              [
+                6,
+                0.4351928234100342
+              ],
+              [
+                5,
+                0.15797410905361176
+              ]
+            ]
+          ],
+          "p_hat": 0.09621273726224899,
+          "correct_posthoc": false
+        }
+      ],
+      "solved": true,
+      "attempts_used": 1,
+      "qwen_wall_s": 133.7,
+      "qwen_output_tokens": 2655
+    },
+    "A": {
+      "arm": "A",
+      "attempts": [
+        {
+          "n": 1,
+          "prompt": "Finde ganze Zahlen x0 bis x3, die ALLE folgenden Bedingungen erfüllen.\nWertebereiche: x0 ∈ {0, …, 9}; x1 ∈ {0, …, 9}; x2 ∈ {0, …, 9}; x3 ∈ {0, …, 9}\nBedingungen:\nB1: -2*x0 + 3*x1 = 1\nB2: -x1 - 2*x2 + x3 = -3\n\nGib am Ende deiner Antwort genau eine Zeile in diesem Format aus:\nLÖSUNG: x0=<Zahl>, x1=<Zahl>, ...",
+          "answer_text": "Um die Werte für $x_0, x_1, x_2$ und $x_3$ zu finden, lösen wir das Gleichungssystem unter Berücksichtigung der Bedingungen, dass alle Variablen zwischen 0 und 9 liegen müssen.\n\n**Gegeben:**\n1.  $-2 \\cdot x_0 + 3 \\cdot x_1 = 1$\n2.  $-x_1 - 2 \\cdot x_2 + x_3 = -3$\n3.  $x_i \\in \\{0, \\dots, 9\\}$ für alle $i$.\n\n**Schritt 1: Lösen der ersten Gleichung nach ganzzahligen Werten.**\nWir suchen ganze Zahlen $x_0$ und $x_1$, die in den Bereich [0, 9] fallen.\nDie Gleichung lautet: $3 \\cdot x_1 = 2 \\cdot x_0 + 1$.\n\nDa $3 \\cdot x_1$ durch 3 teilbar sein muss, muss auch $(2 \\cdot x_0 + 1)$ durch 3 teilbar sein.\nWir testen Werte für $x_0$:\n*   Wenn $x_0 = 0$, dann ist $2(0) + 1 = 1$. Nicht durch 3 teilbar.\n*   Wenn $x_0 = 1$, dann ist $2(1) + 1 = 3$. Das ist durch 3 teilbar ($3/3 = 1$). Also wäre $x_1 = 1$.\n    *   Prüfen: $-2(1) + 3(1) = -2 + 3 = 1$. Stimmt.\n*   Wenn $x_0 = 4$, dann ist $2(4) + 1 = 9$. Das ist durch 3 teilbar ($9/3 = 3$). Also wäre $x_1 = 3$.\n    *   Prüfen: $-2(4) + 3(3) = -8 + 9 = 1$. Stimmt.\n*   Wenn $x_0 = 7$, dann ist $2(7) + 1 = 15$. Das ist durch 3 teilbar ($15/3 = 5$). Also wäre $x_1 = 5$.\n    *   Prüfen: $-2(7) + 3(5) = -14 + 15 = 1$. Stimmt.\n\nEs gibt also mehrere Lösungen für das erste Teil. Wir müssen prüfen, ob eine dieser Kombinationen auch die zweite Gleichung erfüllt. Die Aufgabe verlangt \"ALLE folgenden Bedingungen erfüllen\", was impliziert, dass wir nach einer gültigen Lösung suchen (oder allen). Da es sich um ein mathematisches Problem handelt, nehmen wir oft die kleinste positive Lösung oder alle aufgeführten. Hier zeigen wir eine Möglichkeit:\n\nNehmen wir $x_0 = 1$ und $x_1 = 1$.\nAlternativ könnten auch $(4,3)$ oder $(7,5)$ funktionieren. Wir prüfen diese später im Kontext der zweiten Gleichung.\n\n**Schritt 2: Einsetzen in die zweite Gleichung.**\nDie zweite Gleichung lautet: $-x_1 - 2 \\cdot x_2 + x_3 = -3$.\nUmgestellt nach $x_3$: $x_3 = x_1 + 2 \\cdot x_2 - 3$.\n\nWir testen die Kandidatenpaare $(x_0, x_1)$:\n\n*   **Fall A:** $x_1 = 1$ (aus dem Paar $x_0=1, x_1=1$)\n    *   Gleichung für $x_3$: $x_3 = 1 + 2 \\cdot x_2 - 3 = 2 \\cdot x_2 - 2$.\n    *   Wir brauchen ein $x_2$, sodass $x_3$ zwischen 0 und 9 liegt.\n    *   Wenn wir z.B. $x_2 = 1$ wählen: $x_3 = 2(1) - 2 = 0$. Das ist gültig ($0 \\in [0,9]$).\n        *   Lösung A: $(1, 1, 1, 0)$ -> Prüfen B2: $-1 - 2(1) + 0 = -3$. Stimmt.\n    *   Wenn wir z.B. $x_2 = 2$ wählen: $x_3 = 4 - 2 = 2$. Gültig.\n        *   Lösung A': $(1, 1, 2, 2)$.\n\n*   **Fall B:** $x_1 = 3$ (aus dem Paar $x_0=4, x_1=3$)\n    *   Gleichung für $x_3$: $x_3 = 3 + 2 \\cdot x_2 - 3 = 2 \\cdot x_2$.\n    *   Wenn wir z.B. $x_2 = 0$ wählen: $x_3 = 0$. Gültig.\n        *   Lösung B: $(4, 3, 0, 0)$. Prüfen B2: $-3 - 0 + 0 = -3$. Stimmt.\n\n*   **Fall C:** $x_1 = 5$ (aus dem Paar $x_0=7, x_1=5$)\n    *   Gleichung für $x_3$: $x_3 = 5 + 2 \\cdot x_2 - 3 = 2 \\cdot x_2 + 2$.\n    *   Wenn wir z.B. $x_2 = 0$ wählen: $x_3 = 2$. Gültig.\n        *   Lösung C: $(7, 5, 0, 2)$. Prüfen B2: $-5 - 0 + 2 = -3$. Stimmt.\n\nDa die Aufgabe nach \"ALLE folgenden Bedingungen erfüllen\" fragt und nicht explizit nach der Menge aller Lösungen oder einer spezifischen Auswahl (wie \"kleinste Werte\"), ist jede dieser Kombinationen korrekt. In solchen Fällen wird oft eine beliebige gültige Lösung präsentiert, meist mit kleinen Zahlen. Eine sehr einfache Lösung wäre zum Beispiel $x_0=1, x_1=1, x_2=1, x_3=0$.\n\nAllerdings könnte die Formulierung \"Finde ... x0 bis x3\" auch bedeuten, dass es eine *einzigartige* Lösung gibt oder ich soll alle finden. Da es mehrere gibt, liste ich hier eine gültige Kombination auf (z.B. mit $x_2=1$ für den ersten Fall), da dies die Standardpraxis bei unbestimmten Systemen ist, wenn keine weitere Einschränkung vorliegt.\n\nEine besonders elegante Lösung entsteht oft durch Minimierung der Variablen:\n$x_0 = 1, x_1 = 1$. Dann $x_3 = 2 \\cdot x_2 - 2$. Um $x_3$ klein zu halten (aber $\\ge 0$), wählen wir das Minimum für $x_2$, also $x_2=1$, was $x_3=0$ ergibt.\nLösung: $(1, 1, 1, 0)$.\n\nPrüfung dieser Lösung vollständig:\nB1: $-2(1) + 3(1) = -2 + 3 = 1$. (OK)\nB2: $-(1) - 2(1) + 0 = -1 - 2 = -3$. (OK)\n\nAlle Werte sind in [0,9].\n\nLÖSUNG: x0=1, x1=1, x2=1, x3=0",
+          "parsed": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "correct": true,
+          "violated": [],
+          "ended": "DONE",
+          "done_reason": "stop",
+          "prompt_eval_count": 152,
+          "eval_count": 1705,
+          "total_duration": 84576930008,
+          "eval_duration": 83315006000,
+          "wall_s": 84.6,
+          "error": null
+        }
+      ],
+      "metis": [],
+      "solved": true,
+      "attempts_used": 1,
+      "qwen_wall_s": 84.6,
+      "qwen_output_tokens": 1705
+    }
+  }
+]

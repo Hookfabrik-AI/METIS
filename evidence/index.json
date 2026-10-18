@@ -1,0 +1,82 @@
+{
+  "schema": "metis-research-evidence-v0.1",
+  "date": "2026-10-18",
+  "status": "ARCHIVED_RESEARCH_SNAPSHOT",
+  "recomputed_from": "evidence/qwen/run_*/results.json",
+  "selection": {
+    "T01": 4,
+    "T02": 3,
+    "T03": 3,
+    "T04": 3,
+    "T05": 3,
+    "T06": 4,
+    "T07": 4,
+    "T08": 4,
+    "T09": 4,
+    "T10": 5,
+    "T11": 5,
+    "T12": 5
+  },
+  "qwen_four_arm": {
+    "name": "MÉTIS vs no hint/random/min-conflicts on 12 structured constraints",
+    "interpretation": "descriptive; not a causal or generalizable efficiency proof",
+    "arms": {
+      "A": "no hint",
+      "B": "MÉTIS P2 greedy candidate",
+      "C": "uniform random candidate",
+      "D": "Min-Conflicts 256 evaluations"
+    },
+    "statistics": {
+      "A": {
+        "correct": 11,
+        "tasks": 12,
+        "output_tokens": 40559,
+        "qwen_wall_s": 2045.3,
+        "attempts": 17,
+        "candidate_correct_posthoc": null,
+        "proposal_cpu_s_sum": null
+      },
+      "B": {
+        "correct": 10,
+        "tasks": 12,
+        "output_tokens": 36241,
+        "qwen_wall_s": 1892.8,
+        "attempts": 18,
+        "candidate_correct_posthoc": 5,
+        "proposal_cpu_s_sum": 0.83036
+      },
+      "C": {
+        "correct": 10,
+        "tasks": 12,
+        "output_tokens": 52074,
+        "qwen_wall_s": 2819.2,
+        "attempts": 21,
+        "candidate_correct_posthoc": 0,
+        "proposal_cpu_s_sum": 0.00492
+      },
+      "D": {
+        "correct": 11,
+        "tasks": 12,
+        "output_tokens": 24910,
+        "qwen_wall_s": 1367.5,
+        "attempts": 15,
+        "candidate_correct_posthoc": 7,
+        "proposal_cpu_s_sum": 0.17233
+      }
+    }
+  },
+  "validation": {
+    "p2_dataset_manifest_hashes": "verified_against_archive",
+    "p2_code_pretraining_hashes": "verified_against_archive",
+    "four_arm_statistics": "recomputed_from_results",
+    "historical_p2_experiments": "archived_not_rerun",
+    "qwen": "archived_not_rerun",
+    "full_p2_eval_p1_dependency": "not_in_archive",
+    "qwen_runner_external_res1_instance": "not_in_archive"
+  },
+  "research_scope": {
+    "p2": "archived_artifacts_integrity_checkable",
+    "p3": "project_report_only_not_independently_reproduced",
+    "qwen": "historical_p2_results_reaggregated_not_rerun"
+  }
+}
