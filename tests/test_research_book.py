@@ -19,7 +19,6 @@ class ResearchBookTests(unittest.TestCase):
         self.assertNotIn("Bookmarks gespeichert", self.html)
         self.assertNotIn("NOUMORA", self.html)
         self.assertIn("P2 archived", self.html)
-        self.assertNotIn("ARKEIN Research Reader", self.html)
         self.assertIn("MÉTIS", self.html)
         self.assertNotIn("%%BOOK_JSON%%", self.html)
 

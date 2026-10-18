@@ -17,7 +17,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout research archive
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Check Python syntax
         run: python3 -m compileall -q research/p2 scripts tests
       - name: Verify archived artifact hashes
