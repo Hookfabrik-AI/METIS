@@ -1,7 +1,6 @@
 """Offline checks for the published, standalone MÉTIS research book."""
 import unittest
 import json
-import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -30,9 +29,9 @@ class ResearchBookTests(unittest.TestCase):
                 self.assertIn(control, self.html)
 
     def test_embedded_research_data_and_english_navigation(self):
-        found = re.search(r"^const BOOK = (\\{.*\\});$", self.html, re.MULTILINE)
-        self.assertIsNotNone(found)
-        book = json.loads(found.group(1))
+        source = next(line for line in self.html.splitlines() if line.startswith("const BOOK = "))
+        self.assertTrue(source.endswith(";"))
+        book = json.loads(source[len("const BOOK = "):-1])
         self.assertEqual(book["title"], "MÉTIS")
         self.assertEqual(len(book["chapters"]), 9)
         self.assertEqual(book["chapters"][0]["id"], "preface")
