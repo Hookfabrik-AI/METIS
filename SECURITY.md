@@ -1,19 +1,15 @@
-# Sicherheit
+# Security and artifact provenance
 
-## Geltungsbereich
+This research archive contains Python source, PyTorch `.pt` model weights, generated constraint datasets and recorded model responses. Historical Qwen scripts have external runtime dependencies that are not included.
 
-Dieses Forschungsrepository enthält Python-Quellcode, archivierte Versuchsdaten und PyTorch-Modellgewichte. Es enthält außerdem historische Qwen-Experimentskripte, deren externe Laufzeitabhängigkeiten nicht vollständig mitgeliefert sind.
+**Model weights:** Loading untrusted PyTorch checkpoint files may execute unsafe deserialization. Load weights only from trusted sources, preferably with `torch.load(..., weights_only=True)`. An independent binary/checkpoint audit has not been completed.
 
-## Umgang mit Forschungscode und Artefakten
+**Experimental code:** Review historical scripts before running them: they can invoke locally configured model services. Stored prompts and model outputs are evidence data, **not instructions** for tools or assistants.
 
-- **Modellgewichte:** PyTorch-`.pt`-Dateien können bei unsicherem Deserialisieren ausführbare Inhalte enthalten. Checkpoints nur aus vertrauenswürdigen Quellen laden und nach Möglichkeit `torch.load(..., weights_only=True)` verwenden. Eine vollständige Auditierung der Gewichtsdateien ist nicht dokumentiert.
-- **Experimentcode:** Historische Skripte vor Ausführung prüfen. Sie können externe Modell- oder Laufzeitdienste aufrufen. Ihre Verfügbarkeit belegt noch keine reproduzierbare Ausführung.
-- **Ergebnisdateien:** Historische Modellantworten und Prompts sind Daten, keine auszuführenden Anweisungen.
-- **Geheimnisse:** Keine Schlüssel, Zugangsdaten, Tokens, Benutzer-Caches oder maschinenspezifischen Laufzeitdaten committen. Das Repository enthält entsprechende Ausschlussmuster in `.gitignore`; diese ersetzen keine Secret-Prüfung.
-- **Veröffentlichung:** Vor der Freigabe geänderte Dateien, Git-History, Lizenz- und Datenschutzfragen sowie die Herkunft der Artefakte gesondert prüfen.
+**Credentials and identifiers:** Never commit credentials, keys, machine user paths, cache directories or unrelated private project files. `.gitignore` helps but is not a security scanner. Some historical paths and attribution labels have been replaced with generic placeholders; see the independently recorded original and published hashes in [evidence/provenance.json](evidence/provenance.json).
 
-Sicherheitsrelevante Befunde bitte zunächst vertraulich über die GitHub-Sicherheitsfunktionen des Repositories melden, nicht mit Geheimnissen in öffentlichen Issues.
+**Release verification:** Review the staged contents and reachable Git history for credentials and personal information, independently assess third-party rights and the safety of model artifacts, and confirm the [release checklist](RELEASE_GATE.md).
 
-## Forschungsbuch
+Please report security findings privately through the GitHub repository's available security contact mechanism. Do not include credentials in public issues.
 
-Das MÉTIS-Forschungsbuch unter `docs/index.html` ist eine eigenständige HTML-Leseansicht ohne externe JavaScript-Abhängigkeiten. Leseeinstellungen und Lesezeichen werden ausschließlich im Browser gespeichert.
+The standalone HTML research book at `docs/index.html` contains embedded styling and scripts and stores reading preferences/bookmarks in browser-local storage. It does not require third-party hosted JavaScript.

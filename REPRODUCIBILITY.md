@@ -1,6 +1,6 @@
-# Reproduzierbarkeit
+# Reproducibility
 
-## 1. Evidenzintegrität (offline, ohne PyTorch)
+## 1. Offline integrity and aggregation checks
 
 ```bash
 python3 scripts/verify_evidence.py
@@ -8,35 +8,39 @@ python3 scripts/summarize_qwen.py
 python3 -m unittest discover -s tests -v
 ```
 
-Verifiziert wird ausschließlich der Inhalt dieses Pakets gegen sein `evidence/provenance.json` und das P2-Datensatzmanifest. Der Archivhash ist ein Provenienzhinweis auf die originale Eingabe; das Quellarchiv ist **nicht** zur Prüfung erforderlich. Diese Integritätskontrolle beweist keine korrekte wissenschaftliche Durchführung.
+The integrity check compares checked-in files with `evidence/provenance.json` and verifies the P2 dataset manifest. Historical source hashes are retained separately from the hashes of privacy-redacted copies. The manifest's original generator hash is checked against its `original_sha256` provenance entry; the current published generator is checked against its separate `repo_sha256`.
 
-## 2. P2-Code und Daten
+The Qwen script reaggregates the explicitly selected twelve task records and checks the result against `evidence/index.json`. Neither step proves that the historical experiments were carried out correctly.
+
+## 2. P2 data generation and new training
 
 ```bash
 python3 -m venv .venv
 . .venv/bin/activate
 pip install -r requirements.txt
-# Auf einer schnellen Maschine optional Dataset-Rekonstruktion in neuem Zielordner:
+
+# Generate a new dataset in a directory that does not yet exist:
 python3 -I -B research/p2/dataset.py /tmp/metis-regenerated-p2
-# Aufwändiges P2-Training (übernimmt NICHT die archivierten Checkpoints):
+
+# CPU-intensive fresh training; does not replace the archived checkpoints:
 METIS_PYTHON="$PWD/.venv/bin/python" bash scripts/train_p2.sh
 ```
 
-Hinweis: Die historische P2-Evaluation (`research/p2/evaluate.py`) erwartet zusätzlich P1-Quelldateien/-Gewichte. Diese wurden nicht mitgeliefert. Zeit-/Numerikgleichheit der ursprünglichen Trainingsruns wird ohne eingefrorene Hardware, Bibliotheken und Umgebung **nicht** garantiert.
+The launcher resolves its root from the parent of `scripts/`; stages A and B run for seeds 0–2 and C runs for seed 0. Tests verify the shell syntax and directory layout, **not** the entire training run. Version pinning, system libraries, hardware and timing must be recorded to compare a new run scientifically. `requirements.txt` presently lists dependency families without an independently validated environment lock.
 
-## 3. Qwen
+The historical P2 evaluation requires additional P1 source and weights that are not bundled. Thus a complete re-run of the original P2 C5/C6 comparison is not yet possible from this repository alone.
 
-Die 2026-10-17-Experimentquellen sind als `historical/` abgelegt; maschinenlokale Pfade wurden zum Schutz der Privatsphäre ersetzt. Sie enthalten weiterhin Imports der fehlenden privaten `res1_instance`-/`resource_profile`-Runtime; sie sind Referenz- und Auditmaterial, **kein direkt lauffertiger öffentlicher Runner**. Die Archivlogs/Antworten liegen in `evidence/qwen`. Die Offline-Aggregation benötigt keine GPU, Ollama oder Modellgewichte.
+## 3. Qwen historical experiments
 
-Für eine unabhängige E2E-Replikation muss ein eigenständiger offener Runner entwickelt und geprüft werden. Danach Modell-Digests, Umgebung, Aufgaben, Seeds, Laufreihenfolge, RAM-/GPU-Auslastung, Cachezustand, Kandidatengenerierung und sämtliche Kostenterme dokumentieren.
+Sources under `research/qwen/historical/` retain external runtime imports, and several absolute paths have been replaced with explicit placeholders. They are preserved for provenance and review, **not as a standalone runner**.
 
-## 4. Ergebnisstatus
+A new controlled end-to-end experiment requires an independent runner and pinned Qwen model digest, task set, seeds, prompt/candidate formats, execution order, cache conditions, available memory and all candidate/verification/model-load costs. The offline aggregation requires neither an Ollama installation nor the original P2 model weights.
 
-- **Rechnerische Reaggregation** der gespeicherten Qwen-Evidenz: maschinell prüfbar.
-- **SHA-256-Konsistenz** der P2-Datensätze und Quellen: maschinell prüfbar.
-- **Historische neuronale Experimente:** nur archiviert, nicht neu ausgeführt.
-- **Kausale Zuschreibung/Generalisierung:** offen.
+## 4. Levels of evidence
 
-## 5. P3: noch kein reproduzierbares Artefakt
+- **Reproducible now:** hash checks for curated files, P2 data-manifest consistency, and arithmetic reaggregation of selected historic Qwen results.
+- **Archived, not rerun here:** P2 training, model evaluations and Qwen generation.
+- **Not established:** causal performance improvements or generalization to different LLMs/tasks.
+- **P3:** project-reported progress only; no raw checkpoints or evaluations. See [P3 artifact intake](P3_INGESTION.md).
 
-Der Stand P3 ist gegenwärtig ausschließlich als berichtete Fortschrittsnotiz in `docs/p3-status.md` enthalten. Die vorhandenen Integritätsbefehle prüfen **nicht** P3; sie dürfen nicht als Bestätigung von P3-C2–C6 angegeben werden. Für die geplante Aufnahme: [P3_INGESTION.md](P3_INGESTION.md).
+The release criteria are listed in [RELEASE_GATE.md](RELEASE_GATE.md).

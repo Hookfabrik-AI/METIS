@@ -1,59 +1,58 @@
 # MÉTIS — Research Repository
 
-**HOOKFABRIK · Independent AI Research · 18. Oktober 2026**
+**HOOKFABRIK · Independent AI Research · Documentation updated 18 October 2026**
 
-**Evidenzstatus:** P2 ist durch archivierten Quellcode, Datensätze, Modellgewichte und Auswertungen dokumentiert. Für P3 liegt ein Ergebnisbericht vor; zugehörige Checkpoints und Rohdaten sind bislang nicht enthalten. Die historischen Trainings- und Qwen-Versuche wurden für dieses Repository nicht erneut ausgeführt.
+MÉTIS is an experimental, small Transformer for **structured constraint problems**, not a general-purpose language model. The archived P2 configuration has **679,571 trainable parameters**. Its candidates can be checked by a separate deterministic verifier. The research asks whether model-generated candidates can help a larger local language model solve constrained tasks more efficiently than simple alternatives.
 
-[**Forschungsbuch lesen**](docs/index.html) · [Methodik](docs/methods.md) · [Ergebnisse](docs/findings.md) · [Reproduzierbarkeit](REPRODUCIBILITY.md)
+**Evidence status:** P2 source code, seven checkpoints, seven data splits and evaluation records are archived. P3 is a **project-reported** training result; P3 checkpoints and raw evaluations have **not** been provided or independently reproduced. The historical Qwen comparisons used **P2**, not P3.
 
-## Forschungsgegenstand
+[Research book (standalone HTML)](docs/index.html) · [Methodology](docs/methods.md) · [Findings](docs/findings.md) · [Limitations](docs/limitations.md) · [Reproducibility](REPRODUCIBILITY.md)
 
-MÉTIS ist ein kleines, selbst trainiertes Transformer-Modell mit **679.571 trainierbaren Parametern** in der archivierten P2-Standardkonfiguration, spezialisiert auf strukturierte Constraint-Aufgaben. Im P2-Piloten wurde eine Bindung von Variable, Koeffizient/Vorzeichen und Slotposition innerhalb der Constraint-Repräsentation eingeführt. In einem weiteren Experiment wurde untersucht, ob das Modell auf schwacher, ausgelasteter Hardware einem größeren lokalen Sprachmodell (Qwen) nützliche Lösungskandidaten liefern kann.
+> GitHub displays the HTML file as source; to use the interactive research book, download `docs/index.html` and open it in a browser. The book contains its own styling and scripts and does not depend on the private reader-building toolkit.
 
-Die **offene Kernfrage** ist nicht nur, ob ein Hint Qwen schneller macht, sondern ob **der gelernte Inhalt von MÉTIS** einen messbaren Vorteil gegenüber gleich präsentierten, einfachen alternativen Kandidaten liefert — bei vergleichbarer Korrektheit und unter Einschluss aller Laufzeitkosten.
+## Research phases
 
-## Forschungsstände
-
-| Stand | Evidenzstatus | Verfügbare Artefakte |
+| Phase | Evidence status | Available materials |
 |---|---|---|
-| **P2** | Historische Evidenz archiviert; Integrität prüfbar | Quellcode, Datensplits, sieben Gewichte, Evaluationsdateien |
-| **P3** | **Berichtet, nicht unabhängig geprüft** | Ergebnisbericht vom 18.10.2026; **keine P3-Rohdaten oder Gewichte** |
-| **Qwen-Vierarm** | Aus archivierten Runs nachaggregiert | Historischer Versuch mit **P2**, **nicht P3** |
+| **P2** | Archived; integrity checkable | Source, seven data splits, seven selected weights and evaluations |
+| **P3** | Reported, **not independently verified** | Progress report dated 18 October 2026; no raw P3 data or weights |
+| **Qwen comparison** | Archived P2 runs, reaggregated | Recorded tasks and responses; no newly executed benchmark |
 
-Für P3 wurden bei unveränderter Modellarchitektur laut Bericht C2–C6 bestanden, darunter C4. Zahlen, Grenzen und Widersprüche stehen unter [P3-Status](docs/p3-status.md). Der Aufnahmeplan für echte P3-Artefakte steht in [P3_INGESTION.md](P3_INGESTION.md). **P3-Aussagen sind noch keine durch dieses Repo reproduzierten Befunde.**
+The reported P3 results describe the same model architecture trained further, and claim success on C2–C6, including the previously failed learned-control criterion C4. See [P3 status](docs/p3-status.md) and [P3 artifact requirements](P3_INGESTION.md). Reported significance or accuracy is not treated as independently verified P3 evidence.
 
-## Momentaufnahme aus den vorliegenden Rohdaten
+## Historical twelve-task Qwen comparison
 
-Das spätere Vierarm-Experiment verwendet zwölf strukturierte Aufgaben. Für diese Repositorium-Auswertung gilt: T01 aus run_04, T02–T05 aus run_03, T06–T09 aus run_04, T10–T12 aus run_05. **Das sind fortgesetzte/erneute Teilruns und keine unabhängig replizierte, vorab definierte einzige Messserie.** Ein Wiederholungsversuch von T01 aus run_03 bleibt als Originaldatensatz separat erhalten.
+The four-arm snapshot combines prior partial runs: T01 from run_04; T02–T05 from run_03; T06–T09 from run_04; and T10–T12 from run_05. The earlier T01 recording remains archived. **This is not a pre-registered, independently replicated benchmark.**
 
-| Verfahren | korrekt / Aufgaben | Qwen-Ausgabe-Tokens (Summe) | Qwen-Antwortzeit (Summe, s) |
+| Arm | Correct | Qwen output tokens | Summed Qwen response time |
 |---|---:|---:|---:|
-| A: Qwen ohne Kandidat | 11/12 | 40.559 | 2.045,3 |
-| B: Qwen + MÉTIS-Kandidat | 10/12 | 36.241 | 1.892,8 |
-| C: Qwen + Zufallskandidat | 10/12 | 52.074 | 2.819,2 |
-| D: Qwen + Min-Conflicts (256 Prüfungen) | 11/12 | 24.910 | 1.367,5 |
+| A — Qwen without a candidate | 11/12 | 40,559 | 2,045.3 s |
+| B — Qwen + MÉTIS P2 candidate | 10/12 | 36,241 | 1,892.8 s |
+| C — Qwen + random candidate | 10/12 | 52,074 | 2,819.2 s |
+| D — Qwen + Min-Conflicts (256 checks) | 11/12 | 24,910 | 1,367.5 s |
 
-MÉTIS lag hier gegenüber A bei **10,6 % weniger Qwen-Ausgabe-Tokens**, bei einer geringeren Erfolgsquote. Die einfache Min-Conflicts-Baseline schnitt besser ab. Das belegt **keinen kausalen generellen Beschleunigungseffekt durch ein neuronales Modell**; Fallzahl, Mehrfachversuche, Promptunterschiede, Laufzeitstreuung und fehlende Kontrollbedingungen begrenzen die Aussagekraft. Die angegebene Antwortzeit ist **nicht** die vollständige End-to-End-Laufzeit aller Varianten.
+MÉTIS reduced Qwen output-token use by **10.6%** compared with A, **but solved one fewer task**. The deterministic Min-Conflicts baseline did better in this snapshot. These numbers do **not** demonstrate a general speedup, a causal benefit of the learned candidate content or complete end-to-end speed: candidate generation, verification and some model-loading/prompt-processing costs are separate.
 
-Der ältere Zweibedingungsversuch (run_01/02) zeigte eine größere Ersparnis bei den normalen Aufgaben, verwendete aber unterschiedliche Hint-Inhalte und enthält keinen isolierten Methodenvergleich. Siehe [Befunde](docs/findings.md), [Modellarchitektur](docs/architecture.md), [Methodik](docs/methods.md) und [Grenzen](docs/limitations.md).
+An earlier two-arm P2 study recorded larger savings on easier tasks, but used different hint packages and cannot isolate the effect of learned model content. See [historical two-arm note](docs/historical-qwen-note.md) and [findings](docs/findings.md).
 
-## Aufbau
+## Archive layout
 
 ```text
-research/p2/             historische P2-Trainings-, Modell- und Auswertungsskripte
-research/qwen/historical/ historische, pfadbereinigte Qwen-Experimentquellen
-models/p2/               sieben ausgewählte P2-best.pt-Gewichte (3 Seeds, A/B + seed0/C)
-datasets/p2/             originale generierte P2-Datensplits + SHA-256-Manifest
-evidence/p2/             gespeicherte P2-Evaluationen und individuelle Ergebnisse
-evidence/qwen/           die relevanten Qwen-Aufgaben, Antworten, Ergebnisse und Summaries
-evidence/index.json      maschinenlesbare Forschungskennzahlen + Geltungsbereich
-evidence/provenance.json Quelle, Hashes, dokumentierte Bereinigungen
-scripts/                 unabhängige Integritäts- und Auswertungswerkzeuge
-docs/                    Forschungsnotizen, P3-Status, Hypothesen, Grenzen, Freigaberegeln
-tests/                   offline ausführbare Unit-Tests für die Evidenz
+research/p2/               archived P2 model, generator, training and evaluation code
+research/qwen/historical/   historic Qwen experiment sources; external runtime not bundled
+models/p2/                 seven selected P2 checkpoints (three seeds)
+datasets/p2/               seven synthetic data splits and their manifest
+evidence/p2/               archived P2 evaluation and probes
+evidence/qwen/             recorded Qwen tasks, responses and run summaries
+evidence/index.json        machine-readable four-arm statistics and research scope
+evidence/provenance.json   original and sanitized artifact hashes
+reports/p3/                reported, unverified P3 progress
+docs/                      architecture, methods, results and limitations
+scripts/                   integrity and reaggregation utilities
+tests/                     offline regression tests
 ```
 
-## Schnell prüfen (kein LLM, kein Model-Load notwendig)
+## Verify the archived evidence
 
 ```bash
 python3 scripts/verify_evidence.py
@@ -61,10 +60,10 @@ python3 scripts/summarize_qwen.py
 python3 -m unittest discover -s tests -v
 ```
 
-**Forschung reproduzieren:** Siehe [REPRODUCIBILITY.md](REPRODUCIBILITY.md). Die Datengenerierung und P2-Trainingskette liegen bei; eine vollständige historische P2-C5/C6-Reproduktion verlangt zusätzlich P1-Modelle/-Daten, die im Repository nicht enthalten sind. Die Qwen-Skripte benötigen die nicht enthaltene externe `res1_instance`-/`resource_profile`-Runtime und eine eingefrorene Ollama-Modellversion. Die Quellen sind **keine sofort lauffertige unabhängige Qwen-Benchmarkumgebung**.
+These checks confirm **bytes and arithmetic**, not that historical training or the original Qwen trials have been rerun. For a new P2 training run, consult [REPRODUCIBILITY.md](REPRODUCIBILITY.md). Full historical P2 comparison requires unavailable P1 artifacts, while the archived Qwen runners require external runtime components.
 
-## Provenienz und Nutzung
+## Provenance, licensing and release
 
-Historische Qwen-Skripte wurden von maschinenspezifischen absoluten Pfaden bereinigt. Original- und abgeleitete SHA-256-Prüfsummen dokumentiert [evidence/provenance.json](evidence/provenance.json). Weitere Einschränkungen sind unter [Bekannte Grenzen](docs/limitations.md) aufgeführt.
+Selected archival sources contain **documented identifier/path redactions**. Original SHA-256 digests remain in [evidence/provenance.json](evidence/provenance.json) alongside the hashes of the checked-in versions. Historical experiment measurements and checkpoint bytes are not rewritten as if they were newly observed.
 
-Eine Lizenz für Code, Datensätze und Modellgewichte ist bislang nicht festgelegt. Vor Nachnutzung sind die Nutzungsrechte zu klären. Die Kriterien für eine formale Forschungsfreigabe stehen unter [RELEASE_GATE.md](RELEASE_GATE.md).
+Original HOOKFABRIK-owned source code and project documentation are licensed under **[Apache License 2.0](LICENSE)**. Research datasets, recorded evidence and model weights require separate ownership and license clearance: see [LICENSE_SCOPE.md](LICENSE_SCOPE.md). Scientific publication, repository visibility and license permission are separate decisions. The [release checklist](RELEASE_GATE.md) has not been signed off.

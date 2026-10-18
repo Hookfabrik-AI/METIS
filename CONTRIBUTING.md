@@ -1,7 +1,9 @@
-# Beiträge zur MÉTIS-Forschung
+# Contributing to MÉTIS research
 
-Beiträge und Änderungen zur MÉTIS-Forschung sollen nachprüfbar bleiben. Nutzungs- und Weitergaberechte richten sich nach einer ausdrücklich gewählten Lizenz; die bloße Sichtbarkeit eines GitHub-Repositories ist keine Lizenz.
+Contributions should be independently reviewable. Please document the research question, method, baselines, fixed seeds and versions, raw records, reproducible analysis, uncertainties and negative outcomes.
 
-Wissenschaftliche Änderungen benötigen: eine genaue Forschungsfrage, Methode mit Baselines, fixierte Seeds/Versionsstände, getrennte Rohdaten, reproduzierbare Analyse, klar beschriebene Grenzen und einen unabhängigen Review. Negative Befunde und nicht reproduzierbare Resultate werden nicht gelöscht oder beschönigt, sondern versioniert dokumentiert.
+Preserve historical evidence: never change archived measurements or trained checkpoint bytes to make the findings look stronger. Any privacy redaction must record the original digest and the digest of the published artifact separately in `evidence/provenance.json`.
 
-Herkunft private Projekte (insbesondere MOIRAI/LOGOS) und unveröffentlichte Quellen bleiben außerhalb dieses Repos, sofern sie nicht ausdrücklich und separat freigegeben wurden.
+Do not import material or runtime code from unrelated private projects. New P3 evidence must pass the intake criteria in [P3_INGESTION.md](P3_INGESTION.md).
+
+For reuse and licensing, consult [LICENSE_SCOPE.md](LICENSE_SCOPE.md). Visibility on GitHub alone does not grant rights to archival datasets or model weights.
