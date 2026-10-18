@@ -328,7 +328,7 @@
       "archive_path": "METIS_QWEN_E2E/HOOKFABRIK_METIS_QWEN_FORSCHUNGSSCHRITT_P3.md",
       "repo_path": "docs/historical-qwen-note.md",
       "original_sha256": "b9fb12c4f8b7fdb5cf913b7be18ed682b0c0d668abadce114b6550beb36a4e32",
-      "repo_sha256": "77a2ef49ad1390809333b225eed580d72ab09fd2cc0d6fc378f474798c570871",
+      "repo_sha256": "28d9ebe4c3cf2feda6335d05e81e8c0eddc35385ebb324ee3044813bacdd6013",
       "modified": true
     }
   ],
@@ -356,6 +356,17 @@
         "Identifier redactions in comments and archival pointers only",
         "Preserve original content hashes; verify checked-in redacted copies by repo_sha256",
         "No dataset samples, model weights, numerical results or executable constraint logic changed"
+      ]
+    },
+    {
+      "date": "2026-10-18",
+      "purpose": "English historical note with archival numeric content retained and internal local paths omitted",
+      "paths": [
+        "docs/historical-qwen-note.md"
+      ],
+      "rules": [
+        "Original hash preserved as original_sha256",
+        "Recorded two-arm observations and qualifications translated, not remeasured"
       ]
     }
   ]

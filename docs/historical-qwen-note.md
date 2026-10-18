@@ -1,85 +1,75 @@
-# HOOKFABRIK · Forschungsnotiz
-## MÉTIS P2 × Qwen — Neuronale Lösungsvorschläge als Unterstützung eines Sprachmodells
+# MÉTIS P2 × Qwen — Historical two-arm research note
 
-**Status:** Experiment abgeschlossen; unabhängige Prüfung `VERIFIED_WITH_NOTES`  
-**Einordnung:** Eigenständiger Forschungsschritt nach MÉTIS P2; *P3* ist lediglich ein möglicher Arbeitstitel, keine neue Modellversion.  
-**Evidenzgrundlage dieser Notiz:** Vom Projekt übermittelter Abschlussbericht einschließlich Zusammenfassung des unabhängigen Codex-Reviews. Die Rohdaten und Quelldateien wurden für diese Notiz nicht selbst eingesehen.
+**Status at the time:** Experiment completed; an independent reviewer reportedly marked the result `VERIFIED_WITH_NOTES`. This document is an edited English rendition of an archived project report, not a newly executed validation.
 
-### 1. Forschungsfrage
+**Version distinction:** The experiment used a fixed **P2 checkpoint**. A working title referring to “P3” in the old report did not mean that the later trained P3 model was used. The later four-arm comparison is covered separately in [findings](findings.md), with recorded task data under [evidence/qwen](../evidence/qwen/).
 
-Kann ein kleines, auf strukturierte Constraint-Aufgaben trainiertes CPU-Modell (MÉTIS P2) ein größeres lokales Sprachmodell (`qwen3.5:latest`) dabei unterstützen, Aufgaben mit weniger Generierungsaufwand und ohne Qualitätsverlust zu lösen?
+## 1. Research questions
 
-Eine zweite, engere Frage ist, ob *die gelernten MÉTIS-Vorschläge selbst* einen Vorteil bringen – oder bereits irgendein vorgegebener Kandidat die Generierung verkürzt.
+Can a small CPU model trained on structured constraints (MÉTIS P2) provide candidates that help a larger local LLM (`qwen3.5:latest`) solve problems with less generation work and no loss of accuracy?
 
-### 2. Versuchsaufbau
+A narrower question remains: does **learned MÉTIS content** add value beyond any candidate or prompt-format change?
 
-- **MÉTIS:** Unveränderter P2-Checkpoint; experimenteller Adapter erzeugt eigene Lösungskandidaten, die zwei wahrscheinlichsten Werte je Variable und eine modellierte Selbsteinschätzung. Ein Reparaturvorschlag ist vorgesehen, wurde im ausgewerteten Lauf aber nicht ausgelöst.
-- **Qwen:** `qwen3.5:latest`, Thinking deaktiviert, Temperatur 0.
-- **Eingabe:** Zwölf neue, bereits formal als Bedingungen dargestellte Aufgaben; die Übersetzung aus natürlicher Alltagssprache wurde **nicht** untersucht.
-- **Vergleich:** Qwen ohne Hinweis gegenüber Qwen mit dem vollständigen MÉTIS-Hinweispaket.
-- **Korrektur:** Bei einer falschen auswertbaren Antwort hätte der Prüfer in beiden Varianten lediglich verletzte Bedingungen zurückgemeldet. Die MÉTIS-Reparatur wurde nicht aktiviert, weil entsprechende auswertbare Fehlantworten ausblieben.
-- **Einschränkung:** Kein Vergleich mit Zufallskandidaten, einfachen Regelkandidaten oder einem gleich langen neutralen Hinweis; pro Aufgabe und Bedingung nur ein Lauf.
+## 2. Experimental setup
 
-### 3. Beobachtete Ergebnisse
+- **MÉTIS:** Fixed P2 checkpoint. An adapter generated a proposed solution, top-two values per variable and an estimated confidence. The planned repair hint was not triggered in the evaluated runs.
+- **Qwen:** `qwen3.5:latest`, reasoning disabled, temperature 0.
+- **Tasks:** Twelve new structured constraint problems; translating ordinary natural-language requests into constraints was **not** tested.
+- **Conditions:** Qwen with no candidate versus Qwen with the full MÉTIS hint package.
+- **Feedback:** If a parseable response was incorrect, the verifier would report violated constraints in either condition. No model-side MÉTIS repair was activated in the evaluated run.
+- **Controls missing:** No random candidate, rule candidate, matched neutral hint or repeated runs per condition.
 
-| Messgröße | Qwen allein | Qwen + MÉTIS-Hinweis |
+## 3. Observations
+
+| Measurement | Qwen alone | Qwen + MÉTIS hint |
 |---|---:|---:|
-| Normale Aufgaben korrekt | 8/8 | 8/8 |
-| Schwere Aufgaben korrekt | 3/4 | 2/4 |
-| Insgesamt korrekt | **11/12** | **10/12** |
-| Ausgabe-Tokens, normal | 26.277 | 8.595 |
-| Ausgabe-Tokens, schwer | 22.668 | 21.012 |
-| Ausgabe-Tokens, gesamt | **48.945** | **29.607** |
-| Gemessene Qwen-Laufzeit, gesamt | **2.388 s** | **1.580 s** |
+| Easier problems correct | 8/8 | 8/8 |
+| Harder problems correct | 3/4 | 2/4 |
+| Total correct | **11/12** | **10/12** |
+| Easier output tokens | 26,277 | 8,595 |
+| Harder output tokens | 22,668 | 21,012 |
+| Total output tokens | **48,945** | **29,607** |
+| Measured Qwen time | **2,388 s** | **1,580 s** |
 
-Rechnerisch wurden über alle zwölf Aufgaben **19.338 Ausgabe-Tokens bzw. 39,5 %** weniger erzeugt. Die aggregierte gemessene Qwen-Zeit lag **808 s bzw. 33,8 %** niedriger. Bei den acht normalen Aufgaben betrug die Tokenersparnis etwa **67,3 %**; bei den vier schweren Aufgaben lediglich **7,3 %**.
+Across twelve tasks, output decreased by **19,338 tokens (39.5%)** and summed observed Qwen time decreased by **808 seconds (33.8%)**. On the easier group, output-token use decreased by approximately **67.3%**; on harder tasks the decrease was approximately **7.3%**.
 
-Diese Unterschiede sind **Beobachtungen unter zwei Promptbedingungen**, kein belegter kausaler Effekt des trainierten MÉTIS.
+These are differences between **two prompt packages**, not a causal demonstration of a learned-model advantage.
 
-### 4. Konkrete Beobachtungen und Fehlermuster
+## 4. Observed failure patterns
 
-- In den acht normalen Aufgaben gab MÉTIS fünfmal direkt einen richtigen Kandidaten aus. Qwen prüfte die Bedingungen und konnte solche Kandidaten übernehmen.
-- In den übrigen normalen Aufgaben entdeckte Qwen falsche Vorschläge und übernahm sie nicht blind.
-- In **allen vier schweren Aufgaben** war der MÉTIS-Vorschlag falsch.
-- **T11 (Logik):** Qwen allein löste die Aufgabe, mit MÉTIS-Hinweis nicht. Im Verlauf verwarf Qwen einen potenziell richtigen Ansatz unter Verweis auf die hochkonfidente MÉTIS-Präferenz (`x4 = 1`, 97 %). Die **Verankerung ist belegt**, aber **nicht als alleinige Fehlerursache**, weil Qwen zusätzlich eigene Logikfehler machte und der verworfene Ansatz nicht die einzige gültige Lösung war.
-- **T09:** Beide Bedingungen scheiterten. Antworttexte eines abgebrochenen, *nicht ausgewerteten* Laufteils sind nicht archiviert.
-- **T10/T12:** Beide Bedingungen lösten die Aufgaben trotz falscher MÉTIS-Vorschläge; mit Hinweis war die Bearbeitung etwas schneller.
+- Among eight easier tasks, MÉTIS produced a directly correct candidate five times. Qwen could inspect the constraints and reuse valid candidates.
+- Qwen recognized and discarded several incorrect hints on other easier tasks.
+- On **all four harder tasks**, the MÉTIS candidate was incorrect.
+- **T11 (logic):** Qwen succeeded alone but failed with the hint. It discarded a potentially valid approach while referring to a high-confidence MÉTIS proposal (`x4 = 1`, 97%). This supports an *anchoring observation*, not proof that the hint was the sole failure cause; Qwen also made independent errors.
+- **T09:** Both conditions failed. Text from an aborted, non-evaluated part was not archived.
+- **T10/T12:** Both conditions succeeded despite wrong MÉTIS candidates, with somewhat lower observed Qwen time under the hint condition.
 
-### 5. Unabhängige Prüfung durch Codex
+## 5. Reported independent review
 
-**Urteil: `VERIFIED_WITH_NOTES`.** Nach dem übermittelten Prüfbericht:
+The accompanying project review summary assigned `VERIFIED_WITH_NOTES`. It reported that all twelve candidate outputs had been reproduced from a saved checkpoint, timing totals agreed within approximately 0.05 seconds of Ollama records, and six reporting clarifications had been incorporated.
 
-- **Integrität:** Alle zwölf MÉTIS-Vorschläge wurden aus dem gespeicherten Checkpoint reproduziert; es handelt sich um echte Modellausgaben.
-- **Zeitmessung:** Berichtete Summen und Zeiten stimmen; die Messung deckt sich mit Ollama bis auf höchstens 0,05 s Abweichung.
-- **Berichtsgenauigkeit:** Sechs geforderte Präzisierungen wurden eingearbeitet.
-- **Ursächlichkeit:** **Nicht bestätigt.** Der Test vergleicht vollständige Promptpakete, nicht isoliert die Qualität von MÉTIS gegenüber generischen Kandidaten.
+**Causality was not verified.** The comparison tested complete hint packages, not the incremental effect of learned content compared with generic candidates. This archive does not itself include all inputs necessary to independently repeat those historical reviewer checks.
 
-### 6. Grenzen der Evidenz
+## 6. Evidence limitations
 
-1. Qwens beobachtete Generierungsrate schwankte zwischen etwa **18 und 31 Tokens/s**; die Ursache blieb offen.
-2. Prompts mit MÉTIS waren etwa **doppelt so lang** wie die Prompts ohne Hinweis.
-3. Ollama verwendete zum Teil zwischengespeicherte Eingaben wieder. Das kann die Laufzeit beeinflussen; **die Tokenzahlen sind daher die robustere Messgröße**.
-4. Zwei Ollama-Teilzeiten (Modellladen und Prompt-Einlesen) wurden nicht in `results.json` persistiert; Rekonstruktion wäre nur über Logs möglich.
-5. Die MÉTIS-Rechenzeit wurde für die **vier schweren Aufgaben mit insgesamt 0,28 s** gemessen. Für Lauf 1 ist kein überlieferter Messwert verfügbar; **keine Hochrechnung**.
-6. Zwölf Aufgaben mit je einem Durchlauf erlauben keine robuste Verallgemeinerung; kein Zufalls-/Regel-/Neutralhinweis als Kontrollbedingung.
-7. Die Aufgaben lagen bereits formalisiert vor; natürliche Sprache, allgemeines Reasoning, MOIRAI, NOUMORA sowie 14B- oder Frontier-Modelle wurden hier nicht getestet.
+1. Observed generation rate fluctuated around **18–31 tokens/s**; the reason was not established.
+2. Hint prompts were approximately **twice as long** as no-hint prompts.
+3. Some input reuse/caching could affect wall-clock time; output-token counts are a more stable descriptive measure here.
+4. Two Ollama timing components (loading and prompt evaluation) were not persisted in `results.json`.
+5. For the four harder tasks, MÉTIS CPU time summed to **0.28 s**; a corresponding first-run value was unavailable and must not be extrapolated.
+6. Twelve tasks with one run per condition do not permit robust generalization or a fair candidate-method comparison.
+7. Natural-language task formalization, larger model families and unrelated agent systems were not evaluated.
 
-### 7. Forschungsbefund
+## 7. Research conclusion
 
-**Nachgewiesen:** Ein kleines trainiertes CPU-Modell kann echte Kandidaten für ein größeres LLM bereitstellen; Qwen nutzt diese Kandidaten sichtbar. In diesem konkreten Versuch erzeugte Qwen mit dem vollständigen MÉTIS-Hinweis bei normalen Aufgaben erheblich weniger Tokens. Bei schweren Aufgaben brachte das Hinweispaket wenig Ersparnis und fiel hinsichtlich Lösungsquote zurück.
+**Observed:** A small trained model produced real candidate hints that Qwen sometimes used. The complete hint condition reduced token use markedly on easier structured problems, but reduced the number of correct answers on hard problems.
 
-**Nicht nachgewiesen:** Dass die **trainierten Inhalte** von MÉTIS (statt allgemein eines vorgegebenen Kandidaten bzw. eines geänderten Promptformats) die Einsparung verursachten; dass der Ansatz die allgemeine Problemlösefähigkeit steigert; dass eine entsprechende Beschleunigung auf Qwen 14B, Claude oder Codex übertragbar ist.
+**Not established:** Whether learned candidate content caused the savings; a general improvement in problem solving; or transfer to other model sizes, tasks or domains.
 
-**Neue Forschungsfrage:** Wie lassen sich hilfreiche spezialisierte Vorschläge so kennzeichnen, prüfen und gewichten, dass ein LLM weniger suchen muss, ohne richtige eigene Lösungsansätze wegen überkonfidenter falscher Hinweise zu verwerfen?
+A useful follow-up study would independently compare learned hints against rule-generated, random and equally formatted neutral hints, with calibration and anchoring risk as explicit outcomes.
 
-### 8. Einordnung und Dokumentationsverweise
+## 8. Provenance and next steps
 
-Dies ist ein **Funktions- und Beobachtungsnachweis mit gemischtem Ergebnis**, noch kein kausal isolierter Effizienznachweis von MÉTIS. Es gibt keinen Anlass, das Ergebnis entweder als gescheitert oder als allgemeine Tokenoptimierung zu verkaufen.
+This is a **historical observation with mixed outcomes**, not evidence of a broadly applicable LLM speedup. It predates the later four-arm dataset and its associated evaluation. The original report's digest is retained as `original_sha256` in [provenance](../evidence/provenance.json); this edited, translated copy has a distinct `repo_sha256` value.
 
-Lokal vom Projekt genannte Referenzen (Pfadangaben, keine hier neu verifizierten Dateien):
-
-- `NOUMORA_THINKING_20261016/10_METIS_QWEN_E2E_ERGEBNIS.md` – überarbeiteter Ergebnisbericht.
-- `reviews/CODEX_METIS_QWEN_E2E_R1.md` – unabhängiger Prüfbericht.
-- `<LOCAL_QWEN_RUN_01>/` – archivierte Rohdaten, Prompts und Antworten.
-
-**Publikationsregel:** Bei Veröffentlichung die vollständigen Berichte und reproduzierbaren Artefakte verlinken; diese Notiz ersetzt sie nicht. Keine weitergehenden Effizienz- oder Kausalitätsansprüche aus den obigen Zahlen ableiten.
+For the later four-arm measurements and their selection across resumed runs, consult [findings](findings.md) and [methodology](methods.md).
